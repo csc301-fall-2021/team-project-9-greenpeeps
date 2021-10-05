@@ -265,13 +265,13 @@ The next meeting is currently scheduled for 4 to 5pm on Sunday, October 17th, 20
   
 #### Q8: What artifacts will you use to self-organize?
 
-Team communication will be accomplished through Discord primarily. Scheduling will also be accomplished leveraging Discord communication and the when2meet scheduling tool.
+  * Team communication will be accomplished through Discord primarily. Scheduling will also be accomplished leveraging Discord communication and the when2meet scheduling tool.
 
-We will organize our tasks using Trello. Tasks will be prioritized based on urgency. Critical or breaking issues will be given priority 1, features and improvements will be given priority 2, and all other issues will be assigned lower priority or higher priority on a case-by-case basis. 
+  * We will organize our tasks using Trello. Tasks will be prioritized based on urgency. Critical or breaking issues will be given priority 1, features and improvements will be given priority 2, and all other issues will be assigned lower priority or higher priority on a case-by-case basis. 
 
-Tasks will be self-assigned. While our team will be organized into roles, we will be flexible and trust individuals to decide what tasks are most relevant/require immediate attention.
+  * Tasks will be self-assigned. While our team will be organized into roles, we will be flexible and trust individuals to decide what tasks are most relevant/require immediate attention.
 
-Tasks will have the following possible statuses: Open, In Development, Review, Done. We will consider a task Open when we are not actively working on it, but it needs to be done. When someone has taken ownership over a task and is working on it, we will consider it to be In Development. Once a pull request has been opened it will be in Review, and another team member will move it forward if the review passes. Then, once it is merged, the task will be Done.
+  * Tasks will have the following possible statuses: Open, In Development, Review, Done. We will consider a task Open when we are not actively working on it, but it needs to be done. When someone has taken ownership over a task and is working on it, we will consider it to be In Development. Once a pull request has been opened it will be in Review, and another team member will move it forward if the review passes. Then, once it is merged, the task will be Done.
 
 #### Q9: What are the rules regarding how your team works?
 
