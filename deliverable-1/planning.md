@@ -36,26 +36,26 @@ Overall, this supports GreenPeeps’ mandate to reduce carbon emissions by encou
 #### Q4: How will you build it?
 
 * “Front end”/”Back end”:
-Flutter Framework & Dart language
+  * Flutter Framework & Dart language
 GetX framework for Flutter (one of the top 3 frameworks for Flutter currency, shortens boiler plate code)
 * Database
-(possibly) MongoDB (as it scales relatively well and can easily integrate with most PaaS providers)
-(possibly) PostgreSQL 
-(possibly) Firebase (as it has an easy setup process)
+  * (possibly) MongoDB (as it scales relatively well and can easily integrate with most PaaS providers)
+  * (possibly) PostgreSQL 
+  * (possibly) Firebase (as it has an easy setup process)
 * PaaS products
-(possibly) Microsoft Azure (as it’s free on Github student pack)
-(possibly) Heroku (as it’a free and easy to use)
+  * (possibly) Microsoft Azure (as it’s free on Github student pack)
+  * (possibly) Heroku (as it’a free and easy to use)
 * Tools
-VSCode IDE
-Flutter (to wireframe the design and share with everyone)
-Android Studio (for Android emulation and testing)
-MacOS emulator (for iOS emulation and testing)
-Postman (for testing requests)
+  * VSCode IDE
+  * Flutter (to wireframe the design and share with everyone)
+  * Android Studio (for Android emulation and testing)
+  * MacOS emulator (for iOS emulation and testing)
+  * Postman (for testing requests)
 * Possible third party apps or APIs
-Google charts API to display carbon emissions in a circle graph
-(possibly) Google, Facebook, instagram, etc. APIs for “Log in with x”
-(possibly) mobile analytics APIs (from Amazon or another tool)
-APIs that allow integration of whatever database we’re using with our app
+  * Google charts API to display carbon emissions in a circle graph
+  * (possibly) Google, Facebook, instagram, etc. APIs for “Log in with x”
+  * (possibly) mobile analytics APIs (from Amazon or another tool)
+  * APIs that allow integration of whatever database we’re using with our app
 
 We will either use Github Actions (for the convenience and integration right on GitHub) or  Jenkins (for the open source aspect, with less pricing limits on deployment). It will depend completely on what our business needs will be and what our partner’s plan is with the app after it’s creation (which is currently undecided).
 
@@ -63,11 +63,11 @@ We will either use Github Actions (for the convenience and integration right on 
 We will be following Model View Controller (MVC), doing Test Driven Development, and integrating SOLID Design principles into our code.
 
 Our testing strategy consists of testing in several stages of building and testing for various screens of the app. We plan to do Test Driven Development, by writing (or mocking out) tests for calculations, requests and screens, then writing code, then executing the tests and fixing the code accordingly. When appropriate, we will do manual testing through emulators,  physical devices, and third-party testing tools (like Postman). Some examples of tests include:
-Unit tests with Flutter test package
-Mock/stubb user profiles and actions for testing of carbon emission visualization
-Postman to test requests from database to app
-Manual UI tests both from emulators (for easy debugging and testing of features)
-Manual UI tests/usage from Android/iOS devices (for testing native things that emulators cannot simulate + testing the app in every day life for a prolonged period of time)
+  * Unit tests with Flutter test package
+  * Mock/stubb user profiles and actions for testing of carbon emission visualization
+  * Postman to test requests from database to app
+  * Manual UI tests both from emulators (for easy debugging and testing of features)
+  * Manual UI tests/usage from Android/iOS devices (for testing native things that emulators cannot simulate + testing the app in every day life for a prolonged period of time)
 
 #### Q5: What are the user stories that make up the MVP?
 
