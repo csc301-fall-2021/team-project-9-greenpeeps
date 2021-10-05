@@ -110,22 +110,22 @@ After consulting our partner, we have decided that we will only share the code u
   * Role: Software Engineer, UI/UX Designer
   * Responsibilities: Team for carbon emissions reduction, social media sharing, and login features
   * Technical Strengths: Flutter/Dart, SQL, Expert in development methodologies
-  * Technical Weaknesses:
+  * Technical Weaknesses: No direct database/server experience, no testing experience beyond unit tests, experience using APIs
 * Grace
   * Role: Software Engineer, UI/UX Designer
   * Responsibilities: Carbon emissions visualization team
   * Technical Strengths:  Flutter/Dart, SQL, Expert in development methodologies
-  * Technical Weaknesses: 
+  * Technical Weaknesses: No direct database/server experience, no testing experience beyond unit tests, experience using APIs
 * Hayden
   * Role: Software Engineer, UI/UX Designer
   * Responsibilities: Login and New User Experience team
   * Technical Strengths: Experience with Heroku & PaaS products, SQL, Experience working with large databases
-  * Technical Weaknesses:
+  * Technical Weaknesses: No direct database/server experience, no testing experience beyond unit tests, no Flutter/Dart experience
 * Jeffrey
   * Role: Software Engineer, UI/UX Designer
   * Responsibilities: Team for tips for reducing carbon emissions reduction
   * Technical Strengths: SQL, Expert in ML/AI, Expert in Testing
-  * Technical Weaknesses:
+  * Technical Weaknesses: No direct database/server experience, no testing experience beyond unit tests, no Flutter/Dart experience
 * Nathan
   * Role: Software Engineer, Technical Project Manager
   * Responsibilities: Login and New User Experience team
