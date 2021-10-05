@@ -111,30 +111,30 @@ After consulting our partner, we have decided that we will only share the code u
   * Technical Strengths: Flutter/Dart, SQL, Expert in development methodologies
   * Technical Weaknesses:
 * Grace
-Role: Software Engineer, UI/UX Designer
-Responsibilities: Carbon emissions visualization team
-Technical Strengths:  Flutter/Dart, SQL, Expert in development methodologies
-Technical Weaknesses: 
+  * Role: Software Engineer, UI/UX Designer
+  * Responsibilities: Carbon emissions visualization team
+  * Technical Strengths:  Flutter/Dart, SQL, Expert in development methodologies
+  * Technical Weaknesses: 
 * Hayden
-Role: Software Engineer, UI/UX Designer
-Responsibilities: Login and New User Experience team
-Technical Strengths: Experience with Heroku & PaaS products, SQL, Experience working with large databases
-Technical Weaknesses:
+  * Role: Software Engineer, UI/UX Designer
+  * Responsibilities: Login and New User Experience team
+  * Technical Strengths: Experience with Heroku & PaaS products, SQL, Experience working with large databases
+  * Technical Weaknesses:
 * Jeffrey
-Role: Software Engineer, UI/UX Designer
-Responsibilities: Team for tips for reducing carbon emissions reduction
-Technical Strengths: SQL, Expert in ML/AI, Expert in Testing
-Technical Weaknesses:
+  * Role: Software Engineer, UI/UX Designer
+  * Responsibilities: Team for tips for reducing carbon emissions reduction
+  * Technical Strengths: SQL, Expert in ML/AI, Expert in Testing
+  * Technical Weaknesses:
 * Nathan
-Role: Software Engineer, Technical Project Manager
-Responsibilities: Login and New User Experience team
-Technical Strengths: Mobile Development, Flutter/Dart, NoSQL databases, backend development
-Technical Weaknesses: SQL, UI/UX, UI testing
+  * Role: Software Engineer, Technical Project Manager
+  * Responsibilities: Login and New User Experience team
+  * Technical Strengths: Mobile Development, Flutter/Dart, NoSQL databases, backend development
+  * Technical Weaknesses: SQL, UI/UX, UI testing
 * Philip
-Role: Software Engineer, Technical Project Manager
-Responsibilities: Team for tips on reducing carbon emissions
-Technical Strengths: SQL, backend development, Expert in Testing
-Technical Weaknesses: Non-relational DBs, Javascript, Go
+  * Role: Software Engineer, Technical Project Manager
+  * Responsibilities: Team for tips on reducing carbon emissions
+  * Technical Strengths: SQL, backend development, Expert in Testing
+  * Technical Weaknesses: Non-relational DBs, Javascript, Go
 
 #### Q7: What operational events will you have as a team?
 
