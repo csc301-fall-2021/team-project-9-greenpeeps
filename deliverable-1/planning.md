@@ -61,6 +61,7 @@ We will either use Github Actions (for the convenience and integration right on 
 
 
 We will be following Model View Controller (MVC), doing Test Driven Development, and integrating SOLID Design principles into our code.
+<img src="images/InkedMVC_base_template_w_writting.jpg" />
 
 Our testing strategy consists of testing in several stages of building and testing for various screens of the app. We plan to do Test Driven Development, by writing (or mocking out) tests for calculations, requests and screens, then writing code, then executing the tests and fixing the code accordingly. When appropriate, we will do manual testing through emulators,  physical devices, and third-party testing tools (like Postman). Some examples of tests include:
   * Unit tests with Flutter test package
