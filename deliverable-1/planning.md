@@ -48,7 +48,7 @@ GetX framework for Flutter (one of the top 3 frameworks for Flutter currency, sh
   * (possibly) Heroku (as it’a free and easy to use)
 * Tools
   * VSCode IDE
-  * Flutter (to wireframe the design and share with everyone)
+  * Figma (to wireframe the design and share with everyone)
   * Android Studio (for Android emulation and testing)
   * MacOS emulator (for iOS emulation and testing)
   * Postman (for testing requests)
@@ -78,7 +78,7 @@ Acceptance Criteria:
 Given that I want to create an account, when I enter into the app from my phone, then I have the option to Sign Up by filling in information, Sign Up with Google, or Sign Up with Facebook.
 
 2. As a new user, I want to fill out a survey of my carbon footprint, in order to see visualizations of my carbon emissions
-Acceptance Criteria: 
+Acceptance Criteria: Given that I want to see my carbon emissions, when I fill out the intruductory questionnaire, then I will see a chart of my carbon emissions. 
 
 3. As a current user, I want to be able to post my progress steps to social media, in order to share my progress with my friends.
 Acceptance Criteria: 
@@ -86,7 +86,7 @@ Given that I’ve just achieved a big milestone and want to share my progress, w
 
 4.  As an administrator of the app, I want to use a dashboard to access the backend, in order to manage users/the app content, and data. 
 Acceptance Criteria: 
-Given that I want to access or modify some of the app’s data, when I login to a dashboard, then I should be able to visualize and modify the app’s data.
+Given that I want to access or modify some of the app’s data, when I login to a dashboard, then I should be able to visualize and modify the app’s data, such as adding new carbon emission questions, goal recommendations and accounts.
 
 5.  As a current user, I want to update my carbon emissions diary entry every day, in order to get an accurate report of my carbon emissions and update my carbon emissions visualizations.
 Acceptance Criteria: 
@@ -110,8 +110,8 @@ After consulting our partner, we have decided that we will only share the code u
 * Eryka
   * Role: Software Engineer, UI/UX Designer
   * Responsibilities: Team for carbon emissions reduction, social media sharing, and login features
-  * Technical Strengths: Flutter/Dart, SQL, Expert in development methodologies
-  * Technical Weaknesses: UI testing, lack of full-stack app development and database experience
+  * Technical Strengths: Flutter/Dart, SQL, Expert in development methodologies and clean code
+  * Technical Weaknesses: UI testing, lack of full-stack app development, database and API experience
 * Grace
   * Role: Software Engineer, UI/UX Designer
   * Responsibilities: Carbon emissions visualization team
