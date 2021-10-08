@@ -272,7 +272,7 @@ You must provide meeting minutes.
  - 4:30 to 4:35: Nathan continues to talk about the flow of the app from the moment a user starts using it to see if it (the new user experience) is similar to what Jeffrey had in mind.
  - 4:35 to 4:40 : Eryka suggests the categories that bundle questions for users to check and answer and then get the points.
  - 4:40 to 4:45: Eryka asks Jeffrey his thoughts on mentions of politics in the app as it pairs well with Environmentalism.
- - 4:45 to 4:50: Nathan asks about the visual comparison or more aspects of the people comparison?
+ - 4:45 to 4:50: Nathan asks about the social media.
  - 4:50 to 5: Licensing. How we own the code to use for expanding our portfolio but Jefrrey would be allowed to develop the project further with no limitation.
   
 #### Q8: What artifacts will you use to self-organize?
