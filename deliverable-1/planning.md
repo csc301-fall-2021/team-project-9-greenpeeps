@@ -8,7 +8,8 @@
 
 We are building a mobile application to track user’s carbon emissions and provide advice on how the user can reduce their carbon emissions in an approachable and visually appealing way.
 
-<img src="images/mockups.png" />
+**Figma Link to wireframes**
+https://www.figma.com/file/LlIiMsIG2aaIFGPHEpDuij/Mock-up?node-id=0%3A1
 
 From our partner’s vision of the app:
 
