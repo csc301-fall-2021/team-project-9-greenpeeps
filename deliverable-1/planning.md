@@ -202,7 +202,7 @@ Specific talking points include:
     - Iconography at the bottom shows us what you need to know and expect 
     - Small amount of info
     - LOTS of white space 
-    - Learn A LOT about helping climate change -> but make it digestible: slow feeling app; tiny bytes
+    - Learn A LOT about helping climate change but make it digestible: slow feeling app; tiny bytes
     - Learn something small you can actually use
   - Calm:
     - Meditation app
