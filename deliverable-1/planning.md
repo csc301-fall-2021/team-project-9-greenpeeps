@@ -17,7 +17,7 @@ From our partner’s vision of the app:
 
 “To that end, I'm looking to build an app that can track user behaviours that contribute to carbon emissions. The app will help to set a baseline carbon footprint for the user and work with the user to set a goal and reduce emissions to reach that goal. The app will empower users to achieve more by connecting them socially with peers for both motivational (you can do it too!) and informational (here's how I achieved change) purposes.”
 
-We are planning to build a MVP for a mobile app that works for iOS and Android. The purpose of the app is to track carbon emissions and to see how a user’s carbon emissions compare to others while also offering ways to reduce one’s emissions. Functionalities include the ability to view your carbon emissions, post progress to social media, and fill out questions about one’s carbon emissions.
+We are planning to build a MVP for a mobile app that works for iOS and Android. The purpose of the app is to track carbon emissions and to see how a user’s carbon emissions compare to others while also offering ways to reduce one’s emissions. Functionalities include the ability to fill out questions about one’s carbon emissions, view your carbon emissions and post progress to social media.
 
 #### Q2: Who are your target users?
 
@@ -104,12 +104,12 @@ After consulting our partner, we have decided that we will only share the code u
 #### Q6: What are the roles & responsibilities on the team?
 * Akiki
   * Role: Software Engineer, Technical Project Manager
-  * Responsibilities: 
+  * Responsibilities: Team for carbon emissions reduction and social media sharing
   * Technical Strengths: Flutter/Dart, Integration/Unit test writing experience, transferable experience with software development process at startup and big tech
   * Technical Weaknesses: No experience with relational databases, no previous SQL Experience, lack of full stack app development experience
 * Eryka
   * Role: Software Engineer, UI/UX Designer
-  * Responsibilities: Team for carbon emissions reduction, social media sharing, and login features
+  * Responsibilities: Team for carbon emissions reduction and data collection
   * Technical Strengths: Flutter/Dart, SQL, Expert in development methodologies and clean code
   * Technical Weaknesses: UI testing, lack of full-stack app development, database and API experience
 * Grace
@@ -140,33 +140,27 @@ After consulting our partner, we have decided that we will only share the code u
 
 #### Q7: What operational events will you have as a team?
 
+We plan to have bi-weekly meetings with the team Sundays online from 3-5 pm. They will be more frequent closer to deliverable deadlines.
+We will meet Jeffrey Zon (the entrepreneur behind the GreenPeeps idea) Sunday 9-10 pm. 
 
-Describe meetings (and other events) you are planning to have. 
+In team meetings, we will discuss technical updates (what we have done/ what we will be doing- scrum meetings) and confirm the direction/ decisions we have made. This is a chance for sub-teams to fill in others on their progress, and for everyone to ask questions of each other.
+There may be other events such as coding sessions, code reviews and quick weekly meetings online to make sure we are on the same page. Futhermore, people who work on different teams can work together on joint initiatives (such as the questionnaire team would work with the carbon footprint visualizer team to transfer data).
 
-When and where? Recurring or ad hoc? In-person or online?
-* Sunday 3-5 pm online with the team, at least every two weeks. Will be pushed to more frequently closer to deliverable deadlines.
-* Sunday 9-10 pm with Jeffrey Zon (the entrepreneur behind the GreenPeeps idea)
 
-What's the purpose of each meeting?
-* To discuss technical updates (what we have done/ what we will be doing- scrum meetings) and confirm the direction/ decisions we have made. A chance for sub-teams to fill in others on their progress, and for everyone to ask questions of each other.
-Other events could be coding sessions, code reviews, quick weekly sync meeting online, etc.
-* Coding sessions
-* People who work on different teams can work together on joint initiatives (such as the questionnaire team would work with the carbon footprint visualizer team to transfer data).
-
-You must have at least 2 meetings with your project partner (if you have one) before D1 is due. Describe them here:
+**Meetings we have had with our project partner: **
 
 **Meeting 1**
 
-What did you discuss during the meetings?
-- The app, it’s design and purpose.
-  - The app mainly logs what someone’s carbon emissions are  and visualizes their carbon footprint. We want to make the app appealing enough to ensure they do so consistently and so the app has longevity.
-- Who is your audience? Do you want this app to appeal to everyone and get people to think more consciously about their carbon footprint, or is it mostly for people who already have this concern and are looking for a good product? 
-  - The answer seems to be a mixture of both. People who want easy tradeoffs/make a plan for a change/ sustain of habits (ex. riding bike to work instead of driving, boiling the exact amount of water instead of a random amount).
-- Color scheme preferences? 
-  - Nothing is concrete but he does gravitate towards the colour purple. The GreenPeeps website name was taken and so he said we can come up with a new name for the project. He is willing to have us take creative liberties in the beginning stages; he’s not much of a designer kind of guy.
-- User stories that focus on examples of people who want to be carbon conscious and are unaware of how their daily activities contribute to carbon emissions.
-- Potential ways we can make it feel more personalizable is to have the user choose subjects that they want to fill in questions about/ focus on. Overtime, we may want to add similar subjects too.
-  - Akiki suggested a variety of questions that are randomized daily so that it doesn’t get repetitive or stale to the user, but Jeff thinks that as we learn more about the user we may want to personalize questions (ex. If we gauge that they answer more questions about diet and food waste or transportation, etc.).
+In this meeting we discussed the app's purpose, the app's audience, the colour scheme, user stories, app features, communication methods, our partner's investment, and code licensing. 
+
+Specifically, the app mainly logs what someone’s carbon emissions are and visualizes their carbon footprint. We want to make the app appealing enough to ensure they use it consistently and so the app has longevity. With regards to the app's audience, we want to mainly target people who are conscious about their carbon footprint, who want accessible and digestible knowledge about how to be more environmentally conscious, and who want to make a plan to change their habits. For example, riding their bike to work instead of driving or boiling the exact amount of water instead of a random amount.
+
+Our partner does not have a concrete design in mind for the app and he is very open to letting us take creative liberties in the beginning stages. However, he does gravitate towards the colour purple. The GreenPeeps website name is taken and so he said we can come up with a new name for the project.
+
+The user stories should focus on examples of people who want to be carbon conscious and are unaware of how their daily activities contribute to carbon emissions. Potential ways we can make it feel more personalizable is to have the user choose subjects that they want to fill in questions about/ focus on. Overtime, we may want to add similar subjects to recommend to users.
+
+Akiki suggested a variety of questions that are randomized daily so that it doesn’t get repetitive or stale to the user, but Jeffrey thinks that as we learn more about the user we may want to personalize the questions (i.e., If we gauge that they answer more questions about diet and food waste or transportation).
+
 - Potential ways we can make it more fun or addicting is gamification (Jeffrey seems to be open to gamification and errs on the side of not wanting the app to feel like a chore).
   - Users can earn “green points” from completing the green challenges.  The main focus would be on tips, tricks and challenges on how to improve your carbon emissions; based on tracked habits.  
   - Other features could be that users can keep a streak of filling out the questions, having a mascot like Duolinquo’s owl,.
@@ -202,14 +196,14 @@ You must have a regular meeting schedule established by the second meeting.
 * We have decided to have regular bi-weekly meetings on Sundays from 9pm to 10pm.
 
 **Meeting 2**
-What did you discuss during the meetings?
+In this meeting we discussed: 
 - We discussed narrowing the scope, specifically we discussed which features we thought were essential (Login , Questionnaire, Carbon emissions visualization (circle graph), Tips for reducing carbon emissions, Goals for reducing carbon emission (checklist), Reward system, Sharing on social media) and non-essential (Adding friends) as decided in Thursday’s tutorial.
   - Jeffrey noted that he thought it was okay that we do not include the social stuff yet since it is more complicated and will have to look at user feedback from test groups anyways.
 - We discussed screenshots of apps that Jeffrey provided us: 
   - Atomic Habits/ Blinkst:
     - Short description under the book saying what it is 
   - Book summary app:
-    - Clean + simple
+    - Clean and simple
     - Scrolling through library
     - Colourful
     - Like scrolling through Netflix
@@ -221,7 +215,7 @@ What did you discuss during the meetings?
     - Learn something small you can actually use
   - Calm:
     - Meditation app
-    - Slow fade in + out then main screen -> eases you in 
+    - Slow fade in and out then main screen -> eases you in 
     - Rotate through messages?
     - Personalized!!
     - Talk to use like its a conversation (personified, helpful, friendly :])
@@ -229,7 +223,7 @@ What did you discuss during the meetings?
     - Menu scrolling is easy 
     - Star balance -> visual (line and plot graph) -> easy t o understand
     - Helpful but not complicated images to help the user
-    - Personable, it says their name  + emoji
+    - Personable, it says their name  and emoji
   - Spotify:
      - Three buttons at the button 
      - Curates most freq uses of the app
@@ -237,7 +231,7 @@ What did you discuss during the meetings?
      - Here's what you're doing, next step , status
   - Homeworkout:
      - Motivational message
-  - Image + progress bar
+  - Image and progress bar
      - Goal oriented!! Ex. They have month-long challenges. 
 
 - Idea brought up: Market the app as a “improve your green footprint” instead of “lower your carbon emissions”
@@ -287,25 +281,18 @@ You must provide meeting minutes.
 
 #### Q9: What are the rules regarding how your team works?
 
-Describe your team's working culture.
-
 **Communications:**
-* What is the expected frequency? What methods/channels are appropriate?
-  * Weekly meetings on discord. 
-  * General updates can be reported in the discord server. 
-  * Teams should be providing a report on the work that they have done at least once a week (either at online meetings or via write-up) and whenever an important milestone is reached. Since a lot of the teams domains overlap in some key areas of the app, teams are expected to maintain communications over important features and architecture decisions.
 
-* If you have a partner project, what is your process (in detail) for communicating with your partner?
-  * We are going to hold bi-weekly meetings on Sundays from 9pm to 10pm on Zoom (alternative time: 4pm-5pm on Sundays on Zoom). We are able to plan some additional emergency meetings if necessary. On occasion, if necessary, our partner also agreed to meet us in person if we give him advance notice. For all other concerns that are not covered in the meeting, we agreed to contact him via email. 
+We will have weekly meetings on discord, and general updates can be reported in the discord server. 
+Teams should be providing a report on the work that they have done at least once a week (either at online meetings or via write-up) and whenever an important milestone is reached. Since a lot of the teams domains overlap in some key areas of the app, teams are expected to maintain communications over important features and architecture decisions.
+
+With regards to communicating with our partner project, we are going to hold bi-weekly meetings on Sundays from 9pm to 10pm on Zoom (with an alternative time at 4pm-5pm on Sundays on Zoom). We are able to plan some additional emergency meetings if necessary. On occasion, if necessary, our partner also agreed to meet us in person if we give him advance notice. For all other concerns that are not covered in the meeting, we agreed to contact him via email. 
  
 **Meetings:**
-* How are people held accountable for attending meetings, completing action items? Is there a moderator or process?
-  * Weekly Scrum meetings for keeping people accountable. Asking people what they have done + what they will do.
-  * For keeping people accountable, I think we can send reminders for deadlines, and speak directly to them about our concerns and try to work on a compromise or resolution.
+People are held accountable for completing action items through the weekly scrum meetings where everyone will report what they have done and what they are planning on doing. To keep people accountable, we will send reminders for deadlines, and speak directly to them about our concerns and try to work on a compromise or resolution.
 
  
 **Conflict Resolution:**
- * List at least three team scenarios/conflicts you discussed in lecture and how you decided you will resolve them. Indecisions? Non-responsive team members? Any other scenarios you can think of?
   * Non-responsive team members: since we are all working in small teams within our larger team, a non-responsive team member will quickly be discovered and dealt with. First, we would attempt to reach out on other channels to talk with the team member on-on-one to determine the root of the problem. We will work with that person to overcome the problem (especially if it is something like having a really busy schedule that week). We will inform that person to make sure to communicate concerns ahead of time in the future so that we can prepare to overcome them. If the problem is something more serious, such as mental health or other, we will inform the TA and route the person to the resources required.
   * Indecisions: If the team is struggling to make key design decisions efficiently, we will refer to Jeffrey Zon’s decision on the matter. If the problem is more on the technical side, we will meet all together and make the decision as a team. If we have conflicting opinions, we will take the decision to a vote with the whole team. If the vote is inconclusive, the side that will be doing the majority of the development on the topic will make the design decision. 
   * Merge conflicts: while this will happen rarely because of the way that we have structured our teams, this situation may still come up. The developer who has created the merge conflict will contact the other developer(s) that he/she is conflicting with in order to resolve the conflict, if they cannot resolve it on their own. They will also be sure to discuss why the conflict arose, and if better communication of tasks has to be established moving forward to avoid conflicts in the future.
