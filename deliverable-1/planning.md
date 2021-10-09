@@ -78,19 +78,21 @@ Acceptance Criteria:
 Given that I want to create an account, when I enter into the app from my phone, then I have the option to Sign Up by filling in information, Sign Up with Google, or Sign Up with Facebook.
 
 2. As a new user, I want to fill out a survey of my carbon footprint, in order to see visualizations of my carbon emissions
-Acceptance Criteria: Given that I want to see my carbon emissions, when I fill out the intruductory questionnaire, then I will see a chart of my carbon emissions. 
+*Acceptance Criteria:* Given that I want to see my carbon emissions, when I fill out the intruductory questionnaire, then I will see a chart of my carbon emissions. 
 
 3. As a current user, I want to be able to post my progress steps to social media, in order to share my progress with my friends.
-Acceptance Criteria: 
+*Acceptance Criteria:* 
 Given that I’ve just achieved a big milestone and want to share my progress, when I press the share button, then the app will format a post and let me modify and share it on social media.
 
-4.  As an administrator of the app, I want to use a dashboard to access the backend, in order to manage users/the app content, and data. 
-Acceptance Criteria: 
-Given that I want to access or modify some of the app’s data, when I login to a dashboard, then I should be able to visualize and modify the app’s data, such as adding new carbon emission questions, goal recommendations and accounts.
-
-5.  As a current user, I want to update my carbon emissions diary entry every day, in order to get an accurate report of my carbon emissions and update my carbon emissions visualizations.
-Acceptance Criteria: 
+4.  As a current user, I want to update my carbon emissions diary entry every day, in order to get an accurate report of my carbon emissions and update my carbon emissions visualizations.
+*Acceptance Criteria:* 
 Given that I want to update my carbon emissions diary, when I login to the app, then I should be able to quickly answer the questions tracking my current carbon reduction goals and see my carbon emission visualizations update.
+
+5. As an administrator of the app, I want to use a dashboard to access the backend, in order to manage users/the app content, and data. 
+*Acceptance Criteria:* Given that I want to access or modify some of the app’s data, when I login to a dashboard, then I should be able to visualize and modify the app’s data. Specifically, 
+    a. Given that I want to access or modify some of the app’s data, when I login to a dashboard, then I should be able to add a new or change the existing carbon emission questions that are given to users. 
+    b. Given that I want to access or modify some of the app’s data, when I login to a dashboard, then I should be able to add a new or change existing goal reccomendations that are given to users. 
+    c. Given that I want to access or modify some of the app’s data, when I login to a dashboard, then I should be able to add a new or change existing user accounts. 
 
 ----
 ## Intellectual Property Confidentiality Agreement 
@@ -147,7 +149,7 @@ In team meetings, we will discuss technical updates (what we have done/ what we 
 There may be other events such as coding sessions, code reviews and quick weekly meetings online to make sure we are on the same page. Futhermore, people who work on different teams can work together on joint initiatives (such as the questionnaire team would work with the carbon footprint visualizer team to transfer data).
 
 
-**Meetings we have had with our project partner: **
+**Meetings we have had with our project partner:**
 
 **Meeting 1**
 
