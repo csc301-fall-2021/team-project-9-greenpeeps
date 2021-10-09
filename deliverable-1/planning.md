@@ -207,9 +207,8 @@ Specific talking points include:
   - Calm:
     - Meditation app
     - Slow fade in and out then main screen eases you in 
-    - Rotate through messages?
     - Personalized!!
-    - Talk to use like its a conversation (personified, helpful, friendly :])
+    - Talk to use like its a conversation (personified, helpful, friendly)
   - Starbucks App:
     - Menu scrolling is easy 
     - Star balance is a visual (line and plot graph) which is easy to understand
