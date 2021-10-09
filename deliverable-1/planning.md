@@ -150,7 +150,7 @@ In team meetings, we will discuss technical updates (what we have done/ what we 
 There may be other events such as coding sessions, code reviews and quick weekly meetings online to make sure we are on the same page. Futhermore, people who work on different teams can work together on joint initiatives (such as the questionnaire team would work with the carbon footprint visualizer team to transfer data).
 
 
-**Meetings we have had with our project partner: **
+**Meetings we have had with our project partner:**
 
 **Meeting 1**
 
