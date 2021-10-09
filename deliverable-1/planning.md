@@ -84,16 +84,13 @@ Acceptance Criteria: Given that I want to see my carbon emissions, when I fill o
 Acceptance Criteria: 
 Given that I’ve just achieved a big milestone and want to share my progress, when I press the share button, then the app will format a post and let me modify and share it on social media.
 
-4.  As a current user, I want to update my carbon emissions diary entry every day, in order to get an accurate report of my carbon emissions and update my carbon emissions visualizations.
+4.  As an administrator of the app, I want to use a dashboard to access the backend, in order to manage users/the app content, and data. 
+Acceptance Criteria: 
+Given that I want to access or modify some of the app’s data, when I login to a dashboard, then I should be able to visualize and modify the app’s data, such as adding new carbon emission questions, goal recommendations and accounts.
+
+5.  As a current user, I want to update my carbon emissions diary entry every day, in order to get an accurate report of my carbon emissions and update my carbon emissions visualizations.
 Acceptance Criteria: 
 Given that I want to update my carbon emissions diary, when I login to the app, then I should be able to quickly answer the questions tracking my current carbon reduction goals and see my carbon emission visualizations update.
-
-5. As an administrator of the app, I want to use a dashboard to access the backend, in order to manage users/the app content, and data. 
-Acceptance Criteria: Given that I want to access or modify some of the app’s data, when I login to a dashboard, then I should be able to visualize and modify the app’s data. Specifically, 
-    a. Given that I want to access or modify some of the app’s data, when I login to a dashboard, then I should be able to add a new or change the existing carbon emission questions that are given to users. 
-    b. Given that I want to access or modify some of the app’s data, when I login to a dashboard, then I should be able to add a new or change existing goal reccomendations that are given to users. 
-    c. Given that I want to access or modify some of the app’s data, when I login to a dashboard, then I should be able to add a new or change existing user accounts. 
-
 
 ----
 ## Intellectual Property Confidentiality Agreement 
@@ -150,43 +147,26 @@ In team meetings, we will discuss technical updates (what we have done/ what we 
 There may be other events such as coding sessions, code reviews and quick weekly meetings online to make sure we are on the same page. Futhermore, people who work on different teams can work together on joint initiatives (such as the questionnaire team would work with the carbon footprint visualizer team to transfer data).
 
 
-**Meetings we have had with our project partner:**
+**Meetings we have had with our project partner: **
 
 **Meeting 1**
 
 In this meeting we discussed the app's purpose, the app's audience, the colour scheme, user stories, app features, communication methods, our partner's investment, and code licensing. 
 
-Specifically, the app mainly logs what someone’s carbon emissions are and visualizes their carbon footprint. We want to make the app appealing enough to ensure they use it consistently and so the app has longevity. With regards to the app's audience, we want to mainly target people who are conscious about their carbon footprint, who want accessible and digestible knowledge about how to be more environmentally conscious, and who want to make a plan to change their habits. For example, riding their bike to work instead of driving or boiling the exact amount of water instead of a random amount.
+Specific talking points include: 
+- The app mainly logs what someone’s carbon emissions are and visualizes their carbon footprint. We want to make the app appealing enough to ensure they use it consistently and so the app has longevity. With regards to the app's audience, we want to mainly target people who are conscious about their carbon footprint, who want accessible and digestible knowledge about how to be more environmentally conscious, and who want to make a plan to change their habits. For example, riding their bike to work instead of driving or boiling the exact amount of water instead of a random amount.
+- Our partner does not have a concrete design in mind for the app and he is very open to letting us take creative liberties in the beginning stages. However, he does gravitate towards the colour purple. The GreenPeeps website name is taken and so he said we can come up with a new name for the project.
+- The user stories should focus on examples of people who want to be carbon conscious and are unaware of how their daily activities contribute to carbon emissions. Potential ways we can make it feel more personalizable is to have the user choose subjects that they want to fill in questions about/ focus on. Overtime, we may want to add similar subjects to recommend to users.
+- Akiki suggested a variety of questions that are randomized daily so that it doesn’t get repetitive or stale to the user, but Jeffrey thinks that as we learn more about the user we may want to personalize the questions (e.g., if we gauge that they answer more questions about diet and food waste or transportation, we recommende them more of those questions).
+- Potential ways we can make it more fun or addicting is gamification. Plus, Jeffrey seems to be open to gamification and errs on the side of not wanting the app to feel like a chore. Such potential features include how users can earn “green points” from completing the green challenges, keeping a streak of filling out questions, and having a mascot similar to Duolinquo's owl. The main focus would be on tips, tricks and challenges on how to improve your carbon emissions; based on tracked habits.  
+- We mentioned we likely won’t be using any money for this stage of the project, but we would like to set up a good future for your project by using technologies within a projected budget, for when future teams improve on the MVP. Jeffrey mentioned that he is open to putting money into this project for technologies.
+- For communication, Jeffrey said he is open to coming to our in-person tutorials only with advance notice. He says he uses Whatsapp, Slack; does not prefer text if we wish to use another platform for communication but we have decided to mainly be use U of T Zoom which provides us with unlimited calling time.
+- For public availability of code, we discussed ownership of code for future entrepreneurial purposes  and if we can clarify this in future meetings (can he use this code to start a company out of it?), how open source would be okay as the code is not an integral part of the app but he would like some protection if possible.
+- Jeffrey likes Akiki's option of a cross-platform app
 
-Our partner does not have a concrete design in mind for the app and he is very open to letting us take creative liberties in the beginning stages. However, he does gravitate towards the colour purple. The GreenPeeps website name is taken and so he said we can come up with a new name for the project.
+Besides clarification on our questions about the topics listed above, the main outcome of this meeting is that we have decided to have regular bi-weekly meetings on Sundays from 9pm to 10pm.
 
-The user stories should focus on examples of people who want to be carbon conscious and are unaware of how their daily activities contribute to carbon emissions. Potential ways we can make it feel more personalizable is to have the user choose subjects that they want to fill in questions about/ focus on. Overtime, we may want to add similar subjects to recommend to users.
-
-Akiki suggested a variety of questions that are randomized daily so that it doesn’t get repetitive or stale to the user, but Jeffrey thinks that as we learn more about the user we may want to personalize the questions (i.e., If we gauge that they answer more questions about diet and food waste or transportation).
-
-- Potential ways we can make it more fun or addicting is gamification (Jeffrey seems to be open to gamification and errs on the side of not wanting the app to feel like a chore).
-  - Users can earn “green points” from completing the green challenges.  The main focus would be on tips, tricks and challenges on how to improve your carbon emissions; based on tracked habits.  
-  - Other features could be that users can keep a streak of filling out the questions, having a mascot like Duolinquo’s owl,.
-- We discussed the role of administrative users. “Doc mentions admin users that can log in and push notifications to users. Typically done with an admin account on a website, but we can add it as a temporary feature.”
-- We discussed the amount of money in mind Jeffrey is willing to invest into this project. 
-  - We mentioned we likely won’t be using any money for this stage of the project, but would like to set up a good future for your project by using technologies within a projected budget, for when you improve on the MVP.
-  - He said is open to putting money into this project for technologies.
-- We discussed communication.
-  - He is open to coming to our in-person tutorials only with advance notice.
-  - We will get back to him if we want to use something besides email. He says he uses Whatsapp, Slack; does not prefer text.
-  - We will be using U of T Zoom for unlimited time.
-- We discussed public availability of code.
-  - Open source would be okay as the code is not an integral part of the app- rather the idea and marketing
-  - Would like some protection if possible, but open to sharing code 
-  - DISCUSS ownership of code for future entrepreneurial purposes (can he use this code to start a company out of it?)
-  - He is unsure whether he wants to be profit or non-profit. Would prefer little protection on the code at the beginning, but would be open to an entirely open source code. Is fine with us using it publicly. He thinks its important to clarify who owns the code later on.
-- Said he’ll give us his market research bullet points if we like.
-- Would be nice for it to be cross-platform but he is an Android user. He is sold on Akiki’s cross-platform option.
-
-What were the outcomes of each meeting?
-- On top of the communication we have provided in the above point, we have decided to have regular bi-weekly meetings on Sundays from 9pm to 10pm.
-
-You must provide meeting minutes.
+Meeting Minutes:
 * 9 to 9:15: Small introductions from Jeffrey and all of us and discussing the structure of how this meeting will run.
 * 9:15 to 9:22: Jeffrey presents his vision of how the app will be, why he thinks it's important, who he is trying to appeal to, and how it will help.
 * 9:22 to 9:30: Scheduling regular meetings
@@ -195,14 +175,12 @@ You must provide meeting minutes.
 * 10 to 10:05: Spending
 * 10:05 to 10:20: Final questions (confirm meeting time, clarify website vision, technologies)
 
-You must have a regular meeting schedule established by the second meeting.
-* We have decided to have regular bi-weekly meetings on Sundays from 9pm to 10pm.
-
 **Meeting 2**
-In this meeting we discussed: 
-- We discussed narrowing the scope, specifically we discussed which features we thought were essential (Login , Questionnaire, Carbon emissions visualization (circle graph), Tips for reducing carbon emissions, Goals for reducing carbon emission (checklist), Reward system, Sharing on social media) and non-essential (Adding friends) as decided in Thursday’s tutorial.
-  - Jeffrey noted that he thought it was okay that we do not include the social stuff yet since it is more complicated and will have to look at user feedback from test groups anyways.
-- We discussed screenshots of apps that Jeffrey provided us: 
+In this meeting we discussed narrowing the scope. Specifically we discussed which features we thought were essential (Login , Questionnaire, Carbon emissions visualization (circle graph), Tips for reducing carbon emissions, Goals for reducing carbon emission (checklist), Reward system, Sharing on social media) and non-essential (Adding friends) as decided in Thursday’s tutorial.
+
+Specific talking points include:
+- Jeffrey noted that he thought it was okay that we do not include the social aspect of the app yet since it is more complicated and will have to look at user feedback from test groups anyways.
+- We discussed screenshots of apps that Jeffrey provided us and what he enjoys about them: 
   - Atomic Habits/ Blinkst:
     - Short description under the book saying what it is 
   - Book summary app:
@@ -255,14 +233,14 @@ In this meeting we discussed:
 - Licensing discussion wrap up from last weeks meeting
   - We would say we would inquire to our class about the licensing.  He gravitated towards “You will only share the code under an open-source license with the partner but agree to not distribute it in any way to any other entity or individual.” BUT he says it looks all good. Also fine if it is completely open source. By default, we will go with this option and plan to transfer ownership of the code to Jeffrey after course.
  
-What were the outcomes of each meeting?
+The main outcomes of the meeting include:
 - We discussed the scope, which ideas we will implement and which ideas we will leave to future developers.
 - We came to a good consensus about the overall feel of the app based off of examples that Jeffrey provided us.
 - Decided to go with the marketing strategy of “increase your green footprint” instead of “decrease your carbon footprint”.
 - Came to a rough conclusion for licensing. Code will likely be provided open source, and ownership of the code will be transferred to Jeffrey after course concludes. The seven of us just want the code to show off to potential employers via our GitHub.
 - The next meeting is currently scheduled for 4 to 5pm on Sunday, October 17th, 2021.
 
-You must provide meeting minutes.
+Meeting Minutes:
  - 4:00 to 4:08: Scope & Features
  - 4:08 to 4:20: Discussing the email Jefrrey sent us and why he likes the visuals that he does.
  - 4:20 to 4:30: Nathan talks about the marketing idea that he wrote about above.
