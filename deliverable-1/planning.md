@@ -191,20 +191,20 @@ Specific talking points include:
     - Colourful
     - Like scrolling through Netflix
     - Not too many words
-    - Iconography at the bottom -> what you need to know and expect 
+    - Iconography at the bottom shows us what you need to know and expect 
     - Small amount of info
     - LOTS of white space 
     - Learn A LOT about helping climate change -> but make it digestible: slow feeling app; tiny bytes
     - Learn something small you can actually use
   - Calm:
     - Meditation app
-    - Slow fade in and out then main screen -> eases you in 
+    - Slow fade in and out then main screen eases you in 
     - Rotate through messages?
     - Personalized!!
     - Talk to use like its a conversation (personified, helpful, friendly :])
   - Starbucks App:
     - Menu scrolling is easy 
-    - Star balance -> visual (line and plot graph) -> easy t o understand
+    - Star balance is a visual (line and plot graph) which is easy to understand
     - Helpful but not complicated images to help the user
     - Personable, it says their name  and emoji
   - Spotify:
