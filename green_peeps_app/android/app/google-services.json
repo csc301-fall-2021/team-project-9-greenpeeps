@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "372093134939",
+    "project_id": "green-peeps",
+    "storage_bucket": "green-peeps.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:372093134939:android:06c2ea2b4e978b091a777e",
+        "android_client_info": {
+          "package_name": "com.example.green_peeps_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "372093134939-53f8jhb6rcsp2kpmipllej7i8k0bmv4r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2ZbtiA3R0hcwKAFvCKlvlDLCkftusStc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "372093134939-53f8jhb6rcsp2kpmipllej7i8k0bmv4r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
