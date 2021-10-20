@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:green_peeps_app/homeScreen.dart';
-import 'package:green_peeps_app/goalsScreen.dart';
-import 'package:green_peeps_app/resourcesScreen.dart';
-import 'package:green_peeps_app/profileScreen.dart';
+import 'package:green_peeps_app/home_screen.dart';
+import 'package:green_peeps_app/goals_screen.dart';
+import 'package:green_peeps_app/resources_screen.dart';
+import 'package:green_peeps_app/profile_screen.dart';
 
-class navigation extends StatefulWidget {
-  const navigation({Key? key}) : super(key: key);
+class Navigation extends StatefulWidget {
+  const Navigation({Key? key}) : super(key: key);
 
   @override
-  _navigationState createState() => _navigationState();
+  _NavigationState createState() => _NavigationState();
 }
 
 BottomNavigationBarItem _navButton(String buttonText) {
@@ -21,15 +21,15 @@ BottomNavigationBarItem _navButton(String buttonText) {
   );
 }
 
-class _navigationState extends State<navigation> {
+class _NavigationState extends State<Navigation> {
   // This is the starting index of the navigation bar items
   // looking from left to right
   int _selectedIndex = 0;
-  List<Widget> _widgetOptions = <Widget>[
-    homeScreen(),
-    goalsScreen(),
-    resourcesScreen(),
-    profileScreen()
+  final List<Widget> _widgetOptions = <Widget>[
+    const HomeScreen(),
+    const GoalsScreen(),
+    const ResourcesScreen(),
+    const ProfileScreen()
   ];
 
   void _onItemTap(int index) {
@@ -38,24 +38,25 @@ class _navigationState extends State<navigation> {
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(157, 207, 148, 1),
+      backgroundColor: const Color.fromRGBO(157, 207, 148, 1),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         // elevation: for adding shadow
-        backgroundColor: Color.fromRGBO(201, 221, 148, 1),
+        backgroundColor: const Color.fromRGBO(201, 221, 148, 1),
         selectedItemColor: Colors.teal.shade900,
         unselectedItemColor: Colors.green.shade700,
-        selectedLabelStyle: TextStyle(
+        selectedLabelStyle: const TextStyle(
           fontSize: 10.0,
           fontWeight: FontWeight.bold,
           fontFamily: "Nunito",
         ),
-        unselectedLabelStyle: TextStyle(
+        unselectedLabelStyle: const TextStyle(
           fontSize: 10.0,
           fontWeight: FontWeight.bold,
         ),

@@ -8,7 +8,6 @@ import 'package:green_peeps_app/initial_questionnaire.dart';
 // Import the firebase_core plugin
 import 'package:firebase_core/firebase_core.dart';
 
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
@@ -54,15 +53,16 @@ class _AppState extends State<MyApp> {
     }
 
     return MaterialApp(
-        theme: ThemeData(fontFamily: "Nunito"),
-        initialRoute: '/welcome',
-        routes: {
-          '/': (context) => Loading(),
-          '/welcome': (context) => Welcome(),
-          '/nav': (context) => navigation(),
-          '/login': (context) => Login(),
-          '/new': (context) => InitialQuestionnaire(),
-        },);
+      theme: ThemeData(fontFamily: "Nunito"),
+      initialRoute: '/welcome',
+      routes: {
+        '/': (context) => Loading(),
+        '/welcome': (context) => Welcome(),
+        '/nav': (context) => Navigation(),
+        '/login': (context) => Login(),
+        '/new': (context) => InitialQuestionnaire(),
+      },
+    );
   }
 }
 
