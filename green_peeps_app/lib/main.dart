@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:green_peeps_app/navigation.dart';
+import 'package:green_peeps_app/welcome.dart';
+import 'package:green_peeps_app/loading.dart';
+import 'package:green_peeps_app/login.dart';
+import 'package:green_peeps_app/initial_questionnaire.dart';
 
 // Import the firebase_core plugin
 import 'package:firebase_core/firebase_core.dart';
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,7 +53,15 @@ class _AppState extends State<MyApp> {
       print("error in building the Firebase project");
     }
 
-    return MaterialApp(home: navigation());
+    return MaterialApp(
+        initialRoute: '/welcome',
+        routes: {
+          '/': (context) => Loading(),
+          '/welcome': (context) => Welcome(),
+          '/nav': (context) => navigation(),
+          '/login': (context) => Login(),
+          '/new': (context) => InitialQuestionnaire(),
+        },);
   }
 }
 
