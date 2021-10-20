@@ -1,19 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:pie_chart/pie_chart.dart';
+
+Map<String, double> dataMap = {
+  "Food": 5,
+  "Electricity": 3,
+  "Water": 2,
+  "Transportation": 2,
+  ":)": 2,
+  ":(": 30,
+  ":/": 10,
+  ":O": 4
+};
+
+List<Color> colorList = <Color>[
+  Colors.teal.shade200,
+  Colors.teal.shade300,
+  Colors.teal.shade400,
+  Colors.teal,
+  Colors.teal.shade600,
+  Colors.teal.shade700,
+  Colors.teal.shade800,
+  Colors.teal.shade900
+];
 
 Widget _buildPopupDialog(BuildContext context) {
-  return AlertDialog(
-    backgroundColor: const Color.fromRGBO(248, 244, 219, 1),
-    title: const Text('TBD'),
-    content: const Text("what"),
-    actions: <Widget>[
-      IconButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        icon: const Icon(Icons.close),
-      ),
-    ],
-  );
+  return Dialog(
+      backgroundColor: const Color.fromRGBO(248, 244, 219, 1),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(5.0))),
+      child: SizedBox(
+          width: MediaQuery.of(context)
+              .size
+              .width, //todo: Get width resizing to work"
+          height: 535,
+          child: Column(children: <Widget>[
+            AppBar(
+                backgroundColor: const Color.fromRGBO(248, 244, 219, 1),
+                elevation: 0,
+                toolbarHeight: 30,
+                automaticallyImplyLeading: false,
+                actions: <Widget>[
+                  IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      icon: const Icon(Icons.close),
+                      color: Colors.black)
+                ]),
+          ])));
 }
 
 class HomeScreen extends StatefulWidget {
@@ -68,9 +102,38 @@ class _HomeScreenState extends State<HomeScreen> {
             (BuildContext context, int index) {
               return Container(
                 alignment: Alignment.center,
-                height: 140,
+                height: 145,
                 child: ElevatedButton(
-                    child: const Text("hi"),
+                    child: Container(
+                        padding: const EdgeInsets.all(10.0),
+                        width: 330,
+                        height: 145,
+                        child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const <Widget>[
+                              Text("You are x points away from your next leaf!",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.black,
+                                      fontFamily: "Nunito")),
+                              Divider(color: Color.fromRGBO(248, 244, 219, 1)),
+                              Text("Answer More Questions",
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontFamily: "Nunito")),
+                              Divider(color: Color.fromRGBO(248, 244, 219, 1)),
+                              LinearProgressIndicator(
+                                backgroundColor:
+                                    Color.fromRGBO(180, 180, 180, 1),
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(Colors.green),
+                                value: 0.5,
+                                minHeight: 5,
+                              )
+                            ])),
                     onPressed: () {
                       showDialog(
                         context: context,
@@ -79,8 +142,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                     style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(0),
                         primary: const Color.fromRGBO(248, 244, 219, 1),
-                        fixedSize: const Size(330, 140),
+                        fixedSize: const Size(330, 145),
                         elevation: 5)),
               );
             },
@@ -92,13 +156,48 @@ class _HomeScreenState extends State<HomeScreen> {
             (BuildContext context, int index) {
               return Container(
                 alignment: Alignment.center,
-                height: 510,
+                height: 700,
                 child: ElevatedButton(
-                    child: const Text("hi"),
+                    child: Container(
+                        padding: const EdgeInsets.all(10.0),
+                        width: 330,
+                        height: 600,
+                        child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              const Text("My Carbon Emissions",
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontFamily: "Nunito")),
+                              PieChart(
+                                dataMap: dataMap,
+                                chartLegendSpacing: 50,
+                                chartRadius:
+                                    MediaQuery.of(context).size.width / 2,
+                                colorList: colorList,
+                                legendOptions: const LegendOptions(
+                                    legendPosition: LegendPosition.bottom,
+                                    legendTextStyle: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black)),
+                                chartValuesOptions: const ChartValuesOptions(
+                                  showChartValueBackground: false,
+                                  showChartValues: true,
+                                  showChartValuesInPercentage: true,
+                                  showChartValuesOutside: false,
+                                  decimalPlaces: 1,
+                                ),
+                              )
+                            ])),
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(0),
                         primary: const Color.fromRGBO(248, 244, 219, 1),
-                        fixedSize: const Size(330, 441),
+                        fixedSize: const Size(330, 600),
                         elevation: 5)),
               );
             },
@@ -106,6 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         SliverList(
+          // todo: box resizes with text
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
               return Container(
