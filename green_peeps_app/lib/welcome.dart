@@ -15,12 +15,14 @@ class _WelcomeState extends State<Welcome> {
     OutlinedButton.styleFrom(
         textStyle: const TextStyle(
             fontSize: 20,
-            color: Colors.white)
+            fontFamily: 'Nunito',),
+        primary: Colors.white70,
        );
 
 // ButtonStyle(
 //     backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
 //   )
+    const double horPaddingVal = 50;
 
     return Scaffold(
       body: SafeArea(
@@ -29,39 +31,53 @@ class _WelcomeState extends State<Welcome> {
                 color: Color(0xff073617),
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 50.0),
+                  padding: const EdgeInsets.symmetric(vertical: 80.0),
                   child: Center(
                       child: Text('Welcome Traveller',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 32,
-                        fontStyle: FontStyle.italic,
+                        fontFamily: 'Nunito',
                       ),
                       )
                   ),
                 ),
-                OutlinedButton(
-                  style: style,
-                  onPressed: (){
-                    Navigator.pushNamed(context, '/login');
-                  },
-                  child: const Text('I have been here before \n[login]\n'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: horPaddingVal,
+                      vertical: 5),
+                  child: OutlinedButton(
+                    style: style,
+                    onPressed: (){
+                      Navigator.pushNamed(context, '/login');
+                    },
+                    child: const Text('> I have been here before \n[login]\n'),
+                  ),
                 ),
-                OutlinedButton(
-                  style: style,
-                  onPressed: (){
-                    Navigator.pushNamed(context, '/new');
-                  },
-                  child: const Text('Where am I? \n[new user]\n'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: horPaddingVal,
+                      vertical: 5),
+                  child: OutlinedButton(
+                    style: style,
+                    onPressed: (){
+                      Navigator.pushNamed(context, '/new');
+                    },
+                    child: const Text('> Where am I? \n[new user]\n'),
+                  ),
                 ),
-                OutlinedButton(
-                  style: style,
-                  onPressed: (){
-                    Navigator.pushNamed(context, '/nav');
-                  },
-                  child: const Text('I want to explore \n[nav]\n'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: horPaddingVal,
+                    vertical: 5),
+                  child: OutlinedButton(
+                    style: style,
+                    onPressed: (){
+                      Navigator.pushNamed(context, '/nav');
+                    },
+                    child: const Text('> I want to explore \n[nav]\n'),
+                  ),
                 ),],
             ),
           )),
