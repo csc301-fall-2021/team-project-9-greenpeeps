@@ -54,6 +54,7 @@ class _AppState extends State<MyApp> {
     }
 
     return MaterialApp(
+        theme: ThemeData(fontFamily: "Nunito"),
         initialRoute: '/welcome',
         routes: {
           '/': (context) => Loading(),

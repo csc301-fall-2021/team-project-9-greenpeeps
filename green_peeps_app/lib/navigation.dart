@@ -58,7 +58,6 @@ class _navigationState extends State<navigation> {
         unselectedLabelStyle: TextStyle(
           fontSize: 10.0,
           fontWeight: FontWeight.bold,
-          fontFamily: "Nunito",
         ),
         items: <BottomNavigationBarItem>[
           _navButton('Home'),
