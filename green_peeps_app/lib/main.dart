@@ -48,7 +48,8 @@ class _AppState extends State<MyApp> {
       print("error in building the Firebase project");
     }
 
-    return MaterialApp(home: navigation());
+    return MaterialApp(
+        theme: ThemeData(fontFamily: "Nunito"), home: navigation());
   }
 }
 
