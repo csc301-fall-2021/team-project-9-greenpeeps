@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 
-// todo: text overflow/ expanding boxes
+// todo:
 
+// User's carbon emmissions breakdown from database
 Map<String, double> pieChartCategories = {
   "Food": 5,
   "Electricity": 3,
@@ -25,7 +26,87 @@ List<Color> pieChartColors = <Color>[
   Colors.teal.shade900
 ];
 
-Widget _buildPopupDialog(BuildContext context, Color boxColor) {
+Widget makeCategoryButtons(BuildContext context, String categoryName) {
+  return TextButton(
+      onPressed: () {},
+      child: Text(categoryName),
+      style: TextButton.styleFrom(
+          primary: Colors.black,
+          backgroundColor: const Color.fromRGBO(201, 221, 148, 1),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          )));
+}
+
+Widget _buildQuestionPopup(BuildContext context, double boxPadding,
+    double progressCompleted, int progressLeft, Color boxColor) {
+  return Dialog(
+      backgroundColor: boxColor,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(5.0))),
+      child: Container(
+          padding: EdgeInsets.all(boxPadding + 5),
+          width: MediaQuery.of(context).size.width,
+          height: 535,
+          child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                AppBar(
+                    backgroundColor: boxColor,
+                    elevation: 0,
+                    toolbarHeight: 30,
+                    automaticallyImplyLeading: false,
+                    actions: <Widget>[
+                      IconButton(
+                          padding: const EdgeInsets.all(0),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          icon: const Icon(Icons.close),
+                          color: Colors.black)
+                    ]),
+                Text(
+                    "You are " +
+                        progressLeft.toString() +
+                        " points away from your next leaf!",
+                    style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black)),
+                Divider(color: boxColor),
+                ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: LinearProgressIndicator(
+                      backgroundColor: const Color.fromRGBO(180, 180, 180, 1),
+                      valueColor:
+                          const AlwaysStoppedAnimation<Color>(Colors.green),
+                      value: progressCompleted,
+                      minHeight: 10,
+                    )),
+                Divider(color: boxColor),
+                const Text("Receive 1 point per Question!",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black)),
+                Divider(color: boxColor),
+                const Text("Categories",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black)),
+                SingleChildScrollView(
+                    child: Wrap(spacing: 8, children: <Widget>[
+                  for (var key in pieChartCategories.keys)
+                    makeCategoryButtons(context, key)
+                ]))
+              ])));
+}
+
+// This includes a more detailed breakdown of carbon emissions
+// You could use tabs?
+Widget _buildEmissionsPopup(BuildContext context, Color boxColor) {
   return Dialog(
       backgroundColor: boxColor,
       shape: const RoundedRectangleBorder(
@@ -33,21 +114,7 @@ Widget _buildPopupDialog(BuildContext context, Color boxColor) {
       child: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: 535,
-          child: Column(children: <Widget>[
-            AppBar(
-                backgroundColor: boxColor,
-                elevation: 0,
-                toolbarHeight: 30,
-                automaticallyImplyLeading: false,
-                actions: <Widget>[
-                  IconButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      icon: const Icon(Icons.close),
-                      color: Colors.black)
-                ]),
-          ])));
+          child: const Text("Input Work Here")));
 }
 
 Widget _buildFirstWidget(
@@ -122,19 +189,23 @@ Widget _buildSecondWidget(
                               color: Colors.black,
                               fontFamily: "Nunito")),
                       Divider(color: boxColor),
-                      LinearProgressIndicator(
-                        backgroundColor: const Color.fromRGBO(180, 180, 180, 1),
-                        valueColor:
-                            const AlwaysStoppedAnimation<Color>(Colors.green),
-                        value: progressCompleted,
-                        minHeight: 5,
-                      )
+                      ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: LinearProgressIndicator(
+                            backgroundColor:
+                                const Color.fromRGBO(180, 180, 180, 1),
+                            valueColor: const AlwaysStoppedAnimation<Color>(
+                                Colors.green),
+                            value: progressCompleted,
+                            minHeight: 5,
+                          ))
                     ])),
             onPressed: () {
               showDialog(
+                barrierDismissible: false,
                 context: context,
-                builder: (BuildContext context) =>
-                    _buildPopupDialog(context, boxColor),
+                builder: (BuildContext context) => _buildQuestionPopup(context,
+                    boxPadding, progressCompleted, progressLeft, boxColor),
               );
             },
             style: ElevatedButton.styleFrom(
@@ -186,7 +257,14 @@ Widget _buildThirdWidget(BuildContext context, double boxPadding,
                         ),
                       )
                     ])),
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (BuildContext context) =>
+                    _buildEmissionsPopup(context, boxColor),
+              );
+            },
             style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.all(0),
                 primary: boxColor,
