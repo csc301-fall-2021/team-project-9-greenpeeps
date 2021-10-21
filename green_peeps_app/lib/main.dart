@@ -4,6 +4,7 @@ import 'package:green_peeps_app/welcome.dart';
 import 'package:green_peeps_app/loading.dart';
 import 'package:green_peeps_app/login.dart';
 import 'package:green_peeps_app/initial_questionnaire.dart';
+import 'package:green_peeps_app/learn_more.dart';
 
 // Import the firebase_core plugin
 import 'package:firebase_core/firebase_core.dart';
@@ -61,6 +62,7 @@ class _AppState extends State<MyApp> {
         '/nav': (context) => Navigation(),
         '/login': (context) => Login(),
         '/new': (context) => InitialQuestionnaire(),
+        '/learn_more': (context) => LearnMore()
       },
     );
   }
