@@ -27,15 +27,15 @@ class _WelcomeState extends State<Welcome> {
     return Scaffold(
       body: SafeArea(
           child: Container(
-            decoration: new BoxDecoration(
+            decoration: const BoxDecoration(
                 color: Color(0xff073617),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
 
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 80.0),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 80.0),
                   child: Center(
                       child: Text('Welcome Traveller',
                       style: TextStyle(
