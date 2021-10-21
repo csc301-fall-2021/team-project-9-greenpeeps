@@ -14,6 +14,7 @@ class _QuestionPopup extends State<QuestionPopup> {
   // Box Variables
   final double _boxPadding = 10.0;
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
+  String dropDownValue = 'Bus';
 
   // Database Information
   double _progressCompleted = 0.5; // Must be from 0 to 1
@@ -64,6 +65,100 @@ class _QuestionPopup extends State<QuestionPopup> {
         ),
       ),
     );
+  }
+
+  Widget _buildOption(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const <Widget>[
+          Text("TBD"),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDropDown(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const Text(
+            "How'd you get to work today?",
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+          ),
+          const Divider(),
+          DropdownButton<String>(
+            value: dropDownValue,
+            icon: const Icon(Icons.arrow_downward),
+            iconSize: 24,
+            elevation: 16,
+            style: const TextStyle(color: Colors.teal),
+            underline: Container(
+              height: 2,
+              color: Colors.tealAccent,
+            ),
+            onChanged: (newValue) {
+              setState(() {
+                dropDownValue = newValue.toString();
+              });
+            },
+            items: <String>['Car', 'Bus', 'Bike', 'Walked']
+                .map<DropdownMenuItem<String>>(
+              (String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              },
+            ).toList(),
+          ),
+          const Divider(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTextField(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          const Text(
+            "How long did it take to get to work today?",
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+          ),
+          TextFormField(
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildForm(BuildContext context, String type) {
+    if (type == "Option") {
+      return _buildOption(context);
+    } else if (type == "DropDown") {
+      return _buildDropDown(context);
+    } else if (type == "TextField") {
+      return _buildTextField(context);
+    } else {
+      return const SizedBox();
+    }
   }
 
   Widget _buildQuestionPopupOne(BuildContext context, double boxPadding,
@@ -203,22 +298,9 @@ class _QuestionPopup extends State<QuestionPopup> {
               ),
             ),
             Divider(color: boxColor),
-            const Text(
-              "How'd you get to work today?",
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
+            _buildForm(context, "DropDown"),
             Divider(color: boxColor),
-            TextFormField(
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
-            ),
+            _buildForm(context, "TextField"),
             Divider(color: boxColor),
             Row(
               children: <Widget>[
@@ -251,6 +333,8 @@ class _QuestionPopup extends State<QuestionPopup> {
       _buildQuestionPopupTwo(
           context, _boxPadding, _progressCompleted, _progressLeft, _boxColor),
     ];
-    return _widgetOptions.elementAt(_selectedIndex);
+    return SingleChildScrollView(
+      child: _widgetOptions.elementAt(_selectedIndex),
+    );
   }
 }

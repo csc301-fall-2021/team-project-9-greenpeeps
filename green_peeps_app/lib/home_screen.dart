@@ -19,8 +19,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // Database Information
   final String _userFirstName = "Human";
-  double _progressCompleted = 0.5; // Must be from 0 to 1
-  int _progressLeft = 50; // Represented in amount of points
+  final double _progressCompleted = 0.5; // Must be from 0 to 1
+  final int _progressLeft = 50; // Represented in amount of points
   final String _funFact =
       "Did you know that some house centipedes are poisonous. Additionally, house centipedes can sometimes regenerate their legs if they have been cut off. Trust me, I know from experience!";
 
