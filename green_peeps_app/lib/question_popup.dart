@@ -35,8 +35,12 @@ class _QuestionPopup extends State<QuestionPopup> {
   void _setIndex(setState, String categoryName) {
     setState(
       () {
-        _selectedIndex = 1;
-        _currCategoryName = categoryName;
+        if (_selectedIndex == 0) {
+          _selectedIndex = 1;
+          _currCategoryName = categoryName;
+        } else {
+          _selectedIndex = 0;
+        }
       },
     );
   }
@@ -269,12 +273,21 @@ class _QuestionPopup extends State<QuestionPopup> {
                 IconButton(
                     padding: const EdgeInsets.all(0),
                     onPressed: () {
+                      _setIndex(setState, "");
+                    },
+                    icon: const Icon(Icons.arrow_back_rounded),
+                    color: Colors.black),
+                const Spacer(),
+                IconButton(
+                    padding: const EdgeInsets.all(0),
+                    onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    icon: const Icon(Icons.close),
+                    icon: const Icon(Icons.close_rounded),
                     color: Colors.black)
               ],
             ),
+            Divider(color: boxColor),
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: LinearProgressIndicator(
