@@ -310,26 +310,26 @@ class _HomeScreenState extends State<HomeScreen> {
           SliverSafeArea(
             sliver: SliverPadding(
               padding: const EdgeInsets.only(
-                  left: 40, right: 40, top: 15, bottom: 0),
+                  left: 30, right: 30, top: 15, bottom: 0),
               sliver: _buildFirstWidget(context, _boxPadding, _boxElevation,
                   _boxColor, _userFirstName),
             ),
           ),
           SliverPadding(
             padding:
-                const EdgeInsets.only(left: 40, right: 40, top: 25, bottom: 0),
+                const EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
             sliver: _buildSecondWidget(context, _boxPadding, _boxElevation,
                 _boxColor, _progressCompleted, _progressLeft),
           ),
           SliverPadding(
             padding:
-                const EdgeInsets.only(left: 40, right: 40, top: 25, bottom: 0),
+                const EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
             sliver: _buildThirdWidget(
                 context, _boxPadding, _boxElevation, _boxColor),
           ),
           SliverPadding(
             padding:
-                const EdgeInsets.only(left: 40, right: 40, top: 25, bottom: 25),
+                const EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 25),
             sliver: _buildFourthWidget(
                 context, _boxPadding, _boxElevation, _boxColor, _funFact),
           ),
