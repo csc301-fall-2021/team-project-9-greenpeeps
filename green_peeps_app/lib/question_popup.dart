@@ -99,14 +99,11 @@ class _QuestionPopup extends State<QuestionPopup> {
           const Divider(),
           DropdownButton<String>(
             value: dropDownValue,
-            icon: const Icon(Icons.arrow_downward),
-            iconSize: 24,
-            elevation: 16,
-            style: const TextStyle(color: Colors.teal),
-            underline: Container(
-              height: 2,
-              color: Colors.tealAccent,
-            ),
+            dropdownColor: Colors.white,
+            iconDisabledColor: Colors.grey,
+            iconEnabledColor: Colors.grey,
+            elevation: 8,
+            style: const TextStyle(color: Colors.black),
             onChanged: (newValue) {
               setState(() {
                 dropDownValue = newValue.toString();
