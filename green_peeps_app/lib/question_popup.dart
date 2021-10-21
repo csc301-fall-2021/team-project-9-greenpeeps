@@ -9,14 +9,15 @@ class QuestionPopup extends StatefulWidget {
 
 class _QuestionPopup extends State<QuestionPopup> {
   int _selectedIndex = 0;
+  String _currCategoryName = "";
 
   // Box Variables
   final double _boxPadding = 10.0;
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
 
   // Database Information
-  final double _progressCompleted = 0.5; // Must be from 0 to 1
-  final int _progressLeft = 50; // Represented in amount of points
+  double _progressCompleted = 0.5; // Must be from 0 to 1
+  int _progressLeft = 50; // Represented in amount of points
 
   // User's carbon emmissions breakdown from database
   final Map<String, double> _pieChartCategories = {
@@ -30,10 +31,20 @@ class _QuestionPopup extends State<QuestionPopup> {
     ":O": 4
   };
 
-  void _setIndex(setState) {
+  void _setIndex(setState, String categoryName) {
     setState(
       () {
         _selectedIndex = 1;
+        _currCategoryName = categoryName;
+      },
+    );
+  }
+
+  void _setProgressBar(setState, double newProgressCompleted) {
+    setState(
+      () {
+        _progressCompleted = newProgressCompleted;
+        _progressLeft = _progressLeft - 1;
       },
     );
   }
@@ -42,7 +53,7 @@ class _QuestionPopup extends State<QuestionPopup> {
   Widget _makeCategoryButton(BuildContext context, String categoryName) {
     return TextButton(
       onPressed: () {
-        _setIndex(setState);
+        _setIndex(setState, categoryName);
       },
       child: Text(categoryName),
       style: TextButton.styleFrom(
@@ -55,7 +66,7 @@ class _QuestionPopup extends State<QuestionPopup> {
     );
   }
 
-  Widget _buildQuestionPopup(BuildContext context, double boxPadding,
+  Widget _buildQuestionPopupOne(BuildContext context, double boxPadding,
       double progressCompleted, int progressLeft, Color boxColor) {
     return Dialog(
       backgroundColor: boxColor,
@@ -137,13 +148,108 @@ class _QuestionPopup extends State<QuestionPopup> {
     );
   }
 
+  Widget _buildQuestionPopupTwo(BuildContext context, double boxPadding,
+      double progressCompleted, int progressLeft, Color boxColor) {
+    return Dialog(
+      backgroundColor: boxColor,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(5.0),
+        ),
+      ),
+      child: Container(
+        padding: EdgeInsets.all(boxPadding + 5),
+        width: double.infinity,
+        height: 535,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            AppBar(
+              backgroundColor: boxColor,
+              elevation: 0,
+              toolbarHeight: 30,
+              automaticallyImplyLeading: false,
+              actions: <Widget>[
+                IconButton(
+                    padding: const EdgeInsets.all(0),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: const Icon(Icons.close),
+                    color: Colors.black)
+              ],
+            ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: LinearProgressIndicator(
+                backgroundColor: const Color.fromRGBO(180, 180, 180, 1),
+                valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
+                value: progressCompleted,
+                minHeight: 10,
+              ),
+            ),
+            Divider(color: boxColor),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: Container(
+                padding: const EdgeInsets.only(
+                    top: 5, bottom: 5, left: 15, right: 15),
+                color: const Color.fromRGBO(201, 221, 148, 1),
+                child: Text(
+                  _currCategoryName,
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
+                ),
+              ),
+            ),
+            Divider(color: boxColor),
+            const Text(
+              "How'd you get to work today?",
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            ),
+            Divider(color: boxColor),
+            TextFormField(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter some text';
+                }
+                return null;
+              },
+            ),
+            Divider(color: boxColor),
+            Row(
+              children: <Widget>[
+                const Spacer(),
+                TextButton(
+                  child: const Text('Submit'),
+                  onPressed: () {
+                    _setProgressBar(setState, 0.8);
+                  },
+                  style: TextButton.styleFrom(
+                    primary: Colors.white,
+                    backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
+                    elevation: 5,
+                    fixedSize: const Size(146, 42),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final List<Widget> _widgetOptions = <Widget>[
-      _buildQuestionPopup(
+      _buildQuestionPopupOne(
           context, _boxPadding, _progressCompleted, _progressLeft, _boxColor),
-      _buildQuestionPopup(
-          context, _boxPadding, _progressCompleted, _progressLeft, Colors.teal),
+      _buildQuestionPopupTwo(
+          context, _boxPadding, _progressCompleted, _progressLeft, _boxColor),
     ];
     return _widgetOptions.elementAt(_selectedIndex);
   }

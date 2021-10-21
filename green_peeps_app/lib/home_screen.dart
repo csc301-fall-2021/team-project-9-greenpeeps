@@ -47,15 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
     Colors.teal.shade900
   ];
 
-  void _setProgressBar(double newProgressCompleted) {
-    setState(
-      () {
-        _progressCompleted = newProgressCompleted;
-        _progressLeft = _progressLeft - 1;
-      },
-    );
-  }
-
   void _setPieChart() {
     setState(
       () {},
