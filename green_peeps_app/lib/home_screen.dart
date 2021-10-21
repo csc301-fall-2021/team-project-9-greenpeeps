@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
-import 'package:green_peeps_app/resources_screen.dart';
+import 'package:green_peeps_app/question_popup.dart';
 
 // todo:
 
@@ -48,110 +48,17 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   void _setProgressBar(double newProgressCompleted) {
-    setState(() {
-      _progressCompleted = newProgressCompleted;
-      _progressLeft = _progressLeft - 1;
-    });
-  }
-
-  void _setPieChart() {
-    setState(() {});
-  }
-
-  // Consider making its own file
-  Widget _makeCategoryButton(BuildContext context, String categoryName) {
-    return TextButton(
-      onPressed: () {},
-      child: Text(categoryName),
-      style: TextButton.styleFrom(
-        primary: Colors.black,
-        backgroundColor: const Color.fromRGBO(201, 221, 148, 1),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-      ),
+    setState(
+      () {
+        _progressCompleted = newProgressCompleted;
+        _progressLeft = _progressLeft - 1;
+      },
     );
   }
 
-  Widget _buildQuestionPopup(BuildContext context, double boxPadding,
-      double progressCompleted, int progressLeft, Color boxColor) {
-    return Dialog(
-      backgroundColor: boxColor,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(5.0),
-        ),
-      ),
-      child: Container(
-        padding: EdgeInsets.all(boxPadding + 5),
-        width: double.infinity,
-        height: 535,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            AppBar(
-              backgroundColor: boxColor,
-              elevation: 0,
-              toolbarHeight: 30,
-              automaticallyImplyLeading: false,
-              actions: <Widget>[
-                IconButton(
-                    padding: const EdgeInsets.all(0),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    icon: const Icon(Icons.close),
-                    color: Colors.black)
-              ],
-            ),
-            Text(
-              "You are " +
-                  progressLeft.toString() +
-                  " points away from your next leaf!",
-              style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
-            Divider(color: boxColor),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: LinearProgressIndicator(
-                backgroundColor: const Color.fromRGBO(180, 180, 180, 1),
-                valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
-                value: progressCompleted,
-                minHeight: 10,
-              ),
-            ),
-            Divider(color: boxColor),
-            const Text(
-              "Receive 1 point per Question!",
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
-            Divider(color: boxColor),
-            const Text(
-              "Categories",
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
-            SingleChildScrollView(
-              child: Wrap(
-                spacing: 8,
-                children: <Widget>[
-                  for (var key in _pieChartCategories.keys)
-                    _makeCategoryButton(context, key)
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+  void _setPieChart() {
+    setState(
+      () {},
     );
   }
 
@@ -259,8 +166,9 @@ class _HomeScreenState extends State<HomeScreen> {
               showDialog(
                 barrierDismissible: false,
                 context: context,
-                builder: (BuildContext context) => _buildQuestionPopup(context,
-                    boxPadding, progressCompleted, progressLeft, boxColor),
+                builder: (BuildContext context) {
+                  return const QuestionPopup();
+                },
               );
             },
             style: ElevatedButton.styleFrom(
