@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:green_peeps_app/question_popup.dart';
 
-// todo:
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -18,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
 
   // Database Information
+  // (could you make getters and setters for this when you database things)
   final String _userFirstName = "Human";
   final double _progressCompleted = 0.5; // Must be from 0 to 1
   final int _progressLeft = 50; // Represented in amount of points
@@ -47,14 +46,16 @@ class _HomeScreenState extends State<HomeScreen> {
     Colors.teal.shade900
   ];
 
+  // Updates the pie chart widget with new values when a question has been answered
+  // (pie chart could be own entity?)
   void _setPieChart() {
     setState(
       () {},
     );
   }
 
-// This includes a more detailed breakdown of carbon emissions
-// You could use tabs?
+// This popup includes a more detailed breakdown of carbon emissions
+// (you could use tabs or use a scrollable, etc. to fit more visuals)
   Widget _buildEmissionsPopup(BuildContext context, Color boxColor) {
     return Dialog(
       backgroundColor: boxColor,
@@ -63,35 +64,27 @@ class _HomeScreenState extends State<HomeScreen> {
           Radius.circular(5.0),
         ),
       ),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
+      child: const SizedBox(
+        width: double.infinity,
         height: 535,
-        child: const Text("Input Work Here"),
+        child: Text("Input Work Here"),
       ),
     );
   }
 
-  Widget _buildFirstWidget(BuildContext context, double boxPadding,
+  // First box when looking at boxes from top to bottom
+  // (consider making each box its own dart file)
+  Widget _buildFirstBox(BuildContext context, double boxPadding,
       double boxElevation, Color boxColor, String userFirstName) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
           return Material(
+            color: boxColor,
             elevation: boxElevation,
             borderRadius: BorderRadius.circular(5.0),
             child: Container(
               padding: EdgeInsets.all(boxPadding),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5.0),
-                color: boxColor,
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.grey,
-                    offset: Offset(0.0, 1.0),
-                    blurRadius: 1.0,
-                  ),
-                ],
-              ),
               child: Text(
                 "Welcome " + userFirstName + "!",
                 textAlign: TextAlign.left,
@@ -108,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildSecondWidget(
+  Widget _buildSecondBox(
       BuildContext context,
       double boxPadding,
       double boxElevation,
@@ -122,8 +115,10 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               padding: EdgeInsets.all(boxPadding),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize
+                    .min, // Use the minimum space necessary to fit all widgets
+                crossAxisAlignment:
+                    CrossAxisAlignment.start, // Everything starts fartest left
                 children: <Widget>[
                   Text(
                     "You are " +
@@ -131,7 +126,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         " points away from your next leaf!",
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
-                  Divider(color: boxColor),
+                  Divider(
+                      color: boxColor), // Adds some room between these widgets
                   const Text(
                     "Answer More Questions",
                     style: TextStyle(
@@ -141,6 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Divider(color: boxColor),
                   ClipRRect(
+                    // Used to make the bar round
                     borderRadius: BorderRadius.circular(10),
                     child: LinearProgressIndicator(
                       backgroundColor: const Color.fromRGBO(180, 180, 180, 1),
@@ -155,7 +152,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             onPressed: () {
               showDialog(
-                barrierDismissible: false,
+                barrierDismissible:
+                    false, // Users cannot click off the screen to close popup
                 context: context,
                 builder: (BuildContext context) {
                   return const QuestionPopup();
@@ -163,10 +161,11 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
             style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(0),
-                primary: boxColor,
-                fixedSize: const Size(330, 145),
-                elevation: boxElevation),
+              primary: boxColor,
+              elevation: boxElevation,
+              fixedSize: const Size(330, 145),
+              padding: const EdgeInsets.all(0),
+            ),
           );
         },
         childCount: 1,
@@ -174,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildThirdWidget(BuildContext context, double boxPadding,
+  Widget _buildThirdBox(BuildContext context, double boxPadding,
       double boxElevation, Color boxColor) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
@@ -183,8 +182,8 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               padding: EdgeInsets.all(boxPadding),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize
+                    .min, // Use the minimum space necessary to fit all widgets
                 children: <Widget>[
                   const Text(
                     "My Carbon Emissions",
@@ -197,7 +196,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   PieChart(
                     dataMap: _pieChartCategories,
                     chartLegendSpacing: 50,
-                    chartRadius: MediaQuery.of(context).size.width / 2,
+                    chartRadius: MediaQuery.of(context).size.width /
+                        2, // Half the width of the screen
                     colorList: _pieChartColors,
                     legendOptions: const LegendOptions(
                       legendPosition: LegendPosition.bottom,
@@ -219,16 +219,18 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             onPressed: () {
               showDialog(
-                barrierDismissible: false,
+                barrierDismissible:
+                    true, // User can click off the screen to close popup
                 context: context,
                 builder: (BuildContext context) =>
                     _buildEmissionsPopup(context, boxColor),
               );
             },
             style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(0),
-                primary: boxColor,
-                elevation: boxElevation),
+              primary: boxColor,
+              elevation: boxElevation,
+              padding: const EdgeInsets.all(0),
+            ),
           );
         },
         childCount: 1,
@@ -236,27 +238,17 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildFourthWidget(BuildContext context, double boxPadding,
+  Widget _buildFourthBox(BuildContext context, double boxPadding,
       double boxElevation, Color boxColor, String funFact) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
           return Material(
+            color: boxColor,
             elevation: boxElevation,
             borderRadius: BorderRadius.circular(5.0),
             child: Container(
               padding: EdgeInsets.all(boxPadding),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5.0),
-                color: boxColor,
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.grey,
-                    offset: Offset(0.0, 1.0),
-                    blurRadius: 1.0,
-                  ),
-                ],
-              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -282,10 +274,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           Navigator.pushNamed(context, '/learn_more');
                         },
                         style: TextButton.styleFrom(
-                          primary: Colors.white,
-                          backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
                           elevation: 5,
+                          primary: Colors.white,
                           fixedSize: const Size(146, 42),
+                          backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
                         ),
                       ),
                     ],
@@ -304,33 +296,33 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Center(
       // List of scrollable widgets
-      // You can customize to space between widgets
+      // You can customize to space between each widget/ box
       child: CustomScrollView(
         slivers: <Widget>[
           SliverSafeArea(
             sliver: SliverPadding(
               padding: const EdgeInsets.only(
                   left: 30, right: 30, top: 15, bottom: 0),
-              sliver: _buildFirstWidget(context, _boxPadding, _boxElevation,
+              sliver: _buildFirstBox(context, _boxPadding, _boxElevation,
                   _boxColor, _userFirstName),
             ),
           ),
           SliverPadding(
             padding:
                 const EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
-            sliver: _buildSecondWidget(context, _boxPadding, _boxElevation,
+            sliver: _buildSecondBox(context, _boxPadding, _boxElevation,
                 _boxColor, _progressCompleted, _progressLeft),
           ),
           SliverPadding(
             padding:
                 const EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
-            sliver: _buildThirdWidget(
-                context, _boxPadding, _boxElevation, _boxColor),
+            sliver:
+                _buildThirdBox(context, _boxPadding, _boxElevation, _boxColor),
           ),
           SliverPadding(
             padding:
                 const EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 25),
-            sliver: _buildFourthWidget(
+            sliver: _buildFourthBox(
                 context, _boxPadding, _boxElevation, _boxColor, _funFact),
           ),
         ],

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+// Import the different navigation bar screens
 import 'package:green_peeps_app/home_screen.dart';
 import 'package:green_peeps_app/goals_screen.dart';
 import 'package:green_peeps_app/resources_screen.dart';
@@ -11,31 +13,34 @@ class Navigation extends StatefulWidget {
   _NavigationState createState() => _NavigationState();
 }
 
-BottomNavigationBarItem _navButton(String buttonText) {
-  return BottomNavigationBarItem(
-    icon: ImageIcon(
-      AssetImage('images/' + buttonText + '.png'),
-      size: 40.0,
-    ),
-    label: buttonText,
-  );
-}
-
 class _NavigationState extends State<Navigation> {
-  // This is the starting index of the navigation bar items
-  // looking from left to right
-  int _selectedIndex = 0;
-  final List<Widget> _widgetOptions = <Widget>[
+  // Index of current navigation bar button counting from left to right
+  int _currIndex = 0;
+
+  // The different screen options for the center of the scaffold
+  final List<Widget> _screenOptions = <Widget>[
     const HomeScreen(),
     const GoalsScreen(),
     const ResourcesScreen(),
     const ProfileScreen()
   ];
 
-  void _onItemTap(int index) {
+  // Updates which screen option is currently in the center of the scaffold
+  void _onButtonTap(int index) {
     setState(() {
-      _selectedIndex = index;
+      _currIndex = index;
     });
+  }
+
+  // Customizes the appearance of bottom navigation bar buttons
+  BottomNavigationBarItem _navButton(String buttonText) {
+    return BottomNavigationBarItem(
+      label: buttonText,
+      icon: ImageIcon(
+        AssetImage('images/' + buttonText + '.png'),
+        size: 40.0,
+      ),
+    );
   }
 
   @override
@@ -43,11 +48,10 @@ class _NavigationState extends State<Navigation> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(157, 207, 148, 1),
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: _screenOptions.elementAt(_currIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        // elevation: for adding shadow
         backgroundColor: const Color.fromRGBO(201, 221, 148, 1),
         selectedItemColor: Colors.teal.shade900,
         unselectedItemColor: Colors.green.shade700,
@@ -66,8 +70,8 @@ class _NavigationState extends State<Navigation> {
           _navButton('Resources'),
           _navButton('Profile')
         ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTap,
+        currentIndex: _currIndex,
+        onTap: _onButtonTap,
       ),
     );
   }

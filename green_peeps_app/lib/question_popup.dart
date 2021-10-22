@@ -8,15 +8,18 @@ class QuestionPopup extends StatefulWidget {
 }
 
 class _QuestionPopup extends State<QuestionPopup> {
-  int _selectedIndex = 0;
+  // Current index of which popup view to look at
+  int _popupIndex = 0;
+
+  // Name of the category button that was pressed on from the first popup view
   String _currCategoryName = "";
 
   // Box Variables
   final double _boxPadding = 10.0;
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
-  String dropDownValue = 'Bus';
 
   // Database Information
+  String dropDownValue = 'Bus';
   double _progressCompleted = 0.5; // Must be from 0 to 1
   int _progressLeft = 50; // Represented in amount of points
 
@@ -32,19 +35,21 @@ class _QuestionPopup extends State<QuestionPopup> {
     ":O": 4
   };
 
+  // Changes popup view being viewed
   void _setIndex(setState, String categoryName) {
     setState(
       () {
-        if (_selectedIndex == 0) {
-          _selectedIndex = 1;
+        if (_popupIndex == 0) {
+          _popupIndex = 1;
           _currCategoryName = categoryName;
         } else {
-          _selectedIndex = 0;
+          _popupIndex = 0;
         }
       },
     );
   }
 
+  // Updates progress bar and points when a user submits
   void _setProgressBar(setState, double newProgressCompleted) {
     setState(
       () {
@@ -55,6 +60,7 @@ class _QuestionPopup extends State<QuestionPopup> {
   }
 
   // Consider making its own file
+  // (use case?)
   Widget _makeCategoryButton(BuildContext context, String categoryName) {
     return TextButton(
       onPressed: () {
@@ -71,9 +77,10 @@ class _QuestionPopup extends State<QuestionPopup> {
     );
   }
 
+  // Build a form widget for questions with yes/no answer
   Widget _buildOption(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
+      width: double.infinity, // this value is the maximum value width can be
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,6 +91,7 @@ class _QuestionPopup extends State<QuestionPopup> {
     );
   }
 
+  // Build a form widget for questions with answers selected from dropdown box
   Widget _buildDropDown(BuildContext context) {
     return SizedBox(
       width: double.infinity,
@@ -98,16 +106,18 @@ class _QuestionPopup extends State<QuestionPopup> {
           ),
           const Divider(),
           DropdownButton<String>(
+            elevation: 8,
             value: dropDownValue,
             dropdownColor: Colors.white,
             iconDisabledColor: Colors.grey,
             iconEnabledColor: Colors.grey,
-            elevation: 8,
             style: const TextStyle(color: Colors.black),
             onChanged: (newValue) {
-              setState(() {
-                dropDownValue = newValue.toString();
-              });
+              setState(
+                () {
+                  dropDownValue = newValue.toString();
+                },
+              );
             },
             items: <String>['Car', 'Bus', 'Bike', 'Walked']
                 .map<DropdownMenuItem<String>>(
@@ -125,6 +135,8 @@ class _QuestionPopup extends State<QuestionPopup> {
     );
   }
 
+  // Build a form widget for questions that require the user to input text
+  // (will possibly need different validators for number answers and string answers)
   Widget _buildTextField(BuildContext context) {
     return SizedBox(
       width: double.infinity,
@@ -150,6 +162,8 @@ class _QuestionPopup extends State<QuestionPopup> {
     );
   }
 
+  // Builds a widget appropriate to type of question
+  // (ideally this will be used in a for loop for link list of category questions)
   Widget _buildForm(BuildContext context, String type) {
     if (type == "Option") {
       return _buildOption(context);
@@ -162,6 +176,7 @@ class _QuestionPopup extends State<QuestionPopup> {
     }
   }
 
+  // The first view of the popups
   Widget _buildQuestionPopupOne(BuildContext context, double boxPadding,
       double progressCompleted, int progressLeft, Color boxColor) {
     return Dialog(
@@ -180,15 +195,15 @@ class _QuestionPopup extends State<QuestionPopup> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             AppBar(
-              backgroundColor: boxColor,
               elevation: 0,
               toolbarHeight: 30,
-              automaticallyImplyLeading: false,
+              backgroundColor: boxColor,
+              automaticallyImplyLeading: false, // No back arrow
               actions: <Widget>[
                 IconButton(
                     padding: const EdgeInsets.all(0),
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).pop(); // Closes popup
                     },
                     icon: const Icon(Icons.close),
                     color: Colors.black)
@@ -229,7 +244,9 @@ class _QuestionPopup extends State<QuestionPopup> {
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
             ),
+            // If the number of categories exceed the box, it becomes scrollable
             SingleChildScrollView(
+              // If the number of categories per row overflow, it will start at a new row
               child: Wrap(
                 spacing: 8,
                 children: <Widget>[
@@ -244,6 +261,7 @@ class _QuestionPopup extends State<QuestionPopup> {
     );
   }
 
+  // The second view of the popups
   Widget _buildQuestionPopupTwo(BuildContext context, double boxPadding,
       double progressCompleted, int progressLeft, Color boxColor) {
     return Dialog(
@@ -262,15 +280,15 @@ class _QuestionPopup extends State<QuestionPopup> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             AppBar(
-              backgroundColor: boxColor,
               elevation: 0,
               toolbarHeight: 30,
+              backgroundColor: boxColor,
               automaticallyImplyLeading: false,
               actions: <Widget>[
                 IconButton(
                     padding: const EdgeInsets.all(0),
                     onPressed: () {
-                      _setIndex(setState, "");
+                      _setIndex(setState, ""); // Go back
                     },
                     icon: const Icon(Icons.arrow_back_rounded),
                     color: Colors.black),
@@ -337,14 +355,14 @@ class _QuestionPopup extends State<QuestionPopup> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _widgetOptions = <Widget>[
+    final List<Widget> _popupViews = <Widget>[
       _buildQuestionPopupOne(
           context, _boxPadding, _progressCompleted, _progressLeft, _boxColor),
       _buildQuestionPopupTwo(
           context, _boxPadding, _progressCompleted, _progressLeft, _boxColor),
     ];
     return SingleChildScrollView(
-      child: _widgetOptions.elementAt(_selectedIndex),
+      child: _popupViews.elementAt(_popupIndex),
     );
   }
 }
