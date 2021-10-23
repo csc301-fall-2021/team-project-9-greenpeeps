@@ -30,8 +30,8 @@ class PieDiagram extends StatelessWidget {
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           var userData = snapshot.data;
-          Map<String, double> carbonEmissions = Map<String, double>.from(userData!["carbonEmissions"]);
-
+          Map<String, double> carbonEmissions =
+              Map<String, double>.from(userData!["carbonEmissions"]);
 
           return PieChart(
             dataMap: carbonEmissions,
@@ -85,30 +85,18 @@ class _HomeScreenState extends State<HomeScreen> {
       "Did you know that some house centipedes are poisonous. Additionally, house centipedes can sometimes regenerate their legs if they have been cut off. Trust me, I know from experience!";
 
   // User's carbon emmissions breakdown from database
-  final Map<String, double> _pieChartCategories = {
-    "Food": 5,
-    "Electricity": 3,
-    "Water": 2,
-    "Transportation": 2,
+  Map<String, double> pieChartCategories = {
+    "transportation": 0.0,
+    "food": 0.0,
+    "electricity": 0.0
   };
-
-  final List<Color> _pieChartColors = <Color>[
-    Colors.teal.shade200,
-    Colors.teal.shade300,
-    Colors.teal.shade400,
-    Colors.teal,
-    Colors.teal.shade600,
-    Colors.teal.shade700,
-    Colors.teal.shade800,
-    Colors.teal.shade900
-  ];
 
   // Updates the pie chart widget with new values when a question has been answered
   // (pie chart could be own entity?)
-  void _setPieChart() {
-    setState(
-      () {},
-    );
+  void_setPieChart() {
+    setState(() {
+      
+    });
   }
 
 // This popup includes a more detailed breakdown of carbon emissions
@@ -118,7 +106,15 @@ class _HomeScreenState extends State<HomeScreen> {
       var value = 0.0;
       dynamic key;
 
-      _pieChartCategories.forEach((k, v) {
+      var docRef = FirebaseFirestore.instance
+          .collection('users')
+          .doc('nFSUjg7UBookPXllvk0d');
+      docRef.get().then((doc) => {
+            pieChartCategories =
+                Map<String, double>.from(doc.data()!['carbonEmissions'])
+          });
+
+      pieChartCategories.forEach((k, v) {
         if (v > value) {
           value = v;
           key = k;
