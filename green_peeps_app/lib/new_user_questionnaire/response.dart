@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 class Response{
-  String userID, qID, answer;
+  String userID, qID;
   TimeOfDay timeStamp;
   double value;
 
-  Response({required this.userID, required this.qID, required this.answer,
-    required this.timeStamp, required this.value});
+  Response({required this.userID, required this.qID,
+    required this.timeStamp,  //required this.answer,
+    required this.value});
 
 }

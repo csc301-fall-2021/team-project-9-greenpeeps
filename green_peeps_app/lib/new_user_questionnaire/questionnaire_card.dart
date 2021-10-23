@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-
+import 'package:green_peeps_app/new_user_questionnaire/question.dart';
 
 class QuestionnaireCard extends StatefulWidget {
-  const QuestionnaireCard({Key? key}) : super(key: key);
+  final Question question;
+
+  const QuestionnaireCard({Key? key, required this.question}) : super(key: key);
 
   @override
   _QuestionnaireCardState createState() => _QuestionnaireCardState();
