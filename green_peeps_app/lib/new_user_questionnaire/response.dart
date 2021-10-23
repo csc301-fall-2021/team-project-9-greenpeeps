@@ -6,6 +6,6 @@ class Response{
   String answer;
 
   Response({required this.userID, required this.qID,
-    required this.timeStamp,  required this.answer});
+    required this.answer, required this.timeStamp});
 
 }

@@ -13,15 +13,12 @@ class Question{
   // 1: BaseValue
   // 2: Modifier
   List<String> tags;
-  Map<String, Tuple2<double, List<String>>> answers;
-  List<double> values;
-  // values is the numerical value of each answer in answers
-  // all answers must be unique
+  Map<String, Tuple2<String, List<String>>> answers;
+  // {answer: value, followup qID}
 
 
   Question({required this.id, required this.text, required this.fieldType,
-    required this.type, required this.answers, required this.values,
-    required this.tags});
+    required this.type, required this.answers, required this.tags});
 
   String getId() => id;
 
@@ -39,8 +36,6 @@ class Question{
 
 
   List<String> getTags() => tags;
-
-
 
 }
 
