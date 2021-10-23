@@ -20,7 +20,7 @@ class UserResponses{
   void addAnswer(Response response){
     if (responses[response.qID] == null){
       responses[response.qID] = [Tuple2(response.value, response.timeStamp)];
-      // maybe we should just put in responses as the value instead of the tuple..
+      // maybe we should just put in responses as the value instead of the tuple...
     } else {
       responses[response.qID]?.add(Tuple2(response.value, response.timeStamp));
 
