@@ -1,13 +1,25 @@
+import 'package:tuple/tuple.dart';
 
 class Question{
 
-  String id, text, type;
-  List<String> answers, tags;
+  String id, text;
+  int fieldType, type;
+  // fieldType can be {'MC', 'Num', 'Drop'} for multiple choice or numeric
+  // 0: Numerical
+  // 1: Multiple choice
+  // 2: Dropdown
+  // type can be {'Branching', 'Modifier', 'BaseValue' }
+  // 0: Branching
+  // 1: BaseValue
+  // 2: Modifier
+  List<String> tags;
+  Map<String, Tuple2<double, List<String>>> answers;
   List<double> values;
   // values is the numerical value of each answer in answers
   // all answers must be unique
 
-  Question({required this.id, required this.text,
+
+  Question({required this.id, required this.text, required this.fieldType,
     required this.type, required this.answers, required this.values,
     required this.tags});
 
@@ -15,16 +27,20 @@ class Question{
 
   String getText() => text;
 
-  String getType() => type;
+  int getFieldType() => fieldType;
 
-  List<String> getAnswers() => answers;
+  int getType() => type;
+
+  Set<String> getAnswers(){
+    var answersList = <String>{};
+    answers.forEach((k, v) => answersList.add(k));
+    return answersList;
+  }
+
 
   List<String> getTags() => tags;
 
-  double getAnswerValue(String answer){
-    int index = answers.indexOf(answer);
-    return values[index];
-  }
+
 
 }
 

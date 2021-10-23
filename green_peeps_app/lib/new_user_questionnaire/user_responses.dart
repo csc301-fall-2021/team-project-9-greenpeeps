@@ -4,8 +4,9 @@ import 'package:green_peeps_app/new_user_questionnaire/response.dart';
 
 class UserResponses{
   String id;
-  Map<String, List<Tuple2<double, TimeOfDay>>> responses = {};
-  // {questionID: [(value, timeStamp)]}
+  Map<String, List<Tuple2<String, TimeOfDay>>> responses = {};
+  // {questionID: [(answer, timeStamp)]}
+  // numerical answers are converted to Strings!!!
 
   UserResponses({required this.id});
 
@@ -19,10 +20,10 @@ class UserResponses{
 
   void addAnswer(Response response){
     if (responses[response.qID] == null){
-      responses[response.qID] = [Tuple2(response.value, response.timeStamp)];
+      responses[response.qID] = [Tuple2(response.answer, response.timeStamp)];
       // maybe we should just put in responses as the value instead of the tuple...
     } else {
-      responses[response.qID]?.add(Tuple2(response.value, response.timeStamp));
+      responses[response.qID]?.add(Tuple2(response.answer, response.timeStamp));
 
     }
   }
