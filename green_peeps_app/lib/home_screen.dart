@@ -57,6 +57,19 @@ class _HomeScreenState extends State<HomeScreen> {
 // This popup includes a more detailed breakdown of carbon emissions
 // (you could use tabs or use a scrollable, etc. to fit more visuals)
   Widget _buildEmissionsPopup(BuildContext context, Color boxColor) {
+    String getMaxEmission() {
+      var value = 0.0;
+      dynamic key;
+
+      _pieChartCategories.forEach((k, v) {
+        if (v > value) {
+          value = v;
+          key = k;
+        }
+      });
+      return key;
+    }
+
     return Dialog(
       backgroundColor: boxColor,
       shape: const RoundedRectangleBorder(
@@ -64,10 +77,53 @@ class _HomeScreenState extends State<HomeScreen> {
           Radius.circular(5.0),
         ),
       ),
-      child: const SizedBox(
+      child: SizedBox(
         width: double.infinity,
         height: 535,
-        child: Text("Input Work Here"),
+        child: Column(
+          children: <Widget>[
+            const Padding(padding: EdgeInsets.all(8)),
+            PieChart(
+              dataMap: _pieChartCategories,
+              chartLegendSpacing: 25,
+              chartRadius: MediaQuery.of(context).size.width /
+                  2, // Half the width of the screen
+              colorList: _pieChartColors,
+              legendOptions: const LegendOptions(
+                showLegendsInRow: true,
+                legendPosition: LegendPosition.bottom,
+                legendTextStyle: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
+              ),
+              chartValuesOptions: const ChartValuesOptions(
+                showChartValueBackground: false,
+                showChartValues: true,
+                showChartValuesInPercentage: true,
+                showChartValuesOutside: false,
+                decimalPlaces: 1,
+              ),
+            ),
+            const Padding(padding: EdgeInsets.all(8)),
+            const Text(
+                "The category where most of your consumptions come from is: ",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+            const Padding(padding: EdgeInsets.all(2)),
+            Text(getMaxEmission(),
+                textAlign: TextAlign.center,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
+            const Padding(padding: EdgeInsets.all(8)),
+            const Text("Some ways to reduce carbon emissions: ",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                )),
+          ],
+        ),
       ),
     );
   }
