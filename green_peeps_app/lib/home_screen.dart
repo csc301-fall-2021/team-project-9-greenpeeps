@@ -2,6 +2,67 @@ import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:green_peeps_app/question_popup.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class PieDiagram extends StatelessWidget {
+  PieDiagram({Key? key}) : super(key: key);
+
+  final List<Color> _pieChartColors = <Color>[
+    Colors.teal.shade200,
+    Colors.teal.shade300,
+    Colors.teal.shade400,
+    Colors.teal,
+    Colors.teal.shade600,
+    Colors.teal.shade700,
+    Colors.teal.shade800,
+    Colors.teal.shade900
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    Stream<DocumentSnapshot> users = FirebaseFirestore.instance
+        .collection('users')
+        .doc('nFSUjg7UBookPXllvk0d')
+        .snapshots();
+
+    return StreamBuilder<DocumentSnapshot>(
+      stream: users,
+      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          var userData = snapshot.data;
+          Map<String, double> carbonEmissions = Map<String, double>.from(userData!["carbonEmissions"]);
+
+
+          return PieChart(
+            dataMap: carbonEmissions,
+            chartLegendSpacing: 25,
+            chartRadius: MediaQuery.of(context).size.width /
+                2, // Half the width of the screen
+            colorList: _pieChartColors,
+            legendOptions: const LegendOptions(
+              showLegendsInRow: true,
+              legendPosition: LegendPosition.bottom,
+              legendTextStyle: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            ),
+            chartValuesOptions: const ChartValuesOptions(
+              showChartValueBackground: false,
+              showChartValues: true,
+              showChartValuesInPercentage: true,
+              showChartValuesOutside: false,
+              decimalPlaces: 1,
+            ),
+          );
+        } else {
+          return Container();
+        }
+      },
+    );
+  }
+}
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -29,10 +90,6 @@ class _HomeScreenState extends State<HomeScreen> {
     "Electricity": 3,
     "Water": 2,
     "Transportation": 2,
-    ":)": 2,
-    ":(": 30,
-    ":/": 10,
-    ":O": 4
   };
 
   final List<Color> _pieChartColors = <Color>[
@@ -83,28 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: <Widget>[
             const Padding(padding: EdgeInsets.all(8)),
-            PieChart(
-              dataMap: _pieChartCategories,
-              chartLegendSpacing: 25,
-              chartRadius: MediaQuery.of(context).size.width /
-                  2, // Half the width of the screen
-              colorList: _pieChartColors,
-              legendOptions: const LegendOptions(
-                showLegendsInRow: true,
-                legendPosition: LegendPosition.bottom,
-                legendTextStyle: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
-              chartValuesOptions: const ChartValuesOptions(
-                showChartValueBackground: false,
-                showChartValues: true,
-                showChartValuesInPercentage: true,
-                showChartValuesOutside: false,
-                decimalPlaces: 1,
-              ),
-            ),
+            PieDiagram(),
             const Padding(padding: EdgeInsets.all(8)),
             const Text(
                 "The category where most of your consumptions come from is: ",
@@ -249,27 +285,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
                   ),
-                  PieChart(
-                    dataMap: _pieChartCategories,
-                    chartLegendSpacing: 50,
-                    chartRadius: MediaQuery.of(context).size.width /
-                        2, // Half the width of the screen
-                    colorList: _pieChartColors,
-                    legendOptions: const LegendOptions(
-                      legendPosition: LegendPosition.bottom,
-                      legendTextStyle: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
-                    ),
-                    chartValuesOptions: const ChartValuesOptions(
-                      showChartValueBackground: false,
-                      showChartValues: true,
-                      showChartValuesInPercentage: true,
-                      showChartValuesOutside: false,
-                      decimalPlaces: 1,
-                    ),
-                  ),
+                  PieDiagram(),
                 ],
               ),
             ),
