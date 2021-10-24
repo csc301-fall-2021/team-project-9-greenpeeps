@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 // Import the different navigation bar screens
-import 'package:green_peeps_app/home_screen.dart';
-import 'package:green_peeps_app/goals_screen.dart';
-import 'package:green_peeps_app/resources_screen.dart';
-import 'package:green_peeps_app/profile_screen.dart';
+import 'package:green_peeps_app/homescreen/home_screen.dart';
+import 'package:green_peeps_app/goals/goals_screen.dart';
+import 'package:green_peeps_app/resources/resources_screen.dart';
+import 'package:green_peeps_app/profile/profile_screen.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({Key? key}) : super(key: key);

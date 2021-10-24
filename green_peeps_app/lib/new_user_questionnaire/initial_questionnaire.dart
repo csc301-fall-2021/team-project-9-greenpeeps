@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
-import 'new_user_questionnaire/question.dart';
-import 'new_user_questionnaire/response.dart';
-import 'new_user_questionnaire/user_responses.dart';
-import 'new_user_questionnaire/questionnaire_card.dart';
+import '../questionnaire/question.dart';
+import '../questionnaire/response.dart';
+import '../questionnaire/user_responses.dart';
+import 'questionnaire_card.dart';
 
 
 class InitialQuestionnaire extends StatefulWidget {
