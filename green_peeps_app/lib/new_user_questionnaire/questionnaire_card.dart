@@ -40,10 +40,7 @@ class _QuestionnaireCardState extends State<QuestionnaireCard> {
                 Container(
                     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
                     child: BuildQuestionForm(question: widget.question,
-                      onChanged: (value){
-                          widget.response.setAnswer(value, DateTime.now());
-                          print(widget.response.answer);
-                      },
+                      answer: widget.response.answer,
                     )
                 ),
           ]

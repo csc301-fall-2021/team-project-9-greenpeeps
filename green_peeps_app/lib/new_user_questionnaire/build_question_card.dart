@@ -7,10 +7,10 @@ import 'package:green_peeps_app/new_user_questionnaire/question.dart';
 
 class BuildQuestionForm extends StatefulWidget {
   Question question;
-  final ValueChanged<String> onChanged;
+  String answer;
 
   BuildQuestionForm({Key? key, required this.question,
-    required this.onChanged}) : super(key: key);
+    required this.answer}) : super(key: key);
 
 
 
@@ -72,7 +72,9 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
             onChanged: (newValue) {
               setState(() {
                   dropDownValue = newValue.toString();
+                  widget.answer = dropDownValue;
                 },
+
               );
             },
             items: widget.question.getAnswers()
@@ -113,7 +115,13 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
               if (value == null || value.isEmpty) {
                 return 'Please enter some text';
               }
+              widget.answer = value;
               return null;
+            },
+            onChanged: (value) {
+              setState(() {
+                widget.answer = value;
+              },);
             },
             decoration: InputDecoration(
               hintText: 'Please enter a number',
