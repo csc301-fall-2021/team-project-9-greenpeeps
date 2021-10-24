@@ -51,15 +51,12 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
 
   void _saveResponses(){
     DateTime now = DateTime.now();
-    print("Time to save!");
     for (var response in responses) {
-      print('${response.qID}: ${[response.answer, response.timeStamp]}');
       if(response.answer != ""){
         response.timeStamp = now;
         // TODO: save response in database
         //  but for now we will save it in userResponses
           userResponses.addAnswer(response);
-          print('saved ${response.qID}: ${[response.answer, response.timeStamp]}');
       }
     };
   }

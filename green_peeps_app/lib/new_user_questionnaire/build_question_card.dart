@@ -75,7 +75,6 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
               setState(() {
                   dropDownValue = newValue.toString();
                   widget.response.answer = dropDownValue;
-                  print(widget.response.answer);
                 },
 
               );

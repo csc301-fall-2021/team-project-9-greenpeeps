@@ -21,7 +21,6 @@ class _QuestionnaireCardState extends State<QuestionnaireCard> {
 
 
   Widget build(BuildContext context) {
-    debugPrint('questionnaire card ${widget.response.answer}');
     return Card(
         color: const Color.fromRGBO(248, 244, 219, 1),
         margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
