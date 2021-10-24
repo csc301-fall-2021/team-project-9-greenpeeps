@@ -21,6 +21,7 @@ class BuildQuestionForm extends StatefulWidget {
 class _BuildQuestionFormState extends State<BuildQuestionForm> {
   @override
   // static String dropDownValue = widget.question.getAnswers()[0];
+  // TODO make radio button question type
 
   Widget _makeMCButton(BuildContext context, String categoryName) {
     return TextButton(
@@ -54,7 +55,7 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
 
   // Build a form widget for questions with answers selected from dropdown box
 
-  Widget _buildDropDown(BuildContext context) {
+  Widget _buildDropDown(BuildContext context, setState) {
     // String dropDownValue = widget.question.getAnswers()[0];
     return SizedBox(
       width: double.infinity,
@@ -145,9 +146,9 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
     if (widget.question.fieldType == 0) { // Numerical
       return _buildNumberTextField(context);
     } else if (widget.question.fieldType == 1) { // Multiple choice [ACTUALLY REPLACE W DROPDOWN]
-      return _buildDropDown(context);
+      return _buildDropDown(context, setState);
     } else if (widget.question.fieldType == 2) { // Dropdown
-      return _buildDropDown(context);
+      return _buildDropDown(context, setState);
     } else {
       return const SizedBox();
     }

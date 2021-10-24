@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:green_peeps_app/new_user_questionnaire/response.dart';
 
 class UserResponses{
-  String id;
+  String userID;
   Map<String, List<Tuple2<String, DateTime>>> responses = {};
   // {questionID: [(answer, timeStamp)]}
   // numerical answers are converted to Strings!!!
 
-  UserResponses({required this.id});
+  UserResponses({required this.userID});
 
 
   // TODO add get average and potential average to the responses map

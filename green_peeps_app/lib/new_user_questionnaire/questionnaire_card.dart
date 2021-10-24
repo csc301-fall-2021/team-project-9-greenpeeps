@@ -41,7 +41,7 @@ class _QuestionnaireCardState extends State<QuestionnaireCard> {
                     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
                     child: BuildQuestionForm(question: widget.question,
                       answer: widget.response.answer,
-                    )
+                    ),
                 ),
           ]
         ),
