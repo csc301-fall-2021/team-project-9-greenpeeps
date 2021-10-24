@@ -25,6 +25,7 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
   static Tuple2<double, List<String>> q2AnswerBad = Tuple2(10, ["q3"]);
   static Tuple2<double, List<String>> q3AnswerDefault = Tuple2(10, []);
 
+
   List<Question> questions = [
     Question(id: "q1", text: "Do you own a car?", fieldType: 1, type: 0,
     tags: ["Travel"], answers: {"Yes": q1AnswerYes, "No": q1AnswerNo}),
@@ -87,12 +88,10 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
             child: Column(
                 children: <Widget>[
                   for(int i = 0 ; i < questions.length ; i++)
-                      QuestionnaireCard(question: questions[i],
-                       response: responses[i])
+                    // if(questions[i].fieldType == 2 && responses[i].answer != "A bad car")
+                    QuestionnaireCard(question: questions[i],
+                        response: responses[i])
                   ]
-                // questions.map((question) =>
-                //     QuestionnaireCard(question: question,
-                //     response: responses[])).toList(),
               )
         ),
       ),

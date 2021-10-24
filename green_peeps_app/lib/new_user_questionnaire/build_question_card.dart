@@ -99,7 +99,7 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
   // (will possibly need different validators for number answers and string answers)
   Widget _buildNumberTextField(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
+      width: double.infinity, // make 200 but then the box isnt on the left
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,6 +113,7 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
           TextFormField(
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter some text';
@@ -126,9 +127,16 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
               },);
             },
             decoration: const InputDecoration(
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.green, width: 2.0),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey, width: 2.0),
+              ),
               hintText: 'Please enter a number',
             ),
           ),
+          SizedBox(height: 10,)
         ],
       ),
     );

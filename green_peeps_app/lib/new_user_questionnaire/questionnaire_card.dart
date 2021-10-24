@@ -26,6 +26,7 @@ class _QuestionnaireCardState extends State<QuestionnaireCard> {
         margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         child: Column(
               children: <Widget>[
+               SizedBox(height: 15),
                Container(
                  width: double.infinity,
                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
