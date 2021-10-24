@@ -6,6 +6,7 @@ import 'package:green_peeps_app/welcome.dart';
 import 'package:green_peeps_app/loading.dart';
 import 'package:green_peeps_app/login.dart';
 import 'package:green_peeps_app/initial_questionnaire.dart';
+import 'package:green_peeps_app/new_account.dart';
 import 'package:green_peeps_app/learn_more.dart';
 
 // Import the firebase_core plugin
