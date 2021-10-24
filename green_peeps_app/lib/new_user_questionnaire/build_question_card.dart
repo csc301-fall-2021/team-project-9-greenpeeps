@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:green_peeps_app/new_user_questionnaire/question.dart';
+import 'package:green_peeps_app/new_user_questionnaire/response.dart';
 
 // build form credit skeleton: Grace
 
 
 class BuildQuestionForm extends StatefulWidget {
   Question question;
-  String answer;
+  Response response;
 
   BuildQuestionForm({Key? key, required this.question,
-    required this.answer}) : super(key: key);
+    required this.response}) : super(key: key);
 
 
 
@@ -55,7 +56,7 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
 
   // Build a form widget for questions with answers selected from dropdown box
 
-  Widget _buildDropDown(BuildContext context, setState) {
+  Widget _buildDropDown(BuildContext context) {
     // String dropDownValue = widget.question.getAnswers()[0];
     return SizedBox(
       width: double.infinity,
@@ -73,7 +74,8 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
             onChanged: (newValue) {
               setState(() {
                   dropDownValue = newValue.toString();
-                  widget.answer = dropDownValue;
+                  widget.response.answer = dropDownValue;
+                  print(widget.response.answer);
                 },
 
               );
@@ -116,15 +118,15 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
               if (value == null || value.isEmpty) {
                 return 'Please enter some text';
               }
-              widget.answer = value;
+              // widget.response.answer = value;
               return null;
             },
             onChanged: (value) {
               setState(() {
-                widget.answer = value;
+                widget.response.answer = value;
               },);
             },
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Please enter a number',
             ),
           ),
@@ -146,9 +148,9 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
     if (widget.question.fieldType == 0) { // Numerical
       return _buildNumberTextField(context);
     } else if (widget.question.fieldType == 1) { // Multiple choice [ACTUALLY REPLACE W DROPDOWN]
-      return _buildDropDown(context, setState);
+      return _buildDropDown(context);
     } else if (widget.question.fieldType == 2) { // Dropdown
-      return _buildDropDown(context, setState);
+      return _buildDropDown(context);
     } else {
       return const SizedBox();
     }
