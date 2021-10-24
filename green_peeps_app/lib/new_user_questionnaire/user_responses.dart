@@ -4,7 +4,7 @@ import 'package:green_peeps_app/new_user_questionnaire/response.dart';
 
 class UserResponses{
   String id;
-  Map<String, List<Tuple2<String, TimeOfDay>>> responses = {};
+  Map<String, List<Tuple2<String, DateTime>>> responses = {};
   // {questionID: [(answer, timeStamp)]}
   // numerical answers are converted to Strings!!!
 
