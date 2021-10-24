@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
-import 'package:green_peeps_app/question_popup.dart';
+import 'package:green_peeps_app/homescreen/question_popup.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
