@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:green_peeps_app/questionnaire/question.dart';
+import 'package:green_peeps_app/models/question.dart';
 import 'package:green_peeps_app/questionnaire/response.dart';
 
 // build form credit skeleton: Grace
-
 
 class BuildQuestionForm extends StatefulWidget {
   Question question;
   Response response;
 
-  BuildQuestionForm({Key? key, required this.question,
-    required this.response}) : super(key: key);
-
-
+  BuildQuestionForm({Key? key, required this.question, required this.response})
+      : super(key: key);
 
   @override
   _BuildQuestionFormState createState() => _BuildQuestionFormState();
@@ -72,16 +69,16 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
             iconEnabledColor: Colors.grey,
             style: const TextStyle(color: Colors.black),
             onChanged: (newValue) {
-              setState(() {
+              setState(
+                () {
                   dropDownValue = newValue.toString();
                   widget.response.answer = dropDownValue;
                 },
-
               );
             },
-            items: widget.question.getAnswers()
-                .map<DropdownMenuItem<String>>(
-                  (String value) {
+            items:
+                widget.question.getAnswerText().map<DropdownMenuItem<String>>(
+              (String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -113,7 +110,6 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
           TextFormField(
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter some text';
@@ -122,9 +118,11 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
               return null;
             },
             onChanged: (value) {
-              setState(() {
-                widget.response.answer = value;
-              },);
+              setState(
+                () {
+                  widget.response.answer = value;
+                },
+              );
             },
             decoration: const InputDecoration(
               focusedBorder: OutlineInputBorder(
@@ -136,32 +134,34 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
               hintText: 'Please enter a number',
             ),
           ),
-          SizedBox(height: 10,)
+          SizedBox(
+            height: 10,
+          )
         ],
       ),
     );
   }
 
   String dropDownValue = "";
-  void _setDefaultDropDownValue(){
-    if (dropDownValue == ""){
-      dropDownValue = widget.question.getAnswers()[0];
+  void _setDefaultDropDownValue() {
+    if (dropDownValue == "") {
+      dropDownValue = widget.question.getAnswerText()[0];
     }
   }
 
-
   Widget build(BuildContext context) {
     _setDefaultDropDownValue();
-    if (widget.question.fieldType == 0) { // Numerical
+    if (widget.question.fieldType == 0) {
+      // Numerical
       return _buildNumberTextField(context);
-    } else if (widget.question.fieldType == 1) { // Multiple choice [ACTUALLY REPLACE W DROPDOWN]
+    } else if (widget.question.fieldType == 1) {
+      // Multiple choice [ACTUALLY REPLACE W DROPDOWN]
       return _buildDropDown(context);
-    } else if (widget.question.fieldType == 2) { // Dropdown
+    } else if (widget.question.fieldType == 2) {
+      // Dropdown
       return _buildDropDown(context);
     } else {
       return const SizedBox();
     }
   }
 }
-
-
