@@ -64,7 +64,7 @@ class _AppState extends State<MyApp> {
         '/welcome': (context) => Welcome(),
         '/nav': (context) => Navigation(),
         '/login': (context) => Login(),
-        '/new': (context) => InitialQuestionnaire(),
+        '/new': (context) => NewAccount(),
         '/learn_more': (context) => LearnMore()
       },
     );
