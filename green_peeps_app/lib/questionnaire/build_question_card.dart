@@ -5,7 +5,6 @@ import 'package:green_peeps_app/questionnaire/response.dart';
 
 // build form credit skeleton: Grace
 
-
 class BuildQuestionForm extends StatefulWidget {
   Question question;
   Response response;
@@ -74,14 +73,12 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
             onChanged: (newValue) {
               setState(() {
                   dropDownValue = newValue.toString();
-                  widget.response.answer = dropDownValue;
+                  widget.response.answer = dropDownValue; //
                 },
-
               );
             },
-            items: widget.question.getAnswers()
-                .map<DropdownMenuItem<String>>(
-                  (String value) {
+            items: widget.question.getAnswers().map<DropdownMenuItem<String>>(
+              (String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -113,7 +110,6 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
           TextFormField(
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter some text';
@@ -123,8 +119,9 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
             },
             onChanged: (value) {
               setState(() {
-                widget.response.answer = value;
-              },);
+                  widget.response.answer = value;
+                },
+              );
             },
             decoration: const InputDecoration(
               focusedBorder: OutlineInputBorder(
@@ -136,19 +133,20 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
               hintText: 'Please enter a number',
             ),
           ),
-          SizedBox(height: 10,)
+          SizedBox(
+            height: 10,
+          )
         ],
       ),
     );
   }
 
   String dropDownValue = "";
-  void _setDefaultDropDownValue(){
-    if (dropDownValue == ""){
+  void _setDefaultDropDownValue() {
+    if (dropDownValue == "") {
       dropDownValue = widget.question.getAnswers()[0];
     }
   }
-
 
   Widget build(BuildContext context) {
     _setDefaultDropDownValue();
@@ -156,12 +154,10 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
       return _buildNumberTextField(context);
     } else if (widget.question.fieldType == 1) { // Multiple choice [ACTUALLY REPLACE W DROPDOWN]
       return _buildDropDown(context);
-    } else if (widget.question.fieldType == 2) { // Dropdown
+    } else if (widget.question.fieldType == 2) {
       return _buildDropDown(context);
     } else {
       return const SizedBox();
     }
   }
 }
-
-
