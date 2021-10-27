@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NewAccount extends StatefulWidget {
   const NewAccount({Key? key}) : super(key: key);
@@ -10,6 +11,7 @@ class NewAccount extends StatefulWidget {
 
 class _NewAccountState extends State<NewAccount> {
   FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   String email = '';
   String password = '';
@@ -17,10 +19,23 @@ class _NewAccountState extends State<NewAccount> {
   String lastName = '';
 
   // Define an async function to create a new user with the fetched email and password
-  void createUserEmailPassword(email, password) async {
+  Future<void> createUserEmailPassword(
+      email, password, firstName, lastName) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+      auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) => {
+                firestore
+                    .collection('users')
+                    .doc(value.user!.uid)
+                    .set({
+                      'email': email,
+                      'firstName': firstName,
+                      'lastName': lastName
+                    })
+                    .then((value) => Navigator.pushNamed(context, '/nav'))
+                    .catchError((error) => print("Failed to add user: $error"))
+              });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -80,7 +95,8 @@ class _NewAccountState extends State<NewAccount> {
                   ),
                   child: Text('Sign up', style: TextStyle(color: Colors.white)),
                   onPressed: () async {
-                    createUserEmailPassword(email.trim(), password.trim());
+                    createUserEmailPassword(email.trim(), password.trim(),
+                        firstName.trim(), lastName.trim());
                   },
                 )
               ],

@@ -16,8 +16,9 @@ class _LoginState extends State<Login> {
   // Define an async function to create a new user with the fetched email and password
   void signInEmailPassword(email, password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+      auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((value) => Navigator.pushNamed(context, '/nav'));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -59,8 +60,6 @@ class _LoginState extends State<Login> {
                   ),
                   child: Text('Sign in', style: TextStyle(color: Colors.white)),
                   onPressed: () async {
-                    print(email.trim());
-                    print(password.trim());
                     signInEmailPassword(email.trim(), password.trim());
                   },
                 )
