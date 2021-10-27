@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/question.dart';
-import '../services/question_firestore.dart';
+import 'package:green_peeps_app/models/question.dart';
+import 'package:provider/provider.dart';
 import '../questionnaire/response.dart';
 import 'questionnaire_card.dart';
 
@@ -16,32 +16,21 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
   String userID = "u1";
 
   @override
-  initState() {
-    super.initState();
-    _addQuestion('F3Ct0WCqgIaAlkdrqE7X');
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return ListView(children: <Widget>[
-      Column(
-        children: _questionList
-            .map((question) => QuestionnaireCard(
-                question: question,
-                response: Response(userID: userID, qID: question.getId())))
-            .toList(),
-      )
-    ]);
-  }
-
-  final List<Question> _questionList = [];
-
-  void _addQuestion(String id) async {
-    Question? question = await getQuestionFromStore(id);
-    if (question != null) {
-      setState(() {
-        _questionList.add(question);
-      });
-    }
+    return ChangeNotifierProvider(
+        create: (context) => QuestionListModel('F3Ct0WCqgIaAlkdrqE7X'),
+        child: Consumer<QuestionListModel>(
+            builder: (context, questionList, child) {
+          return ListView(children: <Widget>[
+            Column(
+              children: questionList.questionList
+                  .map((question) => QuestionnaireCard(
+                      question: question,
+                      response:
+                          Response(userID: userID, qID: question.getId())))
+                  .toList(),
+            )
+          ]);
+        }));
   }
 }
