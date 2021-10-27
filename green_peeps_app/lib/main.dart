@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:green_peeps_app/navigation.dart';
 import 'package:green_peeps_app/welcome.dart';
 import 'package:green_peeps_app/loading.dart';
-import 'package:green_peeps_app/login.dart';
-import 'package:green_peeps_app/initial_questionnaire.dart';
-import 'package:green_peeps_app/new_account.dart';
-import 'package:green_peeps_app/learn_more.dart';
+import 'package:green_peeps_app/login/login.dart';
+import 'package:green_peeps_app/new_user_questionnaire/initial_questionnaire.dart';
+import 'package:green_peeps_app/login/new_account.dart';
+import 'package:green_peeps_app/homescreen/learn_more.dart';
 
 // Import the firebase_core plugin
 import 'package:firebase_core/firebase_core.dart';

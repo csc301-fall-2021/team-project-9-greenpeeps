@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:green_peeps_app/new_user_questionnaire/question.dart';
-import 'package:green_peeps_app/new_user_questionnaire/response.dart';
-import 'package:green_peeps_app/new_user_questionnaire/build_question_card.dart';
+import 'package:green_peeps_app/questionnaire/question.dart';
+import 'package:green_peeps_app/questionnaire/response.dart';
+import 'package:green_peeps_app/questionnaire/build_question_card.dart';
 import 'package:flutter/foundation.dart';
 
 
