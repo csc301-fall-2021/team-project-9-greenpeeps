@@ -3,6 +3,8 @@ import 'package:green_peeps_app/homescreen/question_popup.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:green_peeps_app/homescreen/pie_diagram.dart';
+
+import 'package:green_peeps_app/homescreen/first_box.dart';
 import 'package:green_peeps_app/homescreen/second_box.dart';
 
 // Database Information (variables)
@@ -12,8 +14,6 @@ Map<String, double> carbonEmissions = {
   'food': 0.0,
   'transportation': 0.0
 };
-double progressCompleted = 0.5; // Must be from 0 to 1
-int progressLeft = 50; // Represented in amount of points
 const String _funFact =
     "Did you know that some house centipedes are poisonous. Additionally, house centipedes can sometimes regenerate their legs if they have been cut off. Trust me, I know from experience!";
 
@@ -30,21 +30,21 @@ class _HomeScreenState extends State<HomeScreen> {
   final double _boxElevation = 5.0; // The height of shadow beneath box
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
 
-  @override
-  void initState() {
-    getData();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   getData();
+  //   super.initState();
+  // }
 
-  // Gets all the data on a user from the database
-  void getData() async {
-    final DocumentSnapshot doc = await FirebaseFirestore.instance
-        .collection('users')
-        .doc('nFSUjg7UBookPXllvk0d')
-        .get();
-    carbonEmissions = Map<String, double>.from(doc.get("carbonEmissions"));
-    userFirstName = doc.get("firstName");
-  }
+  // // Gets all the data on a user from the database
+  // void getData() async {
+  //   final DocumentSnapshot doc = await FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc('nFSUjg7UBookPXllvk0d')
+  //       .get();
+  //   carbonEmissions = Map<String, double>.from(doc.get("carbonEmissions"));
+  //   // userFirstName = doc.get("firstName");
+  // }
 
 // This popup includes a more detailed breakdown of carbon emissions
 // (you could use tabs or use a scrollable, etc. to fit more visuals)
@@ -85,99 +85,27 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // First box when looking at boxes from top to bottom
-  // (consider making each box its own dart file)
-  Widget _buildFirstBox(BuildContext context, double boxPadding,
-      double boxElevation, Color boxColor, String userFirstName) {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) {
-          return Material(
-            color: boxColor,
-            elevation: boxElevation,
-            borderRadius: BorderRadius.circular(5.0),
-            child: Container(
-              padding: EdgeInsets.all(boxPadding),
-              child: Text(
-                "Welcome " + userFirstName + "!",
-                textAlign: TextAlign.left,
-                style: const TextStyle(
-                  fontSize: 28.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          );
-        },
-        childCount: 1,
-      ),
-    );
-  }
-
-  // Widget _buildSecondBox(
-  //     BuildContext context,
-  //     double boxPadding,
-  //     double boxElevation,
-  //     Color boxColor,
-  //     double progressCompleted,
-  //     int progressLeft) {
+  // // First box when looking at boxes from top to bottom
+  // // (consider making each box its own dart file)
+  // Widget _buildFirstBox(BuildContext context, double boxPadding,
+  //     double boxElevation, Color boxColor, String userFirstName) {
   //   return SliverList(
   //     delegate: SliverChildBuilderDelegate(
   //       (BuildContext context, int index) {
-  //         return ElevatedButton(
+  //         return Material(
+  //           color: boxColor,
+  //           elevation: boxElevation,
+  //           borderRadius: BorderRadius.circular(5.0),
   //           child: Container(
   //             padding: EdgeInsets.all(boxPadding),
-  //             child: Column(
-  //               mainAxisSize: MainAxisSize
-  //                   .min, // Use the minimum space necessary to fit all widgets
-  //               crossAxisAlignment:
-  //                   CrossAxisAlignment.start, // Everything starts fartest left
-  //               children: <Widget>[
-  //                 Text(
-  //                   "You are " +
-  //                       progressLeft.toString() +
-  //                       " points away from your next leaf!",
-  //                   style: const TextStyle(fontSize: 20, color: Colors.black),
-  //                 ),
-  //                 Divider(
-  //                     color: boxColor), // Adds some room between these widgets
-  //                 const Text(
-  //                   "Answer More Questions",
-  //                   style: TextStyle(
-  //                       fontSize: 22,
-  //                       fontWeight: FontWeight.bold,
-  //                       color: Colors.black),
-  //                 ),
-  //                 Divider(color: boxColor),
-  //                 ClipRRect(
-  //                   // Used to make the bar round
-  //                   borderRadius: BorderRadius.circular(10),
-  //                   child: LinearProgressIndicator(
-  //                     backgroundColor: const Color.fromRGBO(180, 180, 180, 1),
-  //                     valueColor:
-  //                         const AlwaysStoppedAnimation<Color>(Colors.green),
-  //                     value: progressCompleted,
-  //                     minHeight: 5,
-  //                   ),
-  //                 ),
-  //               ],
+  //             child: Text(
+  //               "Welcome " + userFirstName + "!",
+  //               textAlign: TextAlign.left,
+  //               style: const TextStyle(
+  //                 fontSize: 28.0,
+  //                 fontWeight: FontWeight.bold,
+  //               ),
   //             ),
-  //           ),
-  //           onPressed: () {
-  //             showDialog(
-  //               barrierDismissible:
-  //                   false, // Users cannot click off the screen to close popup
-  //               context: context,
-  //               builder: (BuildContext context) {
-  //                 return const QuestionPopup();
-  //               },
-  //             );
-  //           },
-  //           style: ElevatedButton.styleFrom(
-  //             primary: boxColor,
-  //             elevation: boxElevation,
-  //             fixedSize: const Size(330, 145),
-  //             padding: const EdgeInsets.all(0),
   //           ),
   //         );
   //       },
@@ -293,12 +221,11 @@ class _HomeScreenState extends State<HomeScreen> {
       // You can customize to space between each widget/ box
       child: CustomScrollView(
         slivers: <Widget>[
-          SliverSafeArea(
+          const SliverSafeArea(
             sliver: SliverPadding(
-              padding: const EdgeInsets.only(
+              padding: EdgeInsets.only(
                   left: 30, right: 30, top: 15, bottom: 0),
-              sliver: _buildFirstBox(context, _boxPadding, _boxElevation,
-                  _boxColor, userFirstName),
+              sliver: FirstBox(),
             ),
           ),
           const SliverPadding(
