@@ -4,6 +4,8 @@ import 'package:green_peeps_app/questionnaire/response.dart';
 import 'package:green_peeps_app/questionnaire/build_question_card.dart';
 import 'package:flutter/foundation.dart';
 
+// rename to build question form
+
 class QuestionnaireCard extends StatefulWidget {
   final Question question;
   final Response response;
@@ -36,12 +38,21 @@ class _QuestionnaireCardState extends State<QuestionnaireCard> {
             ),
           ),
         ),
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-          child: BuildQuestionForm(
-            question: widget.question,
-            response: widget.response,
-          ),
+        Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+              child: BuildQuestionForm(
+                question: widget.question,
+                response: widget.response,
+              ),
+            ),
+            // Row(
+            //   children: <Widget>[
+            //
+            //   ]
+            // ),
+          ],
         ),
       ]),
     );

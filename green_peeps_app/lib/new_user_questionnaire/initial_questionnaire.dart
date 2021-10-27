@@ -21,16 +21,22 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
     _addQuestion('F3Ct0WCqgIaAlkdrqE7X');
   }
 
+  // progress bar to show you how many questions have left
+  // screen after a certain amount of questions
+  // that tells you finished the general questionnaire
+  // then you can complete a more comprehensive questionnaire too
+  // (continue more questions)
   @override
-  Widget build(BuildContext context) {
-    return ListView(children: <Widget>[
-      Column(
-        children: _questionList
-            .map((question) => QuestionnaireCard(
-                question: question,
-                response: Response(userID: userID, qID: question.getId())))
-            .toList(),
-      )
+  Widget build(BuildContext context) { // add extra instruction card
+    return ListView(
+        children: <Widget>[
+          Column(
+            children: _questionList
+                .map((question) => QuestionnaireCard(
+                    question: question,
+                    response: Response(userID: userID, qID: question.getId())))
+                .toList(),
+          )
     ]);
   }
 
