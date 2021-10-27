@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class NewAccount extends StatefulWidget {
   const NewAccount({Key? key}) : super(key: key);
@@ -8,10 +9,28 @@ class NewAccount extends StatefulWidget {
 }
 
 class _NewAccountState extends State<NewAccount> {
+  FirebaseAuth auth = FirebaseAuth.instance;
+
   String email = '';
   String password = '';
   String firstName = '';
   String lastName = '';
+
+  // Define an async function to create a new user with the fetched email and password
+  void createUserEmailPassword(email, password) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +61,6 @@ class _NewAccountState extends State<NewAccount> {
                 Text("First Name"),
                 SizedBox(height: 1.0),
                 TextFormField(
-                  obscureText: true,
                   onChanged: (val) {
                     setState(() => {firstName = val});
                   },
@@ -51,7 +69,6 @@ class _NewAccountState extends State<NewAccount> {
                 Text("Last Name"),
                 SizedBox(height: 1.0),
                 TextFormField(
-                  obscureText: true,
                   onChanged: (val) {
                     setState(() => {lastName = val});
                   },
@@ -61,12 +78,9 @@ class _NewAccountState extends State<NewAccount> {
                   style: ElevatedButton.styleFrom(
                     primary: Colors.pink[400],
                   ),
-                  child: Text('Sign in', style: TextStyle(color: Colors.white)),
+                  child: Text('Sign up', style: TextStyle(color: Colors.white)),
                   onPressed: () async {
-                    print(email);
-                    print(password);
-                    print(firstName);
-                    print(lastName);
+                    createUserEmailPassword(email.trim(), password.trim());
                   },
                 )
               ],

@@ -9,8 +9,23 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  FirebaseAuth auth = FirebaseAuth.instance;
   String email = '';
   String password = '';
+
+  // Define an async function to create a new user with the fetched email and password
+  void signInEmailPassword(email, password) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +59,9 @@ class _LoginState extends State<Login> {
                   ),
                   child: Text('Sign in', style: TextStyle(color: Colors.white)),
                   onPressed: () async {
-                    print(email);
-                    print(password);
+                    print(email.trim());
+                    print(password.trim());
+                    signInEmailPassword(email.trim(), password.trim());
                   },
                 )
               ],
