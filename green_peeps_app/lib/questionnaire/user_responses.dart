@@ -1,6 +1,6 @@
 import 'package:tuple/tuple.dart';
 import 'package:flutter/material.dart';
-import 'package:green_peeps_app/new_user_questionnaire/response.dart';
+import 'package:green_peeps_app/questionnaire/response.dart';
 
 class UserResponses{
   String userID;

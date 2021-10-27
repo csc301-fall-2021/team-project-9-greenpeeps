@@ -1,67 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:pie_chart/pie_chart.dart';
-import 'package:green_peeps_app/question_popup.dart';
+import 'package:green_peeps_app/homescreen/question_popup.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:green_peeps_app/homescreen/pie_diagram.dart';
 
-class PieDiagram extends StatelessWidget {
-  PieDiagram({Key? key}) : super(key: key);
-
-  final List<Color> _pieChartColors = <Color>[
-    Colors.teal.shade200,
-    Colors.teal.shade300,
-    Colors.teal.shade400,
-    Colors.teal,
-    Colors.teal.shade600,
-    Colors.teal.shade700,
-    Colors.teal.shade800,
-    Colors.teal.shade900
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    Stream<DocumentSnapshot> users = FirebaseFirestore.instance
-        .collection('users')
-        .doc('nFSUjg7UBookPXllvk0d')
-        .snapshots();
-
-    return StreamBuilder<DocumentSnapshot>(
-      stream: users,
-      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        if (snapshot.connectionState == ConnectionState.active) {
-          var userData = snapshot.data;
-          Map<String, double> carbonEmissions = Map<String, double>.from(userData!["carbonEmissions"]);
-
-
-          return PieChart(
-            dataMap: carbonEmissions,
-            chartLegendSpacing: 25,
-            chartRadius: MediaQuery.of(context).size.width /
-                2, // Half the width of the screen
-            colorList: _pieChartColors,
-            legendOptions: const LegendOptions(
-              showLegendsInRow: true,
-              legendPosition: LegendPosition.bottom,
-              legendTextStyle: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
-            chartValuesOptions: const ChartValuesOptions(
-              showChartValueBackground: false,
-              showChartValues: true,
-              showChartValuesInPercentage: true,
-              showChartValuesOutside: false,
-              decimalPlaces: 1,
-            ),
-          );
-        } else {
-          return Container();
-        }
-      },
-    );
-  }
-}
+// Database Information (variables)
+String userFirstName = "";
+Map<String, double> carbonEmissions = {
+  'electricity': 0.0,
+  'food': 0.0,
+  'transportation': 0.0
+};
+double progressCompleted = 0.5; // Must be from 0 to 1
+int progressLeft = 50; // Represented in amount of points
+const String _funFact =
+    "Did you know that some house centipedes are poisonous. Additionally, house centipedes can sometimes regenerate their legs if they have been cut off. Trust me, I know from experience!";
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -76,57 +29,25 @@ class _HomeScreenState extends State<HomeScreen> {
   final double _boxElevation = 5.0; // The height of shadow beneath box
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
 
-  // Database Information
-  // (could you make getters and setters for this when you database things)
-  final String _userFirstName = "Human";
-  final double _progressCompleted = 0.5; // Must be from 0 to 1
-  final int _progressLeft = 50; // Represented in amount of points
-  final String _funFact =
-      "Did you know that some house centipedes are poisonous. Additionally, house centipedes can sometimes regenerate their legs if they have been cut off. Trust me, I know from experience!";
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
 
-  // User's carbon emmissions breakdown from database
-  final Map<String, double> _pieChartCategories = {
-    "Food": 5,
-    "Electricity": 3,
-    "Water": 2,
-    "Transportation": 2,
-  };
-
-  final List<Color> _pieChartColors = <Color>[
-    Colors.teal.shade200,
-    Colors.teal.shade300,
-    Colors.teal.shade400,
-    Colors.teal,
-    Colors.teal.shade600,
-    Colors.teal.shade700,
-    Colors.teal.shade800,
-    Colors.teal.shade900
-  ];
-
-  // Updates the pie chart widget with new values when a question has been answered
-  // (pie chart could be own entity?)
-  void _setPieChart() {
-    setState(
-      () {},
-    );
+  // Gets all the data on a user from the database
+  void getData() async {
+    final DocumentSnapshot doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc('nFSUjg7UBookPXllvk0d')
+        .get();
+    carbonEmissions = Map<String, double>.from(doc.get("carbonEmissions"));
+    userFirstName = doc.get("firstName");
   }
 
 // This popup includes a more detailed breakdown of carbon emissions
 // (you could use tabs or use a scrollable, etc. to fit more visuals)
   Widget _buildEmissionsPopup(BuildContext context, Color boxColor) {
-    String getMaxEmission() {
-      var value = 0.0;
-      dynamic key;
-
-      _pieChartCategories.forEach((k, v) {
-        if (v > value) {
-          value = v;
-          key = k;
-        }
-      });
-      return key;
-    }
-
     return Dialog(
       backgroundColor: boxColor,
       shape: const RoundedRectangleBorder(
@@ -147,10 +68,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
             const Padding(padding: EdgeInsets.all(2)),
-            Text(getMaxEmission(),
+            const Text("Placeholder",
                 textAlign: TextAlign.center,
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
             const Padding(padding: EdgeInsets.all(8)),
             const Text("Some ways to reduce carbon emissions: ",
                 textAlign: TextAlign.center,
@@ -296,6 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 context: context,
                 builder: (BuildContext context) =>
                     _buildEmissionsPopup(context, boxColor),
+                useRootNavigator: false,
               );
             },
             style: ElevatedButton.styleFrom(
@@ -376,14 +297,14 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.only(
                   left: 30, right: 30, top: 15, bottom: 0),
               sliver: _buildFirstBox(context, _boxPadding, _boxElevation,
-                  _boxColor, _userFirstName),
+                  _boxColor, userFirstName),
             ),
           ),
           SliverPadding(
             padding:
                 const EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
             sliver: _buildSecondBox(context, _boxPadding, _boxElevation,
-                _boxColor, _progressCompleted, _progressLeft),
+                _boxColor, progressCompleted, progressLeft),
           ),
           SliverPadding(
             padding:
