@@ -1,3 +1,28 @@
+import 'dart:collection';
+import 'package:flutter/foundation.dart';
+
+import '../services/question_firestore.dart';
+
+class QuestionListModel extends ChangeNotifier {
+  final List<Question> _questions = [];
+
+  QuestionListModel(String id) {
+    addQuestion(id);
+  }
+
+  UnmodifiableListView get questionList {
+    return UnmodifiableListView(_questions);
+  }
+
+  void addQuestion(String id) async {
+    Question? question = await getQuestionFromStore(id);
+    if (question != null) {
+      _questions.add(question);
+      notifyListeners();
+    }
+  }
+}
+
 class Question {
   final String id;
   final String text;
