@@ -52,13 +52,15 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [Colors.black, Colors.purple])),
-                  child: Column(children: [
-                    for (Question question in questionListModel.questionList)
-                      QuestionnaireCard(
-                          question: question,
-                          response:
-                              Response(userID: userID, qID: question.getId()))
-                  ]),
+                        child: Column(children: [
+                          for (Question question in questionListModel.questionList)
+                            QuestionnaireCard(
+                                question: question,
+                                response:
+                                    Response(userID: userID, qID: question.getId())),
+                          SizedBox(height: 800, ), // TODO remove
+                        ],
+                        ),
                 )),
               ),
             ),
