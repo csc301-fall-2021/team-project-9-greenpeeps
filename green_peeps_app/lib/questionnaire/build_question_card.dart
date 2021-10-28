@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:green_peeps_app/questionnaire/question.dart';
+import 'package:green_peeps_app/models/question.dart';
 import 'package:green_peeps_app/questionnaire/response.dart';
+import 'package:provider/provider.dart';
 
 // build form credit skeleton: Grace
-
 
 class BuildQuestionForm extends StatefulWidget {
   Question question;
   Response response;
 
-  BuildQuestionForm({Key? key, required this.question,
-    required this.response}) : super(key: key);
-
-
+  BuildQuestionForm({Key? key, required this.question, required this.response})
+      : super(key: key);
 
   @override
   _BuildQuestionFormState createState() => _BuildQuestionFormState();
@@ -64,31 +62,42 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          DropdownButton<String>(
-            elevation: 8,
-            value: dropDownValue,
-            dropdownColor: Colors.white,
-            iconDisabledColor: Colors.grey,
-            iconEnabledColor: Colors.grey,
-            style: const TextStyle(color: Colors.black),
-            onChanged: (newValue) {
-              setState(() {
-                  dropDownValue = newValue.toString();
-                  widget.response.answer = dropDownValue;
-                },
-
-              );
-            },
-            items: widget.question.getAnswers()
-                .map<DropdownMenuItem<String>>(
-                  (String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
+          Consumer<QuestionListModel>(
+              builder: (context, questionListModel, child) {
+            return DropdownButton<String>(
+              elevation: 8,
+              value: dropDownValue,
+              dropdownColor: Colors.white,
+              iconDisabledColor: Colors.grey,
+              iconEnabledColor: Colors.grey,
+              style: const TextStyle(color: Colors.black),
+              onChanged: (newValue) {
+                setState(
+                  () {
+                    dropDownValue = newValue.toString();
+                    widget.response.answer = dropDownValue; //
+                    for (Answer answer in widget.question.answers) {
+                      if (answer.text == dropDownValue) {
+                        if (answer.nextQuestion != null) {
+                          questionListModel.addQuestion(answer.nextQuestion!);
+                        }
+                        break;
+                      }
+                    }
+                  },
                 );
               },
-            ).toList(),
-          ),
+              items:
+                  widget.question.getAnswerText().map<DropdownMenuItem<String>>(
+                (String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                },
+              ).toList(),
+            );
+          }),
           const Divider(),
         ],
       ),
@@ -110,58 +119,73 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
           //       fontWeight: FontWeight.bold,
           //       color: Colors.grey),
           // ),
-          TextFormField(
-            keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter some text';
-              }
-              // widget.response.answer = value;
-              return null;
-            },
-            onChanged: (value) {
-              setState(() {
-                widget.response.answer = value;
-              },);
-            },
-            decoration: const InputDecoration(
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.green, width: 2.0),
+          Consumer<QuestionListModel>(
+              builder: (context, questionListModel, thing) {
+            return TextFormField(
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter some text';
+                }
+                // widget.response.answer = value;
+                return null;
+              },
+              onChanged: (value) {
+                setState(
+                  () {
+                    widget.response.answer = value;
+                    for (Answer answer in widget.question.answers) {
+                      if (answer.text == value) {
+                        if (answer.nextQuestion != null) {
+                          questionListModel.addQuestion(answer.nextQuestion!);
+                        }
+                        break;
+                      }
+                    }
+                  },
+                );
+              },
+              decoration: const InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.green, width: 2.0),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey, width: 2.0),
+                ),
+                hintText: 'Please enter a number',
               ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey, width: 2.0),
-              ),
-              hintText: 'Please enter a number',
-            ),
-          ),
-          SizedBox(height: 10,)
+            );
+          }),
+          SizedBox(
+            height: 10,
+          )
         ],
       ),
     );
   }
 
   String dropDownValue = "";
-  void _setDefaultDropDownValue(){
-    if (dropDownValue == ""){
-      dropDownValue = widget.question.getAnswers()[0];
+  void _setDefaultDropDownValue() {
+    if (dropDownValue == "") {
+      dropDownValue = widget.question.getAnswerText()[0];
     }
   }
 
-
   Widget build(BuildContext context) {
-    _setDefaultDropDownValue();
-    if (widget.question.fieldType == 0) { // Numerical
+    if (widget.question.fieldType == 0) {
+      // Numerical
       return _buildNumberTextField(context);
-    } else if (widget.question.fieldType == 1) { // Multiple choice [ACTUALLY REPLACE W DROPDOWN]
+    } else if (widget.question.fieldType == 1) {
+      // Multiple choice [ACTUALLY REPLACE W DROPDOWN]
+      _setDefaultDropDownValue();
       return _buildDropDown(context);
-    } else if (widget.question.fieldType == 2) { // Dropdown
+    } else if (widget.question.fieldType == 2) {
+      // Dropdown
+      _setDefaultDropDownValue();
       return _buildDropDown(context);
     } else {
       return const SizedBox();
     }
   }
 }
-
-
