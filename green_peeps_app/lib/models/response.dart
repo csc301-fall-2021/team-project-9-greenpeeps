@@ -14,9 +14,9 @@ class ResponseListModel {
     _responses.add(response);
   }
 
-  void saveResponses() {
+  Future<void> saveResponses() async {
     for (Response response in _responses) {
-      sendResponseToStore("test_user", response);
+      await sendResponseToStore("test_user", response);
     }
   }
 }
