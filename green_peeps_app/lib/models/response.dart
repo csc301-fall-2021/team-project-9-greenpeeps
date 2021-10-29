@@ -21,7 +21,7 @@ class ResponseListModel {
       futures.add(sendResponseToStore(uID, response));
     }
     Future.wait(futures);
-    sendConfirmation(uID);
+    await sendConfirmation(uID);
   }
 }
 
