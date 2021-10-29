@@ -5,11 +5,14 @@ final CollectionReference _responseCollection =
     FirebaseFirestore.instance.collection('responses');
 
 Future<void> sendResponseToStore(String userId, Response response) async {
-  DocumentReference responseDoc = _responseCollection.doc(userId);
-  responseDoc.set({'lastResponse': response.qID});
-  CollectionReference userResponses = responseDoc.collection('responses');
+  CollectionReference userResponses =
+      _responseCollection.doc(userId).collection('responses');
   return userResponses
       .doc(response.qID)
       .set({'answer': response.answer, 'timestamp': response.timeStamp});
-  ;
+}
+
+Future<void> sendConfirmation(String userId) {
+  DocumentReference responseDoc = _responseCollection.doc(userId);
+  return responseDoc.set({'lastUpdated': Timestamp.now()});
 }

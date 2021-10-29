@@ -15,9 +15,13 @@ class ResponseListModel {
   }
 
   Future<void> saveResponses() async {
+    String uID = "test_user"; // TODO: Fetch user from state
+    var futures = <Future>[];
     for (Response response in _responses) {
-      await sendResponseToStore("test_user", response);
+      futures.add(sendResponseToStore(uID, response));
     }
+    Future.wait(futures);
+    sendConfirmation(uID);
   }
 }
 
