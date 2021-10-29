@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:green_peeps_app/models/question.dart';
-import 'package:green_peeps_app/questionnaire/response.dart';
+import 'package:green_peeps_app/models/response.dart';
 import 'package:provider/provider.dart';
 
 // build form credit skeleton: Grace
 
 class BuildQuestionForm extends StatefulWidget {
   Question question;
-  Response response;
 
-  BuildQuestionForm({Key? key, required this.question, required this.response})
-      : super(key: key);
+  BuildQuestionForm({Key? key, required this.question}) : super(key: key);
 
   @override
   _BuildQuestionFormState createState() => _BuildQuestionFormState();
@@ -62,8 +60,8 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Consumer<QuestionListModel>(
-              builder: (context, questionListModel, child) {
+          Consumer2<QuestionListModel, ResponseListModel>(
+              builder: (context, questionListModel, responseListModel, child) {
             return DropdownButton<String>(
               elevation: 8,
               value: dropDownValue,
@@ -75,7 +73,8 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
                 setState(
                   () {
                     dropDownValue = newValue.toString();
-                    widget.response.answer = dropDownValue; //
+                    responseListModel.addResponse(Response(
+                        qID: widget.question.id, answer: dropDownValue)); //
                     for (Answer answer in widget.question.answers) {
                       if (answer.text == dropDownValue) {
                         if (answer.nextQuestion != null) {
@@ -119,8 +118,8 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
           //       fontWeight: FontWeight.bold,
           //       color: Colors.grey),
           // ),
-          Consumer<QuestionListModel>(
-              builder: (context, questionListModel, thing) {
+          Consumer2<QuestionListModel, ResponseListModel>(
+              builder: (context, questionListModel, responseListModel, thing) {
             return TextFormField(
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -134,7 +133,8 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
               onChanged: (value) {
                 setState(
                   () {
-                    widget.response.answer = value;
+                    responseListModel.addResponse(
+                        Response(qID: widget.question.id, answer: value));
                     for (Answer answer in widget.question.answers) {
                       if (answer.text == value) {
                         if (answer.nextQuestion != null) {
