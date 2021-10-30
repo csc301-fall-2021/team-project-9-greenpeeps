@@ -36,7 +36,7 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                   builder: (context, responseListModel, child) {
                 return FloatingActionButton.extended(
                   onPressed: () {
-                    responseListModel.saveResponses();
+                    responseListModel.saveResponsesToStore();
                     Navigator.popAndPushNamed(context, '/nav');
                   },
                   label: const Text(
