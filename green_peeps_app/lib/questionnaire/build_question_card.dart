@@ -51,53 +51,73 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
   // }
 
   // Build a form widget for questions with answers selected from dropdown box
-
+bool ignoreEnabled = false;
   Widget _buildDropDown(BuildContext context) {
     // String dropDownValue = widget.question.getAnswers()[0];
+
+
     return SizedBox(
       width: double.infinity,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Consumer2<QuestionListModel, ResponseListModel>(
-              builder: (context, questionListModel, responseListModel, child) {
-            return DropdownButton<String>(
-              elevation: 8,
-              value: dropDownValue,
-              dropdownColor: Colors.white,
-              iconDisabledColor: Colors.grey,
-              iconEnabledColor: Colors.grey,
-              style: const TextStyle(color: Colors.black),
-              onChanged: (newValue) {
-                setState(
-                  () {
-                    dropDownValue = newValue.toString();
-                    responseListModel.addResponse(Response(
-                        qID: widget.question.id, answer: dropDownValue)); //
-                    for (Answer answer in widget.question.answers) {
-                      if (answer.text == dropDownValue) {
-                        if (answer.nextQuestion != null) {
-                          questionListModel.addQuestion(answer.nextQuestion!);
-                        }
-                        break;
-                      }
-                    }
-                  },
+      child: Row(
+        children: [
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Consumer2<QuestionListModel, ResponseListModel>(
+                  builder: (context, questionListModel, responseListModel, child) {
+                return IgnorePointer(
+                  ignoring: ignoreEnabled,
+                  child: DropdownButton<String>(
+                    elevation: 8,
+                    value: dropDownValue,
+                    dropdownColor: Colors.white,
+                    iconDisabledColor: Colors.grey,
+                    iconEnabledColor: Colors.grey,
+                    style: const TextStyle(color: Colors.black),
+                    onChanged: (newValue) {
+                      setState(
+                        () {
+                          dropDownValue = newValue.toString();
+                          responseListModel.addResponse(Response(
+                          qID: widget.question.id, answer: dropDownValue)); //
+                          for (Answer answer in widget.question.answers) {
+                            if (answer.text == dropDownValue) {
+                              if (answer.nextQuestion != null) {
+                                questionListModel.addQuestion(answer.nextQuestion!);
+                                ignoreEnabled = true;
+                              }
+                            break;
+                            }
+                          }
+
+                        },
+                      );
+                    },
+                    items:
+                        widget.question.getAnswerText().map<DropdownMenuItem<String>>(
+                      (String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      },
+                    ).toList(),
+                  ),
                 );
-              },
-              items:
-                  widget.question.getAnswerText().map<DropdownMenuItem<String>>(
-                (String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                },
-              ).toList(),
-            );
-          }),
-          const Divider(),
+              }),
+              // const Divider(),
+            ],
+          ),
+          Visibility (
+            visible: ignoreEnabled,
+          child: Icon(
+            Icons.check_circle_rounded,
+            color: Colors.green,
+            size: 24.0,
+            semanticLabel: "A checkmark to indicate that this question has been completed",
+          ),
+        ),
         ],
       ),
     );
@@ -166,6 +186,7 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
   }
 
   String dropDownValue = "";
+
   void _setDefaultDropDownValue() {
     if (dropDownValue == "") {
       dropDownValue = widget.question.getAnswerText()[0];
@@ -185,7 +206,8 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
       _setDefaultDropDownValue();
       return _buildDropDown(context);
     } else {
-      return const SizedBox();
+      return const SizedBox(
+          child:Text("Error: There is no form for this question"));
     }
   }
 }
