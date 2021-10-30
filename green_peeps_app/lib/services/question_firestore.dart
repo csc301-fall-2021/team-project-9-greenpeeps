@@ -1,11 +1,11 @@
 import '../models/question.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-final CollectionReference questions =
+final CollectionReference _questions =
     FirebaseFirestore.instance.collection('questions');
 
 Future<Question?> getQuestionFromStore(String documentId) async {
-  var snapshot = await questions.doc(documentId).get();
+  var snapshot = await _questions.doc(documentId).get();
 
   Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
   if (data == null) {
@@ -25,7 +25,7 @@ Future<Question?> getQuestionFromStore(String documentId) async {
 }
 
 Future<List<Answer>> _getAnswersFromStore(String documentId) async {
-  var answers = await questions.doc(documentId).collection("answers").get();
+  var answers = await _questions.doc(documentId).collection("answers").get();
   List<Answer> answerList = [];
   for (var snapshot in answers.docs) {
     Map<String, dynamic> data = snapshot.data();
