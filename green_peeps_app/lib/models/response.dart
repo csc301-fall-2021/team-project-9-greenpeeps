@@ -11,10 +11,15 @@ class ResponseListModel {
   }
 
   void addResponse(Response response) {
-    _responses.add(response);
+    int index = _responses.indexOf(response);
+    if (index == -1) {
+      _responses.add(response);
+    } else {
+      _responses[index] = response;
+    }
   }
 
-  Future<void> saveResponses() async {
+  Future<void> saveResponsesToStore() async {
     String uID = "test_user"; // TODO: Fetch user from state
     var futures = <Future>[];
     for (Response response in _responses) {
@@ -29,4 +34,13 @@ class Response {
   DateTime timeStamp = DateTime.now();
   String answer;
   Response({required this.qID, this.answer = ""});
+
+  @override
+  bool operator ==(Object other) {
+    // compare this to other
+    return other is Response && qID == other.qID;
+  }
+
+  @override
+  int get hashCode => qID.hashCode;
 }
