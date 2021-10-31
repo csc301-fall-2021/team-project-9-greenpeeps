@@ -36,7 +36,7 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                   builder: (context, responseListModel, child) {
                 return FloatingActionButton.extended(
                   onPressed: () {
-                    responseListModel.saveResponses();
+                    responseListModel.saveResponsesToStore();
                     Navigator.popAndPushNamed(context, '/nav');
                   },
                   label: const Text(
@@ -63,7 +63,7 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                   return Column(children: [
                     for (Question question in questionListModel.questionList)
                       QuestionnaireCard(question: question),
-                    SizedBox(height: 800) // TODO remove
+                    SizedBox(height: 600) // TODO remove
                   ]);
                 }),
               )),

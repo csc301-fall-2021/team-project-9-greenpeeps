@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:green_peeps_app/models/question.dart';
-import 'package:green_peeps_app/questionnaire/build_question_card.dart';
+import 'package:green_peeps_app/questionnaire/build_question_form.dart';
 import 'package:flutter/foundation.dart';
 
 // rename to build question form
