@@ -27,7 +27,7 @@
 - We forced branching by disallowing pushing to the main branch.
 - We have a shared google drive which contains our many documents for this project including deliverable 1 draft, deliverable 2, an agenda for what we will discuss in our partner meetings, and features.
 - We set soft integration deadlines to ensure that people start thinking about the code well before the deadline so even if that deadline is missed it is not a big deal.
-- Having a when2meet and also knowing everyone’s schedules was helpful in planning meetings, and knowing availability. 
+- We have a when2meet and also know everyone’s schedules which was helpful in planning meetings and knowing availability. 
 
 ### Q2. Decisions that did not turn out as well as we hoped
 
@@ -40,7 +40,7 @@
 
 - Because we were split into different groups, different parts of the structure of the database were completed at different times so coordinating between the different parts was difficult.
 - There was miscommunication between the group and the partner which led to the partner being late to meetings. 
-- Sometimes it was hard to know if everyone had read a message, which created uncertainty as to whether everyone is on the same page. 
+- Sometimes it was hard to know if everyone had read a message/announcement, which created uncertainty as to whether everyone was on the same page. 
 
 
 

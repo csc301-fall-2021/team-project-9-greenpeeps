@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:green_peeps_app/models/question.dart';
-import 'package:green_peeps_app/questionnaire/response.dart';
-import 'package:green_peeps_app/questionnaire/build_question_card.dart';
+import 'package:green_peeps_app/questionnaire/build_question_form.dart';
 import 'package:flutter/foundation.dart';
 
 // rename to build question form
 
 class QuestionnaireCard extends StatefulWidget {
   final Question question;
-  final Response response;
 
-  const QuestionnaireCard(
-      {Key? key, required this.question, required this.response})
-      : super(key: key);
+  const QuestionnaireCard({Key? key, required this.question}) : super(key: key);
 
   @override
   _QuestionnaireCardState createState() => _QuestionnaireCardState();
@@ -44,7 +40,6 @@ class _QuestionnaireCardState extends State<QuestionnaireCard> {
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
               child: BuildQuestionForm(
                 question: widget.question,
-                response: widget.response,
               ),
             ),
             // Row(
