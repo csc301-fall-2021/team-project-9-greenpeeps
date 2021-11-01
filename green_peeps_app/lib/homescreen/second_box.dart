@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:green_peeps_app/homescreen/question_popup.dart';
@@ -91,16 +92,29 @@ class _SecondBoxState extends State<SecondBox> {
   Widget build(BuildContext context) {
     Stream<DocumentSnapshot> users = FirebaseFirestore.instance
         .collection('users')
-        .doc('nFSUjg7UBookPXllvk0d')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .snapshots();
 
+    int progressLeft;
+    double progressCompleted;
     return StreamBuilder<DocumentSnapshot>(
         stream: users,
         builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
             var userData = snapshot.data;
-            var progressLeft = userData!["progressLeft"];
-            var progressCompleted = userData["progressCompleted"];
+
+            if (userData!.data().toString().contains('progressLeft') == false) {
+              progressLeft = 0;
+            } else {
+              progressLeft = userData["progressLeft"];
+            }
+
+            if (userData.data().toString().contains('progressCompleted') ==
+                false) {
+              progressCompleted = 0;
+            } else {
+              progressCompleted = userData["progressCompleted"];
+            }
 
             return _buildSecondBox(context, _boxPadding, _boxElevation,
                 _boxColor, progressCompleted, progressLeft);
