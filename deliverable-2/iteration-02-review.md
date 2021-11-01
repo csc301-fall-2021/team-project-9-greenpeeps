@@ -6,8 +6,8 @@
 
 ## Iteration 02 - Review & Retrospect
 
- * When: Wednesday, October 27th, 2021 from 9pm to 10pm
- * Where: Online Zoom Meeting
+ * When: Thursday, October 28th, 2021 from 8pm to 9pm
+ * Where: During In-Person Tutorial in BA 1170
 
 ## Process - Reflection
 
@@ -22,12 +22,13 @@
 *Explain why (i.e. give a supporting argument) you consider a decision to be successful.*
 *Feel free to refer/link to process artifact(s).*
 
-- We have had different text channels and threads in our discord server to organize communication and ensure everything is easy to find. For instance, we have a channel for links which includes links such as a link to the Github, the figma, and packages. 
-- We split up into sub-teams for every main feature. Almost evenly split between login, initial questionnaire, and carbon emissions.
-- We forced branching by disallowing pushing to the main branch.
-- We have a shared google drive which contains our many documents for this project including deliverable 1 draft, deliverable 2, an agenda for what we will discuss in our partner meetings, and features.
+- We have excellent communication organization. 
+ - We have had different text channels and threads in our discord server to organize causual communication and ensure everything is easy to find. For instance, we have channels dedicated to each subteam, a channel for links which includes a link to the Github, the figma, packages used, and so on. 
+ - We have a when2meet and also know everyone’s schedules which was helpful in planning meetings and knowing availability. 
+ - We have a shared google drive which contains our many documents for this project including deliverable 1 draft, deliverable 2, an agenda for what we will discuss in our partner meetings, and features.
+- We split up into sub-teams for every main feature. Almost evenly split between login, initial questionnaire, and carbon emissions. This made it easier to complete the different features because we would reduce the need for big team meetings (which are difficult to schedule since everyone is quite busy).
+- We forced branching by disallowing pushing to the main branch to limit the amount of merge conflicts we will have to do and prevent possibly losing people's code.
 - We set soft integration deadlines to ensure that people start thinking about the code well before the deadline so even if that deadline is missed it is not a big deal.
-- We have a when2meet and also know everyone’s schedules which was helpful in planning meetings and knowing availability. 
 
 ### Q2. Decisions that did not turn out as well as we hoped
 
@@ -38,7 +39,7 @@
 *Explain why (i.e. give a supporting argument) you consider a decision to be unsuccessful*
 *Feel free to refer/link to process artifact(s).*
 
-- Because we were split into different groups, different parts of the structure of the database were completed at different times so coordinating between the different parts was difficult.
+- Since we were split into different groups, different parts of the structure of the database were completed at different times so coordinating between the different parts was difficult.
 - There was miscommunication between the group and the partner which led to the partner being late to meetings. 
 - Sometimes it was hard to know if everyone had read a message/announcement, which created uncertainty as to whether everyone was on the same page. 
 
@@ -66,16 +67,16 @@
 - How did you prepare your demo?
   - We set a deadline to have most features done before our meeting with our partner. We also had a meeting an hour before the meeting to make sure merging code goes smoothly and discuss the order that each subteam presents.
 - What did you manage to demo to your partner?
-  - We took our partner through our project. We started with the login page and showed him how to register an account. Then we went through the initial questionnaire which leads to the homepage which shows a user’s carbon emissions. Finally, we demonstrated logging into the database (would not work for faulty emails and passwords).
+  - We took our partner through our project. We started with the login page and showed him how to register an account. Then we went through the initial questionnaire which leads to the homepage which shows a user’s carbon emissions. Finally, we demonstrated logging into the database (noting that it would not work for faulty emails and passwords).
 - Did your partner accept the features?
-  - Yes, even offered to restructure his documents to match our firebase collections, as well as learn more leading to webpages.
+  - Yes, our partner even offered to restructure his excel documents to match the structure of our firebase collections, as well as accepting our future plans to have "learn more" lead to a webpage.
 - Were there change requests?
-  - Will update us with more categories Food Wastage, International Travel, etc.
-  - Change colours, specifically pie chart diagrams too (ex. Colours that match the categories (ex. Lightning and yellow)).
-  - Proper list of questions and impacts.
+  - Our partner discussed updating us with more categories Food Wastage, International Travel, etc.
+  - Change of colours, specifically pie chart diagrams too (suggesting we have colours that are easier to differentiate and which match the categories (ex. yellow for lightning, etc.)).
+  - Implementing a proper list of questions and impacts.
   - Signing in with Facebook, Google, and Apple 
 - What did you learn from the demo from either a process or product perspective?
-  - We learnt to merge code much earlier before the demo in case we run into any complications.
-  - To do a test demo before the real demo (because we invoked a bug).
+  - We learnt that in the future we should merge code much earlier before the demo so that we would not be stressed if we run into any complications.
+  - To reherse the demo together before the real demo so that we showcase everything that we want to.
 
  * *This section will be marked very leniently so keep it brief and just make sure the points are addressed*
