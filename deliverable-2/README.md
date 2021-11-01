@@ -12,8 +12,8 @@
 - Database Implementation
 - Users can create an account 
 - Users can log into their account and see a personalized homescreen
-- Users can fill out a questionnaire question whose value will be saved to their account
-- Users can see a visualization pie chart for carbon emissions(currently we are using dummy values, but for the next deliverable users will be able to see their responses visualized)
+- Users can fill out a questionnaire question whose value will be saved to their account (Note that this is saved to the database, but there is currently no feedback implemented so that users are able to see that data)
+- Users can see a visualization pie chart for carbon emissions as a guest(currently we are using dummy values, but for the next deliverable users will be able to see their responses visualized. For now, this is only available for guests navigating the app.)
 - The current features we have implemented for our application is the login page for regular users and guests, an initial questionnaire to get a basis of our user’s carbon emissions, and a visualization of their emissions (pie chart).
 
 ## Instructions:
@@ -28,9 +28,10 @@
 - When we get to the homescreen (currently no matter which option you choose above, you will be logged in as “Guest”), you will be able to see 4 boxes. 
   - Box 1: it just says “Welcome _insert_name_!”.
   - Box 2: it shows how many points you have and how many points you need to get to level up.
-    - If you click this box, it will take you to a pop-up display where you can choose to answer more questions which will give you more points (currently this part of getting points, and the popup in general is not completely implemented, as responses are not currently being. This will be completed for devliverable 3).
+    - If you click this box, it will take you to a pop-up display where you can choose to answer more questions which will give you more points (currently this part of getting points, and the popup in general is not completely implemented, as responses are not currently being saved. This will be completed for devliverable 3).
   - Box 3: it shows the pie diagram with all your carbon emission statistics. 
     - If you click this box, a pop-up box will show up with more details on your emissions such as which category contributes the most and some ways to reduce. 
+    - Note that you can only see the pie diagram if you are navigating the app as a guest. Users who have created an account and filled out the initial questionnaire do not yet have their carbon emissions visualized. 
   - Box 4: it shows a short fun fact of the day about the environment. 
     - If you click learn more, it would take you to an article about this fact (currently not implemented). 
 - There are other pages you can go to right now such as goal screen, profile etc but they are not implemented yet and just empty. It will be done for deliverable 3. 
