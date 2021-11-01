@@ -30,22 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final double _boxElevation = 5.0; // The height of shadow beneath box
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
 
-  // @override
-  // void initState() {
-  //   getData();
-  //   super.initState();
-  // }
-
-  // // Gets all the data on a user from the database
-  // void getData() async {
-  //   final DocumentSnapshot doc = await FirebaseFirestore.instance
-  //       .collection('users')
-  //       .doc('nFSUjg7UBookPXllvk0d')
-  //       .get();
-  //   carbonEmissions = Map<String, double>.from(doc.get("carbonEmissions"));
-  //   // userFirstName = doc.get("firstName");
-  // }
-
 // This popup includes a more detailed breakdown of carbon emissions
 // (you could use tabs or use a scrollable, etc. to fit more visuals)
   Widget _buildEmissionsPopup(BuildContext context, Color boxColor) {
@@ -85,34 +69,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // // First box when looking at boxes from top to bottom
-  // // (consider making each box its own dart file)
-  // Widget _buildFirstBox(BuildContext context, double boxPadding,
-  //     double boxElevation, Color boxColor, String userFirstName) {
-  //   return SliverList(
-  //     delegate: SliverChildBuilderDelegate(
-  //       (BuildContext context, int index) {
-  //         return Material(
-  //           color: boxColor,
-  //           elevation: boxElevation,
-  //           borderRadius: BorderRadius.circular(5.0),
-  //           child: Container(
-  //             padding: EdgeInsets.all(boxPadding),
-  //             child: Text(
-  //               "Welcome " + userFirstName + "!",
-  //               textAlign: TextAlign.left,
-  //               style: const TextStyle(
-  //                 fontSize: 28.0,
-  //                 fontWeight: FontWeight.bold,
-  //               ),
-  //             ),
-  //           ),
-  //         );
-  //       },
-  //       childCount: 1,
-  //     ),
-  //   );
-  // }
 
   Widget _buildThirdBox(BuildContext context, double boxPadding,
       double boxElevation, Color boxColor) {

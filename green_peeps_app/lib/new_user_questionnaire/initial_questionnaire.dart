@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:green_peeps_app/models/question.dart';
+import 'package:green_peeps_app/models/response.dart';
 import 'package:provider/provider.dart';
-import '../questionnaire/response.dart';
 import 'questionnaire_card.dart';
 
 class InitialQuestionnaire extends StatefulWidget {
@@ -17,8 +17,12 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (context) => QuestionListModel('F3Ct0WCqgIaAlkdrqE7X'),
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+              create: (context) => QuestionListModel('F3Ct0WCqgIaAlkdrqE7X')),
+          Provider(create: (context) => ResponseListModel())
+        ],
         child: SafeArea(
           child: Container(
             // decoration: BoxDecoration(
@@ -28,21 +32,25 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
             //         colors: [Colors.black, Colors.purple])),
             child: Scaffold(
               backgroundColor: Colors.transparent,
-              floatingActionButton: FloatingActionButton.extended(
-                onPressed: () {
-                  Navigator.popAndPushNamed(context, '/nav');
-                },
-                label: const Text(
-                  "Save & Quit",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontFamily: "Nunito",
-                    fontWeight: FontWeight.w700,
+              floatingActionButton: Consumer<ResponseListModel>(
+                  builder: (context, responseListModel, child) {
+                return FloatingActionButton.extended(
+                  onPressed: () {
+                    responseListModel.saveResponsesToStore();
+                    Navigator.popAndPushNamed(context, '/nav');
+                  },
+                  label: const Text(
+                    "Save & Quit",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontFamily: "Nunito",
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
-                ),
-                backgroundColor: Colors.green,
-              ),
+                  backgroundColor: Colors.green,
+                );
+              }),
               body: SingleChildScrollView(
                   child: Container(
                 decoration: BoxDecoration(
@@ -54,11 +62,8 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                     builder: (context, questionListModel, child) {
                   return Column(children: [
                     for (Question question in questionListModel.questionList)
-                      QuestionnaireCard(
-                          question: question,
-                          response:
-                              Response(userID: userID, qID: question.getId())),
-                    SizedBox(height: 800), // TODO remove
+                      QuestionnaireCard(question: question),
+                    SizedBox(height: 600) // TODO remove
                   ]);
                 }),
               )),

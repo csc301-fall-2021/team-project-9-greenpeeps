@@ -60,7 +60,7 @@ class _AppState extends State<MyApp> {
       theme: ThemeData(fontFamily: "Nunito"),
       initialRoute: '/welcome',
       routes: {
-        '/': (context) => Loading(),
+        // '/': (context) => Loading(),
         '/welcome': (context) => Welcome(),
         '/nav': (context) => Navigation(),
         '/login': (context) => Login(),

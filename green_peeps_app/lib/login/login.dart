@@ -31,7 +31,8 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
+        body: SingleChildScrollView(
+        child: Container(
             padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
             child: Form(
                 child: Column(
@@ -64,6 +65,6 @@ class _LoginState extends State<Login> {
                   },
                 )
               ],
-            ))));
+            )))));
   }
 }
