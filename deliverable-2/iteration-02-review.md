@@ -23,9 +23,9 @@
 *Feel free to refer/link to process artifact(s).*
 
 - We have excellent communication organization. 
- - We have had different text channels and threads in our discord server to organize causual communication and ensure everything is easy to find. For instance, we have channels dedicated to each subteam, a channel for links which includes a link to the Github, the figma, packages used, and so on. 
- - We have a when2meet and also know everyone’s schedules which was helpful in planning meetings and knowing availability. 
- - We have a shared google drive which contains our many documents for this project including deliverable 1 draft, deliverable 2, an agenda for what we will discuss in our partner meetings, and features.
+  - We have had different text channels and threads in our discord server to organize causual communication and ensure everything is easy to find. For instance, we have channels dedicated to each subteam, a channel for links which includes a link to the Github, the figma, packages used, and so on. 
+  - We have a when2meet and also know everyone’s schedules which was helpful in planning meetings and knowing availability. 
+  - We have a shared google drive which contains our many documents for this project including deliverable 1 draft, deliverable 2, an agenda for what we will discuss in our partner meetings, and features.
 - We split up into sub-teams for every main feature. Almost evenly split between login, initial questionnaire, and carbon emissions. This made it easier to complete the different features because we would reduce the need for big team meetings (which are difficult to schedule since everyone is quite busy).
 - We forced branching by disallowing pushing to the main branch to limit the amount of merge conflicts we will have to do and prevent possibly losing people's code.
 - We set soft integration deadlines to ensure that people start thinking about the code well before the deadline so even if that deadline is missed it is not a big deal.
