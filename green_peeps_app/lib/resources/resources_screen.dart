@@ -10,6 +10,6 @@ class ResourcesScreen extends StatefulWidget {
 class _ResourcesScreenState extends State<ResourcesScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text("Resources"));
+    return const Center(child: Text("Resources Test"));
   }
 }
