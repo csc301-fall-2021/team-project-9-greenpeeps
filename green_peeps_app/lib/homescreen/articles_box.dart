@@ -2,19 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class ResourcesBox extends StatefulWidget {
-  const ResourcesBox({Key? key}) : super(key: key);
+class ArticlesBox extends StatefulWidget {
+  const ArticlesBox({Key? key}) : super(key: key);
 
   @override
-  _ResourcesBoxState createState() => _ResourcesBoxState();
+  _ArticlesBoxState createState() => _ArticlesBoxState();
 }
 
-class _ResourcesBoxState extends State<ResourcesBox> {
+class _ArticlesBoxState extends State<ArticlesBox> {
   final double _boxPadding = 10.0;
   final double _boxElevation = 5.0; // The height of shadow beneath box
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
 
-  Widget _buildResourcesBox(
+  Widget _buildArticlesBox(
     BuildContext context, 
     double boxPadding,
     double boxElevation, 
@@ -29,7 +29,7 @@ class _ResourcesBoxState extends State<ResourcesBox> {
             child: Container(
               padding: EdgeInsets.all(boxPadding),
               child: const Text(
-                "Resources: Learn about climate change",
+                "Articles: Learn about climate change",
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: 28.0,
@@ -47,7 +47,7 @@ class _ResourcesBoxState extends State<ResourcesBox> {
   @override
   Widget build(BuildContext context) {
 
-    return _buildResourcesBox(context, _boxPadding, _boxElevation, _boxColor);
+    return _buildArticlesBox(context, _boxPadding, _boxElevation, _boxColor);
   }
 }
 

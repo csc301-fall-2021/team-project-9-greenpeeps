@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:green_peeps_app/homescreen/pie_diagram.dart';
 
 import 'package:green_peeps_app/homescreen/first_box.dart';
-import 'package:green_peeps_app/homescreen/resources_box.dart';
+import 'package:green_peeps_app/homescreen/articles_box.dart';
 import 'package:green_peeps_app/homescreen/second_box.dart';
 
 // Database Information (variables)
@@ -200,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const SliverPadding(
             padding:
                 EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 25),
-            sliver: ResourcesBox(),
+            sliver: ArticlesBox(),
           ),
         ],
       ),
