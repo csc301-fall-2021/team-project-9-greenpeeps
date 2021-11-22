@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirstBox extends StatefulWidget {
@@ -46,7 +47,7 @@ class _FirstBoxState extends State<FirstBox> {
   Widget build(BuildContext context) {
     Stream<DocumentSnapshot> users = FirebaseFirestore.instance
         .collection('users')
-        .doc('nFSUjg7UBookPXllvk0d')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .snapshots();
 
     return StreamBuilder<DocumentSnapshot>(

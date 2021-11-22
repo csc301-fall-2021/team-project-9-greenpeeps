@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 import '../services/response_firestore.dart';
@@ -20,7 +21,8 @@ class ResponseListModel {
   }
 
   Future<void> saveResponsesToStore() async {
-    String uID = "test_user"; // TODO: Fetch user from state
+    String uID =
+        FirebaseAuth.instance.currentUser!.uid; // TODO: Handle null case
     var futures = <Future>[];
     for (Response response in _responses) {
       futures.add(sendResponseToStore(uID, response));

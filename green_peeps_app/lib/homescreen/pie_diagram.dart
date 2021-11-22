@@ -1,6 +1,16 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+final Map<String, double> carbonEmissions = {
+  "Food": 0,
+  "Electricity": 0,
+  "Water": 0,
+  "Transportation": 0,
+};
 
 class PieDiagram extends StatelessWidget {
   PieDiagram({Key? key}) : super(key: key);
@@ -16,7 +26,7 @@ class PieDiagram extends StatelessWidget {
     Colors.teal.shade900
   ];
 
-  final Map<String, double> carbonEmissions = {
+  Map<String, double> carbonEmissions = {
     "Food": 0,
     "Electricity": 0,
     "Water": 0,
@@ -27,7 +37,7 @@ class PieDiagram extends StatelessWidget {
   Widget build(BuildContext context) {
     Stream<DocumentSnapshot> users = FirebaseFirestore.instance
         .collection('users')
-        .doc('nFSUjg7UBookPXllvk0d')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .snapshots();
 
     return StreamBuilder<DocumentSnapshot>(
@@ -35,8 +45,17 @@ class PieDiagram extends StatelessWidget {
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           var userData = snapshot.data;
-          Map<String, double> carbonEmissions =
-              Map<String, double>.from(userData!["carbonEmissions"]);
+
+          if (userData!.data().toString().contains('carbonEmissions') ==
+              false) {
+            carbonEmissions = {
+              "Food": 0,
+              "Electricity": 0,
+              "Transportation": 0,
+            };
+          } else {
+            carbonEmissions = Map<String, double>.from(userData['carbonEmissions']);
+          }
 
           return PieChart(
             dataMap: carbonEmissions,
