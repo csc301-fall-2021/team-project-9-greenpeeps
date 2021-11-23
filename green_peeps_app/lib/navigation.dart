@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // Import the different navigation bar screens
 import 'package:green_peeps_app/homescreen/home_screen.dart';
-import 'package:green_peeps_app/goals/goals_screen.dart';
+import 'package:green_peeps_app/habits/habits_screen.dart';
 import 'package:green_peeps_app/articles/articles_screen.dart';
 import 'package:green_peeps_app/profile/profile_screen.dart';
 
@@ -20,7 +20,7 @@ class _NavigationState extends State<Navigation> {
   // The different screen options for the center of the scaffold
   final List<Widget> _screenOptions = <Widget>[
     const HomeScreen(),
-    const GoalsScreen(),
+    const HabitsScreen(),
     const ArticlesScreen(),
     const ProfileScreen()
   ];
@@ -66,7 +66,7 @@ class _NavigationState extends State<Navigation> {
         ),
         items: <BottomNavigationBarItem>[
           _navButton('Home'),
-          _navButton('Goals'),
+          _navButton('Habits'),
           _navButton('Articles'),
           _navButton('Profile')
         ],
