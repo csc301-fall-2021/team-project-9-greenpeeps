@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:green_peeps_app/homescreen/question_popup.dart';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:green_peeps_app/homescreen/pie_diagram.dart';
 
 import 'package:green_peeps_app/homescreen/first_box.dart';
 import 'package:green_peeps_app/homescreen/articles_box.dart';
 import 'package:green_peeps_app/homescreen/second_box.dart';
+import 'package:green_peeps_app/homescreen/daily_questions_box.dart';
+import 'package:green_peeps_app/homescreen/daily_habits_box.dart';
 
 // Database Information (variables)
 String userFirstName = "";
@@ -15,8 +14,7 @@ Map<String, double> carbonEmissions = {
   'food': 0.0,
   'transportation': 0.0
 };
-const String _funFact =
-    "Did you know that some house centipedes are poisonous. Additionally, house centipedes can sometimes regenerate their legs if they have been cut off. Trust me, I know from experience!";
+const String _funFact = "Prawns are cannibals";
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -69,7 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
 
   Widget _buildThirdBox(BuildContext context, double boxPadding,
       double boxElevation, Color boxColor) {
@@ -181,15 +178,21 @@ class _HomeScreenState extends State<HomeScreen> {
         slivers: <Widget>[
           const SliverSafeArea(
             sliver: SliverPadding(
-              padding: EdgeInsets.only(
-                  left: 30, right: 30, top: 15, bottom: 0),
+              padding: EdgeInsets.only(left: 30, right: 30, top: 15, bottom: 0),
               sliver: FirstBox(),
             ),
           ),
           const SliverPadding(
-            padding:
-                EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
+            padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
             sliver: SecondBox(),
+          ),
+          const SliverPadding(
+            padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
+            sliver: DailyQuestionsBox(),
+          ),
+          const SliverPadding(
+            padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
+            sliver: DailyLogsBox(),
           ),
           SliverPadding(
             padding:
@@ -198,8 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 _buildThirdBox(context, _boxPadding, _boxElevation, _boxColor),
           ),
           const SliverPadding(
-            padding:
-                EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 25),
+            padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 25),
             sliver: ArticlesBox(),
           ),
         ],

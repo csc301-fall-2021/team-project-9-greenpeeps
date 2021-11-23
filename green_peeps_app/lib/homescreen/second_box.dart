@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:green_peeps_app/homescreen/question_popup.dart';
 
 class SecondBox extends StatefulWidget {
   const SecondBox({Key? key}) : super(key: key);
@@ -26,7 +25,10 @@ class _SecondBoxState extends State<SecondBox> {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
-          return ElevatedButton(
+          return Material(
+            color: boxColor,
+            elevation: boxElevation,
+            borderRadius: BorderRadius.circular(5.0),
             child: Container(
               padding: EdgeInsets.all(boxPadding),
               child: Column(
@@ -38,19 +40,11 @@ class _SecondBoxState extends State<SecondBox> {
                   Text(
                     "You are " +
                         progressLeft.toString() +
-                        " points away from your next leaf!",
+                        " seeds away from your next leaf!",
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                   Divider(
                       color: boxColor), // Adds some room between these widgets
-                  const Text(
-                    "Answer More Questions",
-                    style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
-                  Divider(color: boxColor),
                   ClipRRect(
                     // Used to make the bar round
                     borderRadius: BorderRadius.circular(10),
@@ -59,27 +53,11 @@ class _SecondBoxState extends State<SecondBox> {
                       valueColor:
                           const AlwaysStoppedAnimation<Color>(Colors.green),
                       value: progressCompleted,
-                      minHeight: 5,
+                      minHeight: 10,
                     ),
                   ),
                 ],
               ),
-            ),
-            onPressed: () {
-              showDialog(
-                barrierDismissible:
-                    false, // Users cannot click off the screen to close popup
-                context: context,
-                builder: (BuildContext context) {
-                  return const QuestionPopup();
-                },
-              );
-            },
-            style: ElevatedButton.styleFrom(
-              primary: boxColor,
-              elevation: boxElevation,
-              fixedSize: const Size(330, 145),
-              padding: const EdgeInsets.all(0),
             ),
           );
         },
