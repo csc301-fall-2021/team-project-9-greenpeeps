@@ -201,12 +201,14 @@ class _QuestionPopup extends State<QuestionPopup> {
               automaticallyImplyLeading: false, // No back arrow
               actions: <Widget>[
                 IconButton(
-                    padding: const EdgeInsets.all(0),
-                    onPressed: () {
-                      Navigator.of(context).pop(); // Closes popup
-                    },
-                    icon: const Icon(Icons.close),
-                    color: Colors.black)
+                  padding: const EdgeInsets.all(0),
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Closes popup
+                  },
+                  icon: const Icon(Icons.close),
+                  color: Colors.black,
+                  splashRadius: 15,
+                )
               ],
             ),
             Text(
@@ -286,20 +288,24 @@ class _QuestionPopup extends State<QuestionPopup> {
               automaticallyImplyLeading: false,
               actions: <Widget>[
                 IconButton(
-                    padding: const EdgeInsets.all(0),
-                    onPressed: () {
-                      _setIndex(setState, ""); // Go back
-                    },
-                    icon: const Icon(Icons.arrow_back_rounded),
-                    color: Colors.black),
+                  padding: const EdgeInsets.all(0),
+                  onPressed: () {
+                    _setIndex(setState, ""); // Go back
+                  },
+                  icon: const Icon(Icons.arrow_back_rounded),
+                  color: Colors.black,
+                  splashRadius: 15,
+                ),
                 const Spacer(),
                 IconButton(
-                    padding: const EdgeInsets.all(0),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    icon: const Icon(Icons.close_rounded),
-                    color: Colors.black)
+                  padding: const EdgeInsets.all(0),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: const Icon(Icons.close_rounded),
+                  color: Colors.black,
+                  splashRadius: 15,
+                )
               ],
             ),
             Divider(color: boxColor),
