@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:green_peeps_app/homescreen/pie_diagram.dart';
 
 import 'package:green_peeps_app/homescreen/first_box.dart';
+import 'package:green_peeps_app/homescreen/articles_box.dart';
 import 'package:green_peeps_app/homescreen/second_box.dart';
 
 // Database Information (variables)
@@ -116,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildFourthBox(BuildContext context, double boxPadding,
+  /*Widget _buildFourthBox(BuildContext context, double boxPadding,
       double boxElevation, Color boxColor, String funFact) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
@@ -128,6 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               padding: EdgeInsets.all(boxPadding),
               child: Column(
+                
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -168,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
         childCount: 1,
       ),
     );
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -195,11 +197,10 @@ class _HomeScreenState extends State<HomeScreen> {
             sliver:
                 _buildThirdBox(context, _boxPadding, _boxElevation, _boxColor),
           ),
-          SliverPadding(
+          const SliverPadding(
             padding:
-                const EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 25),
-            sliver: _buildFourthBox(
-                context, _boxPadding, _boxElevation, _boxColor, _funFact),
+                EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 25),
+            sliver: ArticlesBox(),
           ),
         ],
       ),
