@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // Import the different navigation bar screens
 import 'package:green_peeps_app/homescreen/home_screen.dart';
 import 'package:green_peeps_app/goals/goals_screen.dart';
-import 'package:green_peeps_app/resources/resources_screen.dart';
+import 'package:green_peeps_app/articles/articles_screen.dart';
 import 'package:green_peeps_app/profile/profile_screen.dart';
 
 class Navigation extends StatefulWidget {
@@ -21,7 +21,7 @@ class _NavigationState extends State<Navigation> {
   final List<Widget> _screenOptions = <Widget>[
     const HomeScreen(),
     const GoalsScreen(),
-    const ResourcesScreen(),
+    const ArticlesScreen(),
     const ProfileScreen()
   ];
 
@@ -67,7 +67,7 @@ class _NavigationState extends State<Navigation> {
         items: <BottomNavigationBarItem>[
           _navButton('Home'),
           _navButton('Goals'),
-          _navButton('Resources'),
+          _navButton('Articles'),
           _navButton('Profile')
         ],
         currentIndex: _currIndex,
