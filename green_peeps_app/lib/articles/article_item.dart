@@ -13,14 +13,42 @@ class ArticleItem extends StatefulWidget {
 }
 
 class _ArticleItem extends State<ArticleItem> {
+
   @override 
   Widget build(BuildContext context) {
     return Center(
-      child: InkWell(
-        child: 
-          Text(widget.title),
-          onTap: () => launch(widget.link)
-      ),
+      child: Stack(
+        children: <Widget>[
+          Container(
+            height: 200,
+            //color: Colors.amber[500],
+          ),
+          Container(
+            padding: const EdgeInsets.all(80),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(11.0),
+              image: const DecorationImage(
+                image: NetworkImage('https://images.ctfassets.net/hrltx12pl8hq/6TOyJZTDnuutGpSMYcFlfZ/4dfab047c1d94bbefb0f9325c54e08a2/01-nature_668593321.jpg?fit=fill&w=480&h=270'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            //color: Colors.amber[500],
+            child: Center(
+              child: InkWell(
+                child: 
+                  Text(
+                    widget.title,
+                    textAlign: TextAlign.center,
+                  ),
+                  onTap: () => launch(widget.link)
+              ),
+            ),
+          ),
+          
+        ], 
+      )
+      
         
     );
   }
