@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:green_peeps_app/habits/recommended_habit_item.dart';
+import 'dart:math';
 
 class RecommendedBox extends StatefulWidget {
   const RecommendedBox({Key? key}) : super(key: key);
@@ -28,7 +29,22 @@ class _RecommendedBoxState extends State<RecommendedBox> {
   }
 
   _getArticles(AsyncSnapshot<QuerySnapshot> snapshot) {
-    return snapshot.data!.docs.map((doc) => RecommendedHabitItem(title: doc["title"])).toList();
+    List<RecommendedHabitItem> habitsList = snapshot.data!.docs.map((doc) => RecommendedHabitItem(title: doc["title"], info: doc["info"], amount: doc["amount"], points: doc["points"],)).toList();
+
+    if (habitsList.length >= 4) { // if random selection needs to be made
+      List<RecommendedHabitItem> randomHabitsList = [];
+      // select 3 random habits
+      while (randomHabitsList.length <= 3) {
+        int _randInt = Random().nextInt(habitsList.length);
+        if (!randomHabitsList.contains(habitsList[_randInt])) {
+          randomHabitsList.add(habitsList[_randInt]);
+        }
+      }
+      return randomHabitsList;
+    } else {
+      return habitsList;
+    }
+    
   }
 
   // pass info to recommended habit item
