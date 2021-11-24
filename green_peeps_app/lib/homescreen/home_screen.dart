@@ -117,61 +117,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  /*Widget _buildFourthBox(BuildContext context, double boxPadding,
-      double boxElevation, Color boxColor, String funFact) {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) {
-          return Material(
-            color: boxColor,
-            elevation: boxElevation,
-            borderRadius: BorderRadius.circular(5.0),
-            child: Container(
-              padding: EdgeInsets.all(boxPadding),
-              child: Column(
-                
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  const Text(
-                    'Fun Fact of the Day',
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
-                  Text(
-                    funFact,
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                  Divider(color: boxColor),
-                  Row(
-                    children: <Widget>[
-                      const Spacer(),
-                      TextButton(
-                        child: const Text('Learn More'),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/learn_more');
-                        },
-                        style: TextButton.styleFrom(
-                          elevation: 5,
-                          primary: Colors.white,
-                          fixedSize: const Size(146, 42),
-                          backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-        childCount: 1,
-      ),
-    );
-  }*/
-
   @override
   Widget build(BuildContext context) {
     return Center(
