@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:green_peeps_app/habits/recommended_habit_dialogue.dart';
 
 class ExpandHabitDialogueButton extends StatefulWidget {
   final String title;
@@ -24,7 +25,12 @@ class _ExpandHabitDialogueButtonState extends State<ExpandHabitDialogueButton> {
       ),
       tooltip: 'Details about this habit',
       onPressed: () {
-        // pop dialogue
+        showDialog(
+          context: context,
+          builder: (context) {
+            return RecommendedHabitDialogue(title: widget.title, info: widget.info, amount: widget.amount, points: widget.points);
+          }
+        );
       },
     );
   }

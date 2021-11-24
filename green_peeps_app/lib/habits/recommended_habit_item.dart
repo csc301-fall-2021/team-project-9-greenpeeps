@@ -47,14 +47,5 @@ class _RecommendedHabitItemState extends State<RecommendedHabitItem> {
         )
       )
     );
-    
-    /*Column(
-      children: [
-        Text(widget.title),
-        Text(widget.info),
-        Text(widget.amount.toString()),
-        Text(widget.points.toString()),
-      ]
-    );*/
   }
 }
