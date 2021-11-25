@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:green_peeps_app/homescreen/pie_diagram.dart';
 
-import 'package:green_peeps_app/homescreen/first_box.dart';
+import 'package:green_peeps_app/homescreen/welcome_box.dart';
 import 'package:green_peeps_app/homescreen/articles_box.dart';
-import 'package:green_peeps_app/homescreen/second_box.dart';
+import 'package:green_peeps_app/homescreen/progress_box.dart';
 import 'package:green_peeps_app/homescreen/daily_questions_box.dart';
 import 'package:green_peeps_app/homescreen/daily_habits_box.dart';
 
@@ -124,12 +124,12 @@ class _HomeScreenState extends State<HomeScreen> {
           const SliverSafeArea(
             sliver: SliverPadding(
               padding: EdgeInsets.only(left: 30, right: 30, top: 15, bottom: 0),
-              sliver: FirstBox(),
+              sliver: WelcomeBox(),
             ),
           ),
           const SliverPadding(
             padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
-            sliver: SecondBox(),
+            sliver: ProgressBox(),
           ),
           const SliverPadding(
             padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
