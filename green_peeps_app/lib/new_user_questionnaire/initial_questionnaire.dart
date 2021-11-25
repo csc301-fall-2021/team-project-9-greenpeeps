@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:green_peeps_app/models/question.dart';
 import 'package:green_peeps_app/models/response.dart';
 import 'package:provider/provider.dart';
-import 'questionnaire_card.dart';
+import 'package:green_peeps_app/questionnaire/questionnaire_card.dart';
 
 class InitialQuestionnaire extends StatefulWidget {
   const InitialQuestionnaire({Key? key}) : super(key: key);
