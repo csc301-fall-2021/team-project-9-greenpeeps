@@ -6,23 +6,23 @@ import 'package:green_peeps_app/questionnaire/questionnaire_card.dart';
 
 class DailyQuestionQuestion extends StatefulWidget {
   final Question question;
-  const DailyQuestionQuestion({Key? key, required this.question}) : super(key: key);
+  final VoidCallback skipQuestion;
+  final VoidCallback saveQuestion;
+  const DailyQuestionQuestion({Key? key, required this.question,
+    required this.skipQuestion, required this.saveQuestion }) : super(key: key);
 
   @override
   _DailyQuestionQuestionState createState() => _DailyQuestionQuestionState();
 }
 
 class _DailyQuestionQuestionState extends State<DailyQuestionQuestion> {
-  final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
 
-  List<Question> questionList = [ Question(id: "q1", text: "Do you own a car?", fieldType: 1, type: 0,
-      tags: ["Travel"], answers: [Answer(text:"Yes" ), Answer(text:"No" )]),
-    Question(id: "q2", text: "What type of car do you have?",
-        fieldType: 2, type: 2, tags: ["Travel"],
-        answers: [Answer(text:"A good car" ), Answer(text:"A bad car" )]),
-    Question(id: "q3", text: "How far do you drive everyday?",
-        fieldType: 0, type: 1, tags: ["Travel"],
-        answers: [Answer(text:"default" )])];
+  _setProgress(setState){
+
+  }
+
+
+
   // TODO: based on the question, we will have a questionList that will update.
   // This is like initial questionnaire
   // Backend.. do your thinG!
@@ -42,31 +42,66 @@ class _DailyQuestionQuestionState extends State<DailyQuestionQuestion> {
             //         begin: Alignment.topCenter,
             //         end: Alignment.bottomCenter,
             //         colors: [Colors.black, Colors.purple])),
-            child: SingleChildScrollView(
-                child: Consumer<QuestionListModel>(
-                    builder: (context, questionListModel, child) {
-                      return Column(
-                        children: [ // TODO : progress bar,
-                          Column(children: [
-                            for (Question question in questionListModel.questionList)
-                              QuestionnaireCard(question: question)
-                          ]
+            child: Consumer<QuestionListModel>(
+                builder: (context, questionListModel, child) {
+                  return Container(
+                    height: 550,
+                    child: Column(
+                      children: [
+                        Container( // NOTE: questions are scollable but buttons are not!
+                          height: 500,
+                          child: SingleChildScrollView(
+                            child: Column(children: [
+                              for (Question question in questionListModel.questionList)
+                                QuestionnaireCard(question: question)
+                            ]
+                            ),
                           ),
-                          // TODO skip button // save and continue button
-                        ],
-                      );
-                    })),
+                        ),
+                        Spacer(),
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Row(
+                            children: [
+                            TextButton(
+                              child: const Text('Skip Question'),
+                              onPressed: () {
+                                widget.skipQuestion();
+                              },
+                              style: TextButton.styleFrom(
+                                primary: Colors.white,
+                                backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
+                                elevation: 5,
+                                fixedSize: const Size(146, 42),
+                              )
+                            ),
+                            Spacer(),
+                            TextButton(
+                              child: const Text('Save & Continue'),
+                              onPressed: () {
+                                widget.saveQuestion();
+                              },
+                              style: TextButton.styleFrom(
+                                primary: Colors.white,
+                                backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
+                                elevation: 5,
+                                fixedSize: const Size(146, 42),
+                              ),
+                            )
+
+                            ],
+                          ),
+                        )
+                        // TODO skip button // save and continue button
+                      ],
+                    ),
+                  );
+                }),
           ),
         ),
       );
 
-  //Consumer<ResponseListModel>(
-    //                   builder: (context, responseListModel, child) {
-    //                     return FloatingActionButton.extended(
-    //                       onPressed: () {
-    //                         responseListModel.saveResponsesToStore();
-    //                         Navigator.popAndPushNamed(context, '/nav');
-    //                       },
+
 
   }
 }

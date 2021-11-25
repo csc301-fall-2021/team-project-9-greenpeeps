@@ -6,8 +6,10 @@ typedef CategoryCallback = void Function(String category);
 class QuestionCategoryPopup extends StatefulWidget {
   final CategoryCallback setCategory;
   final List<String> categories;
+  final bool noMoreQuestions;
   const QuestionCategoryPopup({Key? key,
     required this.categories,
+    required this.noMoreQuestions,
     required this.setCategory}) : super(key: key);
 
   @override
@@ -46,7 +48,18 @@ class _QuestionCategoryPopupState extends State<QuestionCategoryPopup> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          // Text( TODO progress bar
+          Visibility(
+            visible: widget.noMoreQuestions,
+            child: Container(
+              child: const Text("There are no more questions available for this category, "
+                  "Please choose a new one",
+                style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),),
+            ),
+          // Text(
           //   "You are " +
           //       progressLeft.toString() +
           //       " points away from your next leaf!",

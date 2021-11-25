@@ -25,22 +25,18 @@ class _DailyQuestionsPopupState extends State<DailyQuestionsPopup> {
   String _currCategoryName = "";
   List<Question> questionList = [];
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
+  bool noMoreQuestions = false;
 
-  List<Question> _getQuestionList(){
-    return [ Question(id: "q1", text: "Do you own a car?", fieldType: 1, type: 0,
-        tags: ["Travel"], answers: [Answer(text:"Yes" ), Answer(text:"No" )]),
-      Question(id: "q2", text: "What type of car do you have?",
-          fieldType: 2, type: 2, tags: ["Travel"],
-          answers: [Answer(text:"A good car" ), Answer(text:"A bad car" )]),
-      Question(id: "q3", text: "How far do you drive everyday?",
-          fieldType: 0, type: 1, tags: ["Travel"],
-          answers: [Answer(text:"default" )])];
-  }
+  // TODO these values(below) should be pulled from and stored in the database actually
+  int _questionsDone = 0;
+  int _questionsTodo = 5;
 
+// tODO would it actually make more sense for this to just go back to the
+  // category page rather than last question? or go back a page?
   void _goBack(setState){
     setState(
       () {
-        _popupIndex -= 1;
+        _popupIndex = 0;
       })
     ;
   }
@@ -52,12 +48,16 @@ class _DailyQuestionsPopupState extends State<DailyQuestionsPopup> {
         if (_popupIndex == 0) {
           _popupIndex = 1;
           _currCategoryName = categoryName;
-          // pull from database list of questions
-          questionList = _getQuestionList();
 
-        } else {
+        } else if (_popupIndex < _popupViews.length - 1) {
+          print(_popupIndex);
+          print(_popupViews.length);
           _popupIndex += 1;
           // get the next question in list
+        } else {
+          // no more questions! try another category
+          _popupIndex = 0;
+          noMoreQuestions = true;
         }
       },
     );
@@ -73,7 +73,25 @@ class _DailyQuestionsPopupState extends State<DailyQuestionsPopup> {
   _getQuestionWidgets( questionList){
     List<Widget> questionWidgets = [];
     for (Question question in questionList) {
-      questionWidgets.add(DailyQuestionQuestion(question: question));
+      questionWidgets.add(Consumer<ResponseListModel>(
+          builder: (context, responseListModel, child) {
+            return DailyQuestionQuestion(question: question,
+                skipQuestion: () {
+                  setState(() {
+                    _nextQuestion(setState, _currCategoryName);
+                  });
+                },
+                saveQuestion: () {
+                  setState(() {
+                    _questionsDone += 1;
+                    responseListModel.saveResponsesToStore();
+                    _nextQuestion(setState, _currCategoryName);
+                    print("save!");
+                  });
+                });
+          }
+        )
+      );
     }
     return questionWidgets;
   }
@@ -98,8 +116,10 @@ class _DailyQuestionsPopupState extends State<DailyQuestionsPopup> {
                 setCategory: (String category){
                   _currCategoryName = category;
                   // setIndex to next question
+                  noMoreQuestions = false;
                   _nextQuestion(setState, category);
-                  }
+                  },
+                  noMoreQuestions: noMoreQuestions
                 ));
               // add questions to list as widgets
               List<Widget> questionPopups = _getQuestionWidgets(questionListModel.questionList);
@@ -146,6 +166,16 @@ class _DailyQuestionsPopupState extends State<DailyQuestionsPopup> {
                               )
                             ],
                           ),
+                          // ClipRRect( todo progress bar
+                          //   borderRadius: BorderRadius.circular(10),
+                          //   child: LinearProgressIndicator(
+                          //     backgroundColor: const Color.fromRGBO(180, 180, 180, 1),
+                          //     valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
+                          //     value: progressCompleted,
+                          //     minHeight: 10,
+                          //   ),
+                          // ),
+
                           _popupViews.elementAt(_popupIndex)],
                       ),
                     ),
@@ -157,4 +187,4 @@ class _DailyQuestionsPopupState extends State<DailyQuestionsPopup> {
   }
 }
 
-//
+
