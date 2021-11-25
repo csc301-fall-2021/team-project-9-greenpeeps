@@ -37,11 +37,6 @@ class _DailyQuestionQuestionState extends State<DailyQuestionQuestion> {
         ],
         child: SafeArea(
           child: Container(
-            // decoration: BoxDecoration(
-            //     gradient: LinearGradient(
-            //         begin: Alignment.topCenter,
-            //         end: Alignment.bottomCenter,
-            //         colors: [Colors.black, Colors.purple])),
             child: Consumer<QuestionListModel>(
                 builder: (context, questionListModel, child) {
                   return Container(
@@ -99,8 +94,6 @@ class _DailyQuestionQuestionState extends State<DailyQuestionQuestion> {
           ),
         ),
       );
-
-
 
   }
 }

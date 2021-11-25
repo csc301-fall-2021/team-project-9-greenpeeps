@@ -59,25 +59,6 @@ class _QuestionCategoryPopupState extends State<QuestionCategoryPopup> {
                         color: Colors.black),
                   ),),
             ),
-          // Text(
-          //   "You are " +
-          //       progressLeft.toString() +
-          //       " points away from your next leaf!",
-          //   style: const TextStyle(
-          //       fontSize: 20,
-          //       fontWeight: FontWeight.bold,
-          //       color: Colors.black),
-          // ),
-          // Divider(color: _boxColor),
-          // ClipRRect(
-          //   borderRadius: BorderRadius.circular(10),
-          //   child: LinearProgressIndicator(
-          //     backgroundColor: const Color.fromRGBO(180, 180, 180, 1),
-          //     valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
-          //     value: progressCompleted,
-          //     minHeight: 10,
-          //   ),
-          // ),
           Divider(color: _boxColor),
           const Text(
             "Receive 1 point per Question!",
