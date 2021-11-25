@@ -4,12 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class RecommendedHabitDialogue extends StatefulWidget {
+  final String hid;
   final String title;
   final String info;
   final int amount;
   final int points;
 
-  const RecommendedHabitDialogue({Key? key, required this.title, required this.info, required this.amount, required this.points}) : super(key: key);
+  const RecommendedHabitDialogue({Key? key, required this.hid, required this.title, required this.info, required this.amount, required this.points}) : super(key: key);
 
   @override
   _RecommendedHabitDialogueState createState() => _RecommendedHabitDialogueState();
@@ -28,6 +29,15 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
           maximumSize: const Size(120, 50),
           minimumSize: const Size(120, 50),
         );
+
+  // "nFSUjg7UBookPXllvk0d"
+  // FirebaseAuth.instance.currentUser!.uid
+
+  _generateHabitDict() {
+    Map<dynamic, dynamic> habitMap = <dynamic, dynamic>{'user_completed' : 0, 'completed': false};
+    // add with hid as key
+    return habitMap;
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -107,7 +117,47 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
                   ),
                   ElevatedButton(
                     style: style,
-                    onPressed: () {},
+                    onPressed: () => {
+                      // _addHabit();
+                      FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(FirebaseAuth.instance.currentUser!.uid)
+                      .get()
+                      .then((DocumentSnapshot snapshot) {
+                        // if user doesn't have habit_info
+                        if(!(snapshot.data().toString().contains("habit_info"))) {
+                          FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(FirebaseAuth.instance.currentUser!.uid)
+                          .set(
+                            {'habit_info' : '{}'}, 
+                            SetOptions(merge: true)
+                          ).then((onValue) {
+                            FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .update(
+                              {'habit_info.'+widget.hid : _generateHabitDict()},
+                            );
+                          });
+
+                        // if user already has habit_info
+                        } else {
+                          // firebase structure automatically prevents repeats additions with the same key
+                          // if doesn't already exist
+                          if (!(snapshot.get(FieldPath(const ["habit_info"])).toString().contains(widget.hid))) {
+                            FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .update(
+                              {'habit_info.'+widget.hid : _generateHabitDict()},
+                            );
+                          }
+                          
+                        }
+                      })                  
+                      
+                    },
                     child: const Text(
                       'Add this to My Habits',
                       textAlign: TextAlign.center

@@ -29,12 +29,12 @@ class _RecommendedBoxState extends State<RecommendedBox> {
   }
 
   _getArticles(AsyncSnapshot<QuerySnapshot> snapshot) {
-    List<RecommendedHabitItem> habitsList = snapshot.data!.docs.map((doc) => RecommendedHabitItem(title: doc["title"], info: doc["info"], amount: doc["amount"], points: doc["points"],)).toList();
+    List<RecommendedHabitItem> habitsList = snapshot.data!.docs.map((doc) => RecommendedHabitItem(hid: doc.id, title: doc["title"], info: doc["info"], amount: doc["amount"], points: doc["points"],)).toList();
 
     if (habitsList.length >= 4) { // if random selection needs to be made
       List<RecommendedHabitItem> randomHabitsList = [];
       // select 3 random habits
-      while (randomHabitsList.length <= 3) {
+      while (randomHabitsList.length < 3) {
         int _randInt = Random().nextInt(habitsList.length);
         if (!randomHabitsList.contains(habitsList[_randInt])) {
           randomHabitsList.add(habitsList[_randInt]);
