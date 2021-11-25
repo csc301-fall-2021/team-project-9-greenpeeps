@@ -45,11 +45,11 @@ class _DailyQuestionQuestionState extends State<DailyQuestionQuestion> {
             child: Consumer<QuestionListModel>(
                 builder: (context, questionListModel, child) {
                   return Container(
-                    height: 550,
+                    height: 515,
                     child: Column(
                       children: [
                         Container( // NOTE: questions are scollable but buttons are not!
-                          height: 500,
+                          height: 455,
                           child: SingleChildScrollView(
                             child: Column(children: [
                               for (Question question in questionListModel.questionList)
@@ -92,7 +92,6 @@ class _DailyQuestionQuestionState extends State<DailyQuestionQuestion> {
                             ],
                           ),
                         )
-                        // TODO skip button // save and continue button
                       ],
                     ),
                   );

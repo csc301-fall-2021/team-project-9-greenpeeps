@@ -25,11 +25,11 @@ class _DailyQuestionsPopupState extends State<DailyQuestionsPopup> {
   String _currCategoryName = "";
   List<Question> questionList = [];
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
-  bool noMoreQuestions = false;
+  bool _noMoreQuestions = false;
 
   // TODO these values(below) should be pulled from and stored in the database actually
   int _questionsDone = 0;
-  int _questionsTodo = 5;
+  final int _questionsTodo = 5;
 
 // tODO would it actually make more sense for this to just go back to the
   // category page rather than last question? or go back a page?
@@ -50,14 +50,12 @@ class _DailyQuestionsPopupState extends State<DailyQuestionsPopup> {
           _currCategoryName = categoryName;
 
         } else if (_popupIndex < _popupViews.length - 1) {
-          print(_popupIndex);
-          print(_popupViews.length);
           _popupIndex += 1;
           // get the next question in list
         } else {
           // no more questions! try another category
           _popupIndex = 0;
-          noMoreQuestions = true;
+          _noMoreQuestions = true;
         }
       },
     );
@@ -86,7 +84,6 @@ class _DailyQuestionsPopupState extends State<DailyQuestionsPopup> {
                     _questionsDone += 1;
                     responseListModel.saveResponsesToStore();
                     _nextQuestion(setState, _currCategoryName);
-                    print("save!");
                   });
                 });
           }
@@ -116,14 +113,15 @@ class _DailyQuestionsPopupState extends State<DailyQuestionsPopup> {
                 setCategory: (String category){
                   _currCategoryName = category;
                   // setIndex to next question
-                  noMoreQuestions = false;
+                  _noMoreQuestions = false;
                   _nextQuestion(setState, category);
                   },
-                  noMoreQuestions: noMoreQuestions
+                  noMoreQuestions: _noMoreQuestions
                 ));
               // add questions to list as widgets
               List<Widget> questionPopups = _getQuestionWidgets(questionListModel.questionList);
               _popupViews.addAll(questionPopups);
+
               return Dialog(
                   insetPadding: EdgeInsets.all(15),
                   backgroundColor: _boxColor,
@@ -166,15 +164,19 @@ class _DailyQuestionsPopupState extends State<DailyQuestionsPopup> {
                               )
                             ],
                           ),
-                          // ClipRRect( todo progress bar
-                          //   borderRadius: BorderRadius.circular(10),
-                          //   child: LinearProgressIndicator(
-                          //     backgroundColor: const Color.fromRGBO(180, 180, 180, 1),
-                          //     valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
-                          //     value: progressCompleted,
-                          //     minHeight: 10,
-                          //   ),
-                          // ),
+                          Container(height: 5),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                            child: ClipRRect( // todo progress bar
+                              borderRadius: BorderRadius.circular(10),
+                              child: LinearProgressIndicator(
+                                backgroundColor: const Color.fromRGBO(180, 180, 180, 1),
+                                valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
+                                value: (_questionsDone/_questionsTodo),
+                                minHeight: 15,
+                              ),
+                            ),
+                          ),
 
                           _popupViews.elementAt(_popupIndex)],
                       ),

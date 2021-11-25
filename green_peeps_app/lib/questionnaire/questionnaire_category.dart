@@ -41,9 +41,9 @@ class _QuestionCategoryPopupState extends State<QuestionCategoryPopup> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(_boxPadding + 5),
+      padding: EdgeInsets.symmetric(horizontal: _boxPadding + 5, vertical: _boxPadding),
       width: double.infinity,
-      height: 535,
+
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
