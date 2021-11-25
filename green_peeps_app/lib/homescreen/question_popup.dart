@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:green_peeps_app/questionnaire/build_question_form.dart';
 
 class QuestionPopup extends StatefulWidget {
   const QuestionPopup({Key? key}) : super(key: key);
@@ -177,7 +178,7 @@ class _QuestionPopup extends State<QuestionPopup> {
   }
 
   // The first view of the popups
-  Widget _buildQuestionPopupOne(BuildContext context, double boxPadding,
+  Widget _buildCategoryPopup(BuildContext context, double boxPadding,
       double progressCompleted, int progressLeft, Color boxColor) {
     return Dialog(
       backgroundColor: boxColor,
@@ -362,7 +363,7 @@ class _QuestionPopup extends State<QuestionPopup> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> _popupViews = <Widget>[
-      _buildQuestionPopupOne(
+      _buildCategoryPopup(
           context, _boxPadding, _progressCompleted, _progressLeft, _boxColor),
       _buildQuestionPopupTwo(
           context, _boxPadding, _progressCompleted, _progressLeft, _boxColor),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:green_peeps_app/homescreen/question_popup.dart';
+// import 'package:green_peeps_app/homescreen/question_popup.dart'; TODO remove
+import 'package:green_peeps_app/homescreen/daily_questions_popup.dart';
+
 
 class DailyQuestionsBox extends StatefulWidget {
   const DailyQuestionsBox({Key? key}) : super(key: key);
@@ -49,7 +51,7 @@ class _DailyQuestionsBoxState extends State<DailyQuestionsBox> {
                             false, // Users cannot click off the screen to close popup
                         context: context,
                         builder: (BuildContext context) {
-                          return const QuestionPopup();
+                          return const DailyQuestionsPopup();
                         },
                       );
                     },
