@@ -3,7 +3,9 @@ import 'package:green_peeps_app/questionnaire/questionnaire_category.dart';
 import 'package:green_peeps_app/questionnaire/questionnaire_question.dart';
 import 'package:green_peeps_app/models/question.dart';
 import 'package:green_peeps_app/models/response.dart';
+import 'package:green_peeps_app/homescreen/completed_daily_questions.dart';
 import 'package:provider/provider.dart';
+
 
 
 
@@ -29,7 +31,7 @@ class _DailyQuestionsPopupState extends State<DailyQuestionsPopup> {
 
   // TODO these values(below) should be pulled from and stored in the database actually
   int _questionsDone = 0;
-  final int _questionsTodo = 5;
+  final int _questionsTodo = 2;
 
 // tODO would it actually make more sense for this to just go back to the
   // category page rather than last question? or go back a page?
@@ -107,6 +109,21 @@ class _DailyQuestionsPopupState extends State<DailyQuestionsPopup> {
             builder: (context, questionListModel, child) {
               // clear list in ase there are already questions in the list
               _popupViews.clear();
+              if(_questionsDone == _questionsTodo){
+                _popupIndex = 0;
+                _popupViews.add(CompletedDailyQuestions(
+                  quit: (){
+                    Navigator.of(context).pop();
+                  },
+                  answerMore: (){
+                    _questionsDone += 1;
+                    setState((){
+                      _popupViews.clear();
+                      _popupIndex = 0;
+                    });
+                  }
+                ));
+              }
               // add category popup to list
               _popupViews.add(
                 QuestionCategoryPopup(categories: getCategories(),
@@ -118,6 +135,9 @@ class _DailyQuestionsPopupState extends State<DailyQuestionsPopup> {
                   },
                   noMoreQuestions: _noMoreQuestions
                 ));
+
+
+
               // add questions to list as widgets
               List<Widget> questionPopups = _getQuestionWidgets(questionListModel.questionList);
               _popupViews.addAll(questionPopups);

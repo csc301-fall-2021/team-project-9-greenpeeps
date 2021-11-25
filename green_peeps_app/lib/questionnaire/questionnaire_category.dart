@@ -50,14 +50,13 @@ class _QuestionCategoryPopupState extends State<QuestionCategoryPopup> {
         children: <Widget>[
           Visibility(
             visible: widget.noMoreQuestions,
-            child: Container(
-              child: const Text("There are no more questions available for this category, "
-                  "Please choose a new one",
-                style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),),
+            child: const Text("There are no more questions available for this category, "
+                "Please choose a new one",
+              style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54),
+                ),
             ),
           Divider(color: _boxColor),
           const Text(
