@@ -30,7 +30,9 @@ class _HabitTileInfoState extends State<HabitTileInfo> {
           ),
         ),
         const Expanded(
-          child: Divider(),
+          child: Divider(
+            color: Colors.transparent,
+          ),
         ),
         IconButton(
           splashRadius: 15,

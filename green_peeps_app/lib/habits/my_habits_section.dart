@@ -57,6 +57,9 @@ class _MyHabitsSectionState extends State<MyHabitsSection> {
                               habitNum: index + 1,
                               habitName: habitList[index],
                               habitDescription: "N/A"),
+                          Divider(
+                            color: Colors.grey,
+                          )
                         ],
                       ),
                     );

@@ -70,6 +70,9 @@ class _HabitsInProgressSectionState extends State<HabitsInProgressSection> {
                             userCompleted: 2,
                             userTotal: 10,
                           ),
+                          Divider(
+                            color: Colors.grey,
+                          ),
                         ],
                       ),
                     );
