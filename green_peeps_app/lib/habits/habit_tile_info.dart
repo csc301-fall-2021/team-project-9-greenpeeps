@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:green_peeps_app/habits/habit_tile_info_dialogue.dart';
 
 class HabitTileInfo extends StatefulWidget {
   final int habitNum;
   final String habitName;
+  final String habitDescription;
 
   const HabitTileInfo(
-      {Key? key, required this.habitNum, required this.habitName})
+      {Key? key,
+      required this.habitNum,
+      required this.habitName,
+      required this.habitDescription})
       : super(key: key);
 
   @override
@@ -25,11 +30,22 @@ class _HabitTileInfoState extends State<HabitTileInfo> {
           ),
         ),
         const Expanded(
-          child: Divider(),
+          child: Divider(
+            color: Colors.transparent,
+          ),
         ),
         IconButton(
           splashRadius: 15,
-          onPressed: () {},
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return HabitTileDialogue(
+                    habitName: widget.habitName,
+                    habitDescription: widget.habitDescription);
+              },
+            );
+          },
           icon: const Icon(
             Icons.short_text_rounded,
           ),
