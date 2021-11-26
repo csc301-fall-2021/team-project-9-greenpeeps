@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:green_peeps_app/habits/habit_tiles.dart';
+import 'package:green_peeps_app/habits/habit_tile_info.dart';
+
+List habitList = ["Turn off Computer", "Be Green", "Filler 1", "Filler 2"];
 
 class MyHabitsSection extends StatefulWidget {
   const MyHabitsSection({Key? key}) : super(key: key);
@@ -40,7 +42,26 @@ class _MyHabitsSectionState extends State<MyHabitsSection> {
                 color: const Color.fromRGBO(248, 244, 219, 1),
                 borderRadius: BorderRadius.circular(5.0),
                 elevation: 5,
-                child: HabitTiles(),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: habitList.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          HabitTileInfo(
+                            habitNum: index + 1,
+                            habitName: habitList[index],
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           );

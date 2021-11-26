@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:green_peeps_app/habits/habit_buttons.dart';
-import 'package:green_peeps_app/habits/habit_tiles.dart';
+import 'package:green_peeps_app/habits/habit_tile_info.dart';
+import 'package:green_peeps_app/habits/habit_tile_progress_bar.dart';
+
+List habitList = [
+  "Use Kettle",
+  "Turn off Lights",
+  "Recycle",
+];
 
 class HabitsInProgressSection extends StatefulWidget {
   const HabitsInProgressSection({Key? key}) : super(key: key);
@@ -44,7 +51,30 @@ class _HabitsInProgressSectionState extends State<HabitsInProgressSection> {
                 color: const Color.fromRGBO(248, 244, 219, 1),
                 borderRadius: BorderRadius.circular(5.0),
                 elevation: 5,
-                child: HabitTiles(),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: habitList.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          HabitTileInfo(
+                            habitNum: index + 1,
+                            habitName: habitList[index],
+                          ),
+                          HabitProgressBar(
+                            userCompleted: 2,
+                            userTotal: 10,
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           );
