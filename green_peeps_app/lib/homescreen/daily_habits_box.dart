@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:green_peeps_app/homescreen/log_habit_popup.dart';
+import 'package:green_peeps_app/homescreen/habits_popup.dart';
 
 class DailyLogsBox extends StatefulWidget {
   const DailyLogsBox({Key? key}) : super(key: key);
