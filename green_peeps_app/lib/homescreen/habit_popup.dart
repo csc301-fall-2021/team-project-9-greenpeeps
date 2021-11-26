@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HabitPopup extends StatefulWidget {
   const HabitPopup({Key? key}) : super(key: key);
@@ -46,24 +48,50 @@ class _HabitPopup extends State<HabitPopup> {
     if (_habitMap[habitID] == null) {
       _habitMap[habitID] = false;
     }
-    return CheckboxListTile(
-      title: Text(habitName),
-      activeColor: const Color.fromRGBO(0, 154, 6, 1),
-      controlAffinity: ListTileControlAffinity.leading,
-      value: _habitMap[habitID],
-      onChanged: (bool? value) {
-        setState(
-          () {
-            _habitMap[habitID] = value!;
-          },
-        );
-      },
-    );
+    return FutureBuilder<DocumentSnapshot>(
+        future: FirebaseFirestore.instance
+            .collection('habits')
+            .doc(habitName)
+            .get(),
+        builder:
+            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            Map<String, dynamic> data =
+                snapshot.data!.data() as Map<String, dynamic>;
+            return CheckboxListTile(
+              title: Text(data['title']),
+              activeColor: const Color.fromRGBO(0, 154, 6, 1),
+              controlAffinity: ListTileControlAffinity.leading,
+              value: _habitMap[habitID],
+              onChanged: (bool? value) {
+                setState(
+                  () {
+                    _habitMap[habitID] = value!;
+                  },
+                );
+              },
+            );
+          } else {
+            return CheckboxListTile(
+              title: const Text('None'),
+              activeColor: const Color.fromRGBO(0, 154, 6, 1),
+              controlAffinity: ListTileControlAffinity.leading,
+              value: _habitMap[habitID],
+              onChanged: (bool? value) {
+                setState(
+                  () {
+                    _habitMap[habitID] = value!;
+                  },
+                );
+              },
+            );
+          }
+        });
   }
 
   // The first view of the popups
   Widget _buildQuestionPopupOne(
-      BuildContext context, double boxPadding, Color boxColor) {
+      BuildContext context, double boxPadding, Color boxColor, List habitList) {
     return Dialog(
       backgroundColor: boxColor,
       shape: const RoundedRectangleBorder(
@@ -128,11 +156,33 @@ class _HabitPopup extends State<HabitPopup> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _popupViews = <Widget>[
-      _buildQuestionPopupOne(context, _boxPadding, _boxColor),
-    ];
-    return SingleChildScrollView(
-      child: _popupViews.elementAt(_popupIndex),
-    );
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+    return FutureBuilder<DocumentSnapshot>(
+        future: users.doc(FirebaseAuth.instance.currentUser!.uid).get(),
+        builder:
+            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            Map<String, dynamic> data =
+                snapshot.data!.data() as Map<String, dynamic>;
+            var habitInfo = data['habitInfo'];
+            var habitList = habitInfo.keys.toList();
+
+            List<Widget> _popupViews = <Widget>[
+              _buildQuestionPopupOne(context, _boxPadding, _boxColor, habitList),
+            ];
+
+            return SingleChildScrollView(
+              child: _popupViews.elementAt(_popupIndex),
+            );
+          } else {
+            List<Widget> _popupViews = <Widget>[
+              _buildQuestionPopupOne(context, _boxPadding, _boxColor, habitList),
+            ];
+            return SingleChildScrollView(
+              child: _popupViews.elementAt(_popupIndex),
+            );
+          }
+        });
   }
 }
