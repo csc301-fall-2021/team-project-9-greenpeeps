@@ -30,11 +30,17 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
           minimumSize: const Size(120, 50),
         );
 
-  // "nFSUjg7UBookPXllvk0d"
-  // FirebaseAuth.instance.currentUser!.uid
+  // dev testing: "nFSUjg7UBookPXllvk0d"
+  // prod: FirebaseAuth.instance.currentUser!.uid
 
   _generateHabitDict() {
     Map<dynamic, dynamic> habitMap = <dynamic, dynamic>{'user_completed' : 0, 'completed': false};
+    // add with hid as key
+    return habitMap;
+  }
+
+  _generateCompletedHabitDict() {
+    Map<dynamic, dynamic> habitMap = <dynamic, dynamic>{'user_completed' : 0, 'completed': true};
     // add with hid as key
     return habitMap;
   }
@@ -109,48 +115,81 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
                 children: <Widget>[
                   ElevatedButton(
                     style: style,
-                    onPressed: () {},
-                    child: const Text(
-                      'I already added this Habit',
-                      textAlign: TextAlign.center,
-                      ),
-                  ),
-                  ElevatedButton(
-                    style: style,
-                    onPressed: () => {
-                      // _addHabit();
+                    onPressed: () {
                       FirebaseFirestore.instance
                       .collection('users')
                       .doc(FirebaseAuth.instance.currentUser!.uid)
                       .get()
                       .then((DocumentSnapshot snapshot) {
-                        // if user doesn't have habit_info
-                        if(!(snapshot.data().toString().contains("habit_info"))) {
+                        // if habitInfo doesn't exist yet
+                        if(!(snapshot.data().toString().contains("habitInfo"))) {
                           FirebaseFirestore.instance
                           .collection('users')
                           .doc(FirebaseAuth.instance.currentUser!.uid)
                           .set(
-                            {'habit_info' : '{}'}, 
+                            {'habitInfo' : '{}'}, 
                             SetOptions(merge: true)
                           ).then((onValue) {
                             FirebaseFirestore.instance
                             .collection('users')
                             .doc(FirebaseAuth.instance.currentUser!.uid)
                             .update(
-                              {'habit_info.'+widget.hid : _generateHabitDict()},
+                              {'habitInfo.'+widget.hid : _generateCompletedHabitDict()},
                             );
                           });
 
-                        // if user already has habit_info
+                        // if user already has habitInfo
                         } else {
-                          // firebase structure automatically prevents repeats additions with the same key
-                          // if doesn't already exist
-                          if (!(snapshot.get(FieldPath(const ["habit_info"])).toString().contains(widget.hid))) {
+                          // update the appropriate habit inside habitInfo
                             FirebaseFirestore.instance
                             .collection('users')
                             .doc(FirebaseAuth.instance.currentUser!.uid)
                             .update(
-                              {'habit_info.'+widget.hid : _generateHabitDict()},
+                              {'habitInfo.'+widget.hid : _generateCompletedHabitDict()},
+                            );
+                        }
+                      });
+                    },
+                    child: const Text(
+                      'I already preform this habit in my life',
+                      textAlign: TextAlign.center,
+                      ),
+                  ),
+                  ElevatedButton(
+                    style: style,
+                    onPressed: () => {
+                      FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(FirebaseAuth.instance.currentUser!.uid)
+                      .get()
+                      .then((DocumentSnapshot snapshot) {
+                        // if user doesn't have habitInfo
+                        if(!(snapshot.data().toString().contains("habitInfo"))) {
+                          FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(FirebaseAuth.instance.currentUser!.uid)
+                          .set(
+                            {'habitInfo' : '{}'}, 
+                            SetOptions(merge: true)
+                          ).then((onValue) {
+                            FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .update(
+                              {'habitInfo.'+widget.hid : _generateHabitDict()},
+                            );
+                          });
+
+                        // if user already has habitInfo
+                        } else {
+                          // firebase structure automatically prevents repeats additions with the same key
+                          // if doesn't already exist
+                          if (!(snapshot.get(FieldPath(const ["habitInfo"])).toString().contains(widget.hid))) {
+                            FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .update(
+                              {'habitInfo.'+widget.hid : _generateHabitDict()},
                             );
                           }
                           
@@ -159,7 +198,7 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
                       
                     },
                     child: const Text(
-                      'Add this to My Habits',
+                      'Add this to Habits In Progress',
                       textAlign: TextAlign.center
                     ),
                   ),
