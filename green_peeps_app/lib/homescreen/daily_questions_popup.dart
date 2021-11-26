@@ -187,7 +187,7 @@ class _DailyQuestionsPopupState extends State<DailyQuestionsPopup> {
                           Container(height: 5),
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                            child: ClipRRect( // todo progress bar
+                            child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: LinearProgressIndicator(
                                 backgroundColor: const Color.fromRGBO(180, 180, 180, 1),

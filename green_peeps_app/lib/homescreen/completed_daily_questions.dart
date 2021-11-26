@@ -20,17 +20,11 @@ class _CompletedDailyQuestionsState extends State<CompletedDailyQuestions> {
       child: Column(
         children:  [
           Spacer(),
-          Text("Thank you for completing all of your daily questions.",
+          Text("Thank you for completing all of your daily questions."
+            "You have recieved XX seeds!",
             textAlign: TextAlign.center,
             style: TextStyle(
 
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black),
-          ),
-          Text("You have recieved XX seeds!",
-            textAlign: TextAlign.center,
-            style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.black),
