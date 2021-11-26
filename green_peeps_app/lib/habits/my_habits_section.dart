@@ -54,9 +54,9 @@ class _MyHabitsSectionState extends State<MyHabitsSection> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           HabitTileInfo(
-                            habitNum: index + 1,
-                            habitName: habitList[index],
-                          ),
+                              habitNum: index + 1,
+                              habitName: habitList[index],
+                              habitDescription: "N/A"),
                         ],
                       ),
                     );

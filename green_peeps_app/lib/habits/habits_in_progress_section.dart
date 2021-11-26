@@ -63,9 +63,9 @@ class _HabitsInProgressSectionState extends State<HabitsInProgressSection> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           HabitTileInfo(
-                            habitNum: index + 1,
-                            habitName: habitList[index],
-                          ),
+                              habitNum: index + 1,
+                              habitName: habitList[index],
+                              habitDescription: "TBD"),
                           HabitProgressBar(
                             userCompleted: 2,
                             userTotal: 10,
