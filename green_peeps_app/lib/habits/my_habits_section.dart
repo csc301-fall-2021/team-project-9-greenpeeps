@@ -19,13 +19,22 @@ class _MyHabitsSectionState extends State<MyHabitsSection> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Text(
-                "My Habits",
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const Text(
+                    "My Habits",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Icon(
+                    Icons.auto_awesome_rounded,
+                  ),
+                ],
               ),
               Material(
                 color: const Color.fromRGBO(248, 244, 219, 1),
