@@ -63,7 +63,7 @@ class _WelcomeState extends State<Welcome> {
             child: OutlinedButton(
               style: style,
               onPressed: () {
-                Navigator.pushNamed(context, '/new');
+                Navigator.pushNamed(context, '/init_questionnaire');
               },
               child: const Text('> Where am I? \n[new user]\n'),
             ),

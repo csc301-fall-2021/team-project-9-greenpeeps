@@ -24,13 +24,16 @@ class _QuestionnaireCardState extends State<QuestionnaireCard> {
         Container(
           width: double.infinity,
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-          child: Text(
-            widget.question.text,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-              fontFamily: "Nunito",
-              fontWeight: FontWeight.w700,
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: Text(
+              widget.question.text,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontFamily: "Nunito",
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
         ),
