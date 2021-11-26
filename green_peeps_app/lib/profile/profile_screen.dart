@@ -11,6 +11,7 @@ class _ProfileState extends State<ProfileScreen> {
   final double _boxPadding = 10.0;
   final double _boxElevation = 5.0; // The height of shadow beneath box
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
+  final isVisible = true;
 
   Widget _buildFirstBox(BuildContext context, double boxPadding,
       double boxElevation, Color boxColor, String userFirstName) {
@@ -89,6 +90,60 @@ class _ProfileState extends State<ProfileScreen> {
     );
   }
 
+  Widget _buildThirdBox(BuildContext context, double boxPadding,
+      double boxElevation, Color boxColor, bool isVisible) {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          return Material(
+              color: boxColor,
+              elevation: boxElevation,
+              borderRadius: BorderRadius.circular(5.0),
+              child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      print(isVisible);
+                      isVisible = !isVisible;
+                      print(isVisible);
+                    });
+                  },
+                  child: Visibility(
+                      visible: isVisible,
+                      child: Column(children: [
+                        Container(
+                          padding: EdgeInsets.all(boxPadding),
+                          child: Text(
+                            "Achievements",
+                            textAlign: TextAlign.left,
+                            style: const TextStyle(
+                              fontSize: 28.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Container(
+                            padding: EdgeInsets.all(boxPadding),
+                            child: Row(children: [
+                              Container(
+                                  padding: EdgeInsets.all(boxPadding),
+                                  child: Image(
+                                      image: AssetImage("images/Habits.png"),
+                                      height: 50,
+                                      width: 50)),
+                              Container(
+                                  padding: EdgeInsets.all(boxPadding),
+                                  child: Image(
+                                      image: AssetImage("images/Profile.png"),
+                                      height: 50,
+                                      width: 50))
+                            ])),
+                      ]))));
+        },
+        childCount: 1,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -104,6 +159,11 @@ class _ProfileState extends State<ProfileScreen> {
         padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
         sliver:
             _buildSecondBox(context, _boxPadding, _boxElevation, _boxColor, 32),
+      ),
+      SliverPadding(
+        padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
+        sliver: _buildThirdBox(
+            context, _boxPadding, _boxElevation, _boxColor, isVisible),
       )
     ]));
   }
