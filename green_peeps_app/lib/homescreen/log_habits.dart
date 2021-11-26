@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:green_peeps_app/services/habit_firestore.dart';
 
 class LogHabits extends StatefulWidget {
   final VoidCallback saveHabits;
@@ -23,7 +24,7 @@ class _LogHabitsState extends State<LogHabits> {
       setState(() {
         habitKeys = result;
         for (var key in habitKeys) {
-          getHabitTitles(key).then((r) {
+          getHabitFromStore(key).then((r) {
             setState(() {
               habitList.add(r);
             });
@@ -33,6 +34,7 @@ class _LogHabitsState extends State<LogHabits> {
     });
   }
 
+  // Fetch Habit IDs from user's habit list
   getHabitKeys() async {
     var userSnapshot = await FirebaseFirestore.instance
         .collection('users')
@@ -41,16 +43,6 @@ class _LogHabitsState extends State<LogHabits> {
     if (userSnapshot.exists) {
       habitKeys = userSnapshot['habitInfo'].keys.toList();
       return habitKeys;
-    } else {
-      return null;
-    }
-  }
-
-  getHabitTitles(key) async {
-    var habitSnapshot =
-        await FirebaseFirestore.instance.collection('habits').doc(key).get();
-    if (habitSnapshot.exists) {
-      return habitSnapshot['title'];
     } else {
       return null;
     }
@@ -92,7 +84,7 @@ class _LogHabitsState extends State<LogHabits> {
           child: SingleChildScrollView(
             child: Column(children: [
               for (var i = 0; i < habitList.length; i++)
-                _makeHabitCheckbox(setState, habitList[i], i),
+                _makeHabitCheckbox(setState, habitList[i].title, i),
             ]),
           ),
         ),
