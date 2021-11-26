@@ -23,15 +23,15 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
     "B)))"
   ];
 
-  Widget _makeHabitCheckbox(setState, String habitName, int habitID) {
+  Widget _makeHabitSwitchList(setState, String habitName, int habitID) {
     if (_habitMap[habitID] == null) {
       _habitMap[habitID] = false;
     }
-    return CheckboxListTile(
+    return SwitchListTile(
       title: Text(habitName),
       activeColor: const Color.fromRGBO(0, 154, 6, 1),
       controlAffinity: ListTileControlAffinity.leading,
-      value: _habitMap[habitID],
+      value: _habitMap[habitID]!,
       onChanged: (bool? value) {
         setState(
           () {
@@ -41,7 +41,7 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
                 count++;
               }
             }
-            if (count < 4 || value == false) {
+            if (count < 5 || value == false) {
               _habitMap[habitID] = value!;
             }
           },
@@ -105,7 +105,7 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: const Text(
-                  "Limit: 10",
+                  "Limit: 5",
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontSize: 18.0,
@@ -118,7 +118,7 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
                 child: SingleChildScrollView(
                   child: Column(children: [
                     for (var i = 0; i < habitList.length; i++)
-                      _makeHabitCheckbox(setState, habitList[i], i),
+                      _makeHabitSwitchList(setState, habitList[i], i),
                   ]),
                 ),
               ),
