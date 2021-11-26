@@ -1,11 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:green_peeps_app/homescreen/pie_diagram.dart';
-
-import 'package:green_peeps_app/homescreen/first_box.dart';
-import 'package:green_peeps_app/homescreen/articles_box.dart';
-import 'package:green_peeps_app/homescreen/second_box.dart';
-import 'package:green_peeps_app/homescreen/daily_questions_box.dart';
-import 'package:green_peeps_app/homescreen/daily_habits_box.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -45,9 +38,51 @@ class _ProfileState extends State<ProfileScreen> {
                     child: Container(
                       padding: EdgeInsets.all(150.0),
                       decoration: BoxDecoration(
-                          color: Colors.orange, shape: BoxShape.circle),
+                          image: DecorationImage(
+                              image: AssetImage('images/Ellipse1.png')),
+                          color: Colors.orange,
+                          shape: BoxShape.circle),
                     )),
               ]));
+        },
+        childCount: 1,
+      ),
+    );
+  }
+
+  Widget _buildSecondBox(BuildContext context, double boxPadding,
+      double boxElevation, Color boxColor, int userScore) {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          return Material(
+              color: boxColor,
+              elevation: boxElevation,
+              borderRadius: BorderRadius.circular(5.0),
+              child: Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(boxPadding),
+                    child: Text(
+                      userScore.toString(),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 48.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Container(
+                      padding: EdgeInsets.all(boxPadding),
+                      child: Image(
+                        image: AssetImage("images/Leaf.png"),
+                        height: 75,
+                        width: 75,
+                        alignment: Alignment.center,
+                      ))
+                ],
+                mainAxisAlignment: MainAxisAlignment.center,
+              ));
         },
         childCount: 1,
       ),
@@ -60,11 +95,16 @@ class _ProfileState extends State<ProfileScreen> {
         child: CustomScrollView(slivers: <Widget>[
       SliverSafeArea(
         sliver: SliverPadding(
-          padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 25),
+          padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
           sliver: _buildFirstBox(
               context, _boxPadding, _boxElevation, _boxColor, "Hayden"),
         ),
       ),
+      SliverPadding(
+        padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
+        sliver:
+            _buildSecondBox(context, _boxPadding, _boxElevation, _boxColor, 32),
+      )
     ]));
   }
 }
