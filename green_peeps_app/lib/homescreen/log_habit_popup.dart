@@ -73,7 +73,7 @@ class _LogHabitPopup extends State<LogHabitPopup> {
             );
           } else {
             return CheckboxListTile(
-              title: const Text('None'),
+              title: const Text(''),
               activeColor: const Color.fromRGBO(0, 154, 6, 1),
               controlAffinity: ListTileControlAffinity.leading,
               value: _habitMap[habitID],
@@ -187,7 +187,7 @@ class _LogHabitPopup extends State<LogHabitPopup> {
             );
           } else {
             List<Widget> _popupViews = <Widget>[
-              _buildQuestionPopupOne(context, _boxPadding, _boxColor, habitList),
+              _buildQuestionPopupOne(context, _boxPadding, _boxColor, []),
             ];
             return SingleChildScrollView(
               child: _popupViews.elementAt(_popupIndex),
