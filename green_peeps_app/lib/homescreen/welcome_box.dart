@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FirstBox extends StatefulWidget {
-  const FirstBox({Key? key}) : super(key: key);
+class WelcomeBox extends StatefulWidget {
+  const WelcomeBox({Key? key}) : super(key: key);
 
   @override
-  _FirstBoxState createState() => _FirstBoxState();
+  _WelcomeBoxState createState() => _WelcomeBoxState();
 }
 
-class _FirstBoxState extends State<FirstBox> {
+class _WelcomeBoxState extends State<WelcomeBox> {
   // Box Variables
   final double _boxPadding = 10.0;
   final double _boxElevation = 5.0; // The height of shadow beneath box

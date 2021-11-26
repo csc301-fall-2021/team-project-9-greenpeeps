@@ -17,7 +17,7 @@ class BuildQuestionForm extends StatefulWidget {
 
 class _BuildQuestionFormState extends State<BuildQuestionForm> {
   @override
-  double width = 200;
+  double width = 175;
 
   // static String dropDownValue = widget.question.getAnswers()[0];
   // TODO make radio button question type

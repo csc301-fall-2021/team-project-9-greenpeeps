@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class HabitPopup extends StatefulWidget {
-  const HabitPopup({Key? key}) : super(key: key);
+class LogHabitPopup extends StatefulWidget {
+  const LogHabitPopup({Key? key}) : super(key: key);
 
   @override
-  _HabitPopup createState() => _HabitPopup();
+  _LogHabitPopup createState() => _LogHabitPopup();
 }
 
-class _HabitPopup extends State<HabitPopup> {
+class _LogHabitPopup extends State<LogHabitPopup> {
   // Current index of which popup view to look at
   int _popupIndex = 0;
 
@@ -93,6 +93,7 @@ class _HabitPopup extends State<HabitPopup> {
   Widget _buildQuestionPopupOne(
       BuildContext context, double boxPadding, Color boxColor, List habitList) {
     return Dialog(
+      insetPadding: EdgeInsets.all(15),
       backgroundColor: boxColor,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -102,8 +103,8 @@ class _HabitPopup extends State<HabitPopup> {
       child: Container(
         padding: EdgeInsets.all(boxPadding + 5),
         width: double.infinity,
-        height: 535,
-        child: ListView(
+        height: 600,
+        child: Column(
           children: <Widget>[
             AppBar(
               elevation: 0,
@@ -130,9 +131,18 @@ class _HabitPopup extends State<HabitPopup> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            for (var i = 0; i < habitList.length; i++)
-              _makeHabitCheckbox(setState, habitList[i], i),
-            const Expanded(child: Divider()),
+            Container(
+              height: 415,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    for (var i = 0; i < habitList.length; i++)
+                    _makeHabitCheckbox(setState, habitList[i], i),
+                  ]
+                ),
+              ),
+            ),
+            // const Expanded(child: Divider()),
             Row(
               children: <Widget>[
                 const Spacer(),

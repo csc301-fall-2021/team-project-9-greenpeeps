@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:green_peeps_app/homescreen/habit_popup.dart';
+import 'package:green_peeps_app/homescreen/log_habit_popup.dart';
 
 class DailyLogsBox extends StatefulWidget {
   const DailyLogsBox({Key? key}) : super(key: key);
@@ -49,7 +49,7 @@ class _DailyLogsBoxState extends State<DailyLogsBox> {
                             false, // Users cannot click off the screen to close popup
                         context: context,
                         builder: (BuildContext context) {
-                          return const HabitPopup();
+                          return const LogHabitPopup();
                         },
                       );
                     },
