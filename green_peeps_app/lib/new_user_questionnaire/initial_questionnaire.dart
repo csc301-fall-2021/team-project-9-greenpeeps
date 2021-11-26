@@ -46,59 +46,60 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                     colors: [Colors.black, Colors.purple])),
             child: Scaffold(
               backgroundColor: Colors.transparent,
+              floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
               floatingActionButton: Consumer<ResponseListModel>(
                   builder: (context, responseListModel, child) {
                 return Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  // alignment: Alignment.bottomCenter,
+                  padding: EdgeInsets.all(10),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      FloatingActionButton.extended(
-                        heroTag: null,
-                        onPressed: () {
-                          // TODO skip question / add new question to list
-                          // note that this would have to somehow tell build_question_card
-                          // to no longer accept questions
-                          // or you need to insert the follow up questions from the skipped question
-                          // above new questions if the user decides to answer the skipped question
-                          // after they said they want to skip it
-                          // please as eryka for clarification
-                      },
-                        label: const Text(
-                          "Skip Question",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontFamily: "Nunito",
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        backgroundColor: Colors.green,
-                        ),
-                      Spacer(),
-                      FloatingActionButton.extended(
-                        onPressed: () {
-                        responseListModel.saveResponsesToStore();
-                        Navigator.popAndPushNamed(context, '/nav');
+                      // fit: StackFit.expand,
+                      children: [
+                        FloatingActionButton.extended(
+                          heroTag: null,
+                          onPressed: () {
+                            // TODO skip question / add new question to list
+                            // note that this would have to somehow tell build_question_card
+                            // to no longer accept questions
+                            // or you need to insert the follow up questions from the skipped question
+                            // above new questions if the user decides to answer the skipped question
+                            // after they said they want to skip it
+                            // please ask eryka for clarification
                         },
-                        heroTag: null,
-                        label: const Text(
-                        "Save & Quit",
-                        style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontFamily: "Nunito",
-                        fontWeight: FontWeight.w700,
-                        ),
-                        ),
-                        backgroundColor: Colors.green,
-                        )
-                    ],
-                  ),
+                          label: const Text(
+                            "Skip Question",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontFamily: "Nunito",
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          backgroundColor: Colors.green,
+                          ),
+                        Spacer(),
+                        FloatingActionButton.extended(
+                          onPressed: () {
+                          responseListModel.saveResponsesToStore();
+                          Navigator.popAndPushNamed(context, '/nav');
+                          },
+                          heroTag: null,
+                          label: const Text(
+                          "Save & Quit",
+                          style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontFamily: "Nunito",
+                          fontWeight: FontWeight.w700,
+                          ),
+                          ),
+                          backgroundColor: Colors.green,
+                          )
+                      ],
+                    ),
                 );
+                }
+                  ),
 
-              }),
               body: SingleChildScrollView(
                   child: Container(
                 decoration: BoxDecoration(
@@ -121,7 +122,7 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                       ),
                       // for (Question question in questionListModel.questionList)
                       //   QuestionnaireCard(question: question),
-                      SizedBox(height: 75)
+                      SizedBox(height: 90)
                     ]),
                   );
                 }),
