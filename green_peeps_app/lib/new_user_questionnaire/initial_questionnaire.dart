@@ -16,18 +16,30 @@ class InitialQuestionnaire extends StatefulWidget {
 class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
   @override
   String userID = "u1";
-  final _controller = ScrollController();
+  ScrollController _controller = ScrollController();
+
+  void _ScrollDown(){
+    if(_controller.hasClients){
+      _controller.animateTo(
+        _controller.position.maxScrollExtent,
+        duration: Duration(milliseconds: 100),
+        curve: Curves.ease,
+      );
+      print("Scroll!!!");
+      print( _controller.position.maxScrollExtent);
+    };
+  }
+
+  @override
+  void initState() {
+    _controller = ScrollController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     // this does not work rn :/ TODO
-    if(_controller.hasClients){
-      _controller.animateTo(
-        _controller.position.maxScrollExtent,
-        duration: Duration(seconds: 0),
-        curve: Curves.fastOutSlowIn,
-      );
-    };
+    _ScrollDown();
 
     return MultiProvider(
         providers: [
@@ -64,6 +76,7 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                             // above new questions if the user decides to answer the skipped question
                             // after they said they want to skip it
                             // please ask eryka for clarification
+                            _ScrollDown();
                         },
                           label: const Text(
                             "Skip Question",
@@ -84,13 +97,13 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                           },
                           heroTag: null,
                           label: const Text(
-                          "Save & Quit",
-                          style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontFamily: "Nunito",
-                          fontWeight: FontWeight.w700,
-                          ),
+                            "Save & Quit",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontFamily: "Nunito",
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                           backgroundColor: Colors.green,
                           )
@@ -114,15 +127,22 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                       InitialQuestionnaireInfoCard(),
                       ListView.builder(
                         controller: _controller,
-                        itemCount: questionListModel.questionList.length,
+                        itemCount: questionListModel.questionList.length + 1,
                         shrinkWrap: true,
                         itemBuilder: (context, index){
-                          return QuestionnaireCard(question: questionListModel.questionList[index]);
+                          if (index == questionListModel.questionList.length) {
+                            return Container(
+                              height: 90,
+                              // child: Card(child:Text("HI!!!"))
+                            );
+                          }
+                          return QuestionnaireCard(question: questionListModel
+                                .questionList[index]);
                         },
                       ),
                       // for (Question question in questionListModel.questionList)
                       //   QuestionnaireCard(question: question),
-                      SizedBox(height: 90)
+                      // SizedBox(height: 90)
                     ]),
                   );
                 }),
