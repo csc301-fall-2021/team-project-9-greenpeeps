@@ -20,37 +20,29 @@ class HabitTileInfo extends StatefulWidget {
 class _HabitTileInfoState extends State<HabitTileInfo> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Text(
-          widget.habitNum.toString() + ") " + widget.habitName,
-          style: const TextStyle(
-            fontSize: 24.0,
-            fontWeight: FontWeight.bold,
-          ),
+    return ListTile(
+      trailing: Icon(
+        Icons.short_text_rounded,
+      ),
+      title: Text(
+        "${widget.habitNum}) ${widget.habitName}",
+        overflow: TextOverflow.ellipsis,
+        style: const TextStyle(
+          fontSize: 24.0,
+          fontWeight: FontWeight.bold,
         ),
-        const Expanded(
-          child: Divider(
-            color: Colors.transparent,
-          ),
-        ),
-        IconButton(
-          splashRadius: 15,
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return HabitTileDialogue(
-                    habitName: widget.habitName,
-                    habitDescription: widget.habitDescription);
-              },
-            );
+      ),
+      onTap: (){
+        showDialog(
+          context: context,
+          builder: (context) {
+            return HabitTileDialogue(
+                habitName: widget.habitName,
+                habitDescription: widget.habitDescription);
           },
-          icon: const Icon(
-            Icons.short_text_rounded,
-          ),
-        )
-      ],
+        );
+      },
+
     );
   }
 }

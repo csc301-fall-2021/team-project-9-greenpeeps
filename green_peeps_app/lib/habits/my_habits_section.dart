@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:green_peeps_app/habits/habit_tile_info.dart';
+import 'package:green_peeps_app/habits/habit_tile_info_dialogue.dart';
 import 'package:green_peeps_app/services/habit_firestore.dart';
 
 // List habitList = ["Turn off Computer", "Be Green", "Filler 1", "Filler 2"];
@@ -54,22 +55,25 @@ class _MyHabitsSectionState extends State<MyHabitsSection> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  const Text(
-                    "My Habits",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const Text(
+                      "My Habits",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  Icon(
-                    Icons.auto_awesome_rounded,
-                  ),
-                ],
+                    Icon(
+                      Icons.auto_awesome_rounded,
+                    ),
+                  ],
+                ),
               ),
               Material(
                 color: const Color.fromRGBO(248, 244, 219, 1),

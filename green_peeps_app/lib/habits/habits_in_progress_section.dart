@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:green_peeps_app/habits/habit_buttons.dart';
 import 'package:green_peeps_app/habits/habit_tile_info.dart';
+import 'package:green_peeps_app/habits/habit_tile_info_dialogue.dart';
 import 'package:green_peeps_app/habits/habit_tile_progress_bar.dart';
 
 List habitList = [
@@ -28,22 +29,25 @@ class _HabitsInProgressSectionState extends State<HabitsInProgressSection> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  const Text(
-                    "Habits In Progress",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const Text(
+                      "Habits In Progress",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  Icon(
-                    Icons.assignment_rounded,
-                  ),
-                ],
+                    Icon(
+                      Icons.assignment_rounded,
+                    ),
+                  ],
+                ),
               ),
               HabitButtons(),
               Divider(),
