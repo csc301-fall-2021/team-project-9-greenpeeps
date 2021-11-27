@@ -4,12 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:green_peeps_app/habits/expand_habit_dialogue_button.dart';
 
 class RecommendedHabitItem extends StatefulWidget {
+  final String hid;
   final String title;
   final String info;
   final int amount;
   final int points;
 
-  const RecommendedHabitItem({Key? key, required this.title, required this.info, required this.amount, required this.points}) : super(key: key);
+  const RecommendedHabitItem({Key? key, required this.hid, required this.title, required this.info, required this.amount, required this.points}) : super(key: key);
 
   @override
   _RecommendedHabitItemState createState() => _RecommendedHabitItemState();
@@ -42,7 +43,7 @@ class _RecommendedHabitItemState extends State<RecommendedHabitItem> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(widget.title),
-            ExpandHabitDialogueButton(title: widget.title, info: widget.info, amount: widget.amount, points: widget.points),
+            ExpandHabitDialogueButton(hid: widget.hid, title: widget.title, info: widget.info, amount: widget.amount, points: widget.points),
           ]
         )
       )
