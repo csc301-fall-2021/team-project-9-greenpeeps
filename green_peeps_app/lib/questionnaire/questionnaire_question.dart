@@ -59,7 +59,11 @@ class _DailyQuestionQuestionState extends State<DailyQuestionQuestion> {
                           child: Row(
                             children: [
                             TextButton(
-                              child: const Text('Skip Question'),
+                              child: const Text('Skip Question',
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),),
                               onPressed: () {
                                 widget.skipQuestion();
                               },
@@ -67,12 +71,16 @@ class _DailyQuestionQuestionState extends State<DailyQuestionQuestion> {
                                 primary: Colors.white,
                                 backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
                                 elevation: 5,
-                                fixedSize: const Size(146, 42),
+                                fixedSize: const Size(145, 60),
                               )
                             ),
                             Spacer(),
                             TextButton(
-                              child: const Text('Save & Continue'),
+                              child: const Text('Save & Continue',
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),),
                               onPressed: () {
                                 widget.saveQuestion();
                               },
@@ -80,7 +88,7 @@ class _DailyQuestionQuestionState extends State<DailyQuestionQuestion> {
                                 primary: Colors.white,
                                 backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
                                 elevation: 5,
-                                fixedSize: const Size(146, 42),
+                                fixedSize: const Size(145, 60),
                               ),
                             )
 

@@ -26,12 +26,18 @@ class _QuestionCategoryPopupState extends State<QuestionCategoryPopup> {
       onPressed: () {
         widget.setCategory(categoryName);
       },
-      child: Text(categoryName),
+      child: Text(categoryName,
+        style: const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       style: TextButton.styleFrom(
+        padding: EdgeInsets.all(10),
         primary: Colors.black,
         backgroundColor: const Color.fromRGBO(201, 221, 148, 1),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(20),
         ),
       ),
     );
@@ -78,7 +84,8 @@ class _QuestionCategoryPopupState extends State<QuestionCategoryPopup> {
           SingleChildScrollView(
             // If the number of categories per row overflow, it will start at a new row
             child: Wrap(
-              spacing: 8,
+              spacing: 10,
+              runSpacing: 10,
               children: <Widget>[
                 for (var category in widget.categories)
                   _makeCategoryButton(context, category)

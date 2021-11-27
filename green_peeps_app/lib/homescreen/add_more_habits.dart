@@ -56,7 +56,8 @@ class _AddHabitState extends State<AddHabit> {
                     "Leaves: ${widget.points}",
                     textAlign: TextAlign.left,
                     style: const TextStyle(
-                      fontSize: 15,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -66,7 +67,8 @@ class _AddHabitState extends State<AddHabit> {
                     widget.info,
                     textAlign: TextAlign.left,
                     style: const TextStyle(
-                      fontSize: 15,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -76,7 +78,8 @@ class _AddHabitState extends State<AddHabit> {
                       "Do this habit ${widget.amount} times",
                     textAlign: TextAlign.left,
                     style: const TextStyle(
-                      fontSize: 15,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -99,6 +102,11 @@ class _AddHabitState extends State<AddHabit> {
                         child: Text(
                           "0/${widget.amount}" ,
                           textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+
                         ),
                       )
                     ],
@@ -118,6 +126,8 @@ class _AddHabitState extends State<AddHabit> {
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 15,
+                      fontFamily: "Nunito",
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -129,8 +139,8 @@ class _AddHabitState extends State<AddHabit> {
                       'Add this to My Habits',
                       textAlign: TextAlign.center,
                     style: const TextStyle(
-                    fontSize: 15,
-
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
                   ),
                   ),
                 ),
