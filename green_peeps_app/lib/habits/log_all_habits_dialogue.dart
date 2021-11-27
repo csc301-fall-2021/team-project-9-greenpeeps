@@ -43,8 +43,14 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
     if (userSnapshot.exists && userSnapshot['userHabits'] != null) {
-      allHabitKeys = userSnapshot['userHabits'].keys.toList();
-      return allHabitKeys;
+      var habitKeys = userSnapshot['userHabits'].keys.toList();
+      var copyKeys = [...habitKeys];
+      for (var key in copyKeys) {
+        if (userSnapshot['userHabits'][key]['completed']) {
+          habitKeys.remove(key);
+        }
+      }
+      return habitKeys;
     } else {
       return [];
     }
@@ -129,7 +135,8 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
                       child: Column(
                         children: [
                           for (var i = 0; i < allHabitList.length; i++)
-                            _makeHabitCheckbox(setState, allHabitList[i].title, i),
+                            _makeHabitCheckbox(
+                                setState, allHabitList[i].title, i),
                         ],
                       ),
                     ),

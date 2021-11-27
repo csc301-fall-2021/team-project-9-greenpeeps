@@ -6,7 +6,8 @@ class Habit {
   final String title;
   final String info;
   final String hid;
-  final int amount;
+  int reps;
+  final int totalAmount;
   final int points;
 
   Habit(
@@ -14,13 +15,15 @@ class Habit {
       required this.title,
       required this.info,
       required this.hid,
-      required this.amount,
+      this.reps = 0,
+      required this.totalAmount,
       required this.points});
 
   String getID() => id;
   String getTitle() => title;
   String getInfo() => info;
   String getHID() => hid;
-  int getAmount() => amount;
+  int getReps() => reps;
+  int getTotalAmount() => totalAmount;
   int getPoints() => points;
 }

@@ -7,12 +7,6 @@ import 'package:green_peeps_app/habits/habit_tile_info_dialogue.dart';
 import 'package:green_peeps_app/habits/habit_tile_progress_bar.dart';
 import 'package:green_peeps_app/services/habit_firestore.dart';
 
-List habitList = [
-  "Use Kettle",
-  "Turn off Lights",
-  "Recycle",
-];
-
 class HabitsInProgressSection extends StatefulWidget {
   const HabitsInProgressSection({Key? key}) : super(key: key);
 
@@ -33,6 +27,11 @@ class _HabitsInProgressSectionState extends State<HabitsInProgressSection> {
         allHabitKeys = result;
         for (var key in allHabitKeys) {
           getHabitFromStore(key).then((r) {
+            getRepsFromDB(key).then((t) {
+              setState(() {
+                r!.reps = t;
+              });
+            });
             setState(() {
               allHabitList.add(r);
             });
@@ -41,6 +40,28 @@ class _HabitsInProgressSectionState extends State<HabitsInProgressSection> {
       });
     });
   }
+
+  getRepsFromDB(key) async {
+    var userSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    if (userSnapshot.exists && userSnapshot['userHabits'] != null) {
+      return userSnapshot['userHabits'][key]['reps'];
+    } else {
+      return 0;
+    }
+  }
+
+  // returnReps(key) {
+  //   var value = 0;
+  //   getRepsFromDB(key).then((result) {
+  //     setState(() {
+  //       value = result;
+  //     });
+  //   });
+  //   return value;
+  // }
 
   // Fetch Habit IDs from user's habit list
   getHabitKeys() async {
@@ -111,9 +132,9 @@ class _HabitsInProgressSectionState extends State<HabitsInProgressSection> {
                               habitNum: index + 1,
                               habitName: allHabitList[index].title,
                               habitDescription: allHabitList[index].info),
-                          const HabitProgressBar(
-                            userCompleted: 2,
-                            userTotal: 10,
+                          HabitProgressBar(
+                            userCompleted: allHabitList[index].reps,
+                            userTotal: allHabitList[index].totalAmount,
                           ),
                           const Divider(
                             color: Colors.grey,
