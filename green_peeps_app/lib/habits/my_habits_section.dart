@@ -5,8 +5,6 @@ import 'package:green_peeps_app/habits/habit_tile_info.dart';
 import 'package:green_peeps_app/habits/habit_tile_info_dialogue.dart';
 import 'package:green_peeps_app/services/habit_firestore.dart';
 
-// List habitList = ["Turn off Computer", "Be Green", "Filler 1", "Filler 2"];
-
 class MyHabitsSection extends StatefulWidget {
   const MyHabitsSection({Key? key}) : super(key: key);
 
@@ -17,21 +15,30 @@ class MyHabitsSection extends StatefulWidget {
 class _MyHabitsSectionState extends State<MyHabitsSection> {
   List habitKeys = [];
   List habitList = [];
+
   @override
   void initState() {
     super.initState();
-    getHabitKeys().then((result) {
-      setState(() {
-        habitKeys = result;
-        for (var key in habitKeys) {
-          getHabitFromStore(key).then((r) {
-            setState(() {
-              habitList.add(r);
-            });
-          });
-        }
-      });
-    });
+    getHabitKeys().then(
+      (result) {
+        setState(
+          () {
+            habitKeys = result;
+            for (var key in habitKeys) {
+              getHabitFromStore(key).then(
+                (r) {
+                  setState(
+                    () {
+                      habitList.add(r);
+                    },
+                  );
+                },
+              );
+            }
+          },
+        );
+      },
+    );
   }
 
   getHabitKeys() async {
@@ -56,12 +63,12 @@ class _MyHabitsSectionState extends State<MyHabitsSection> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                padding: EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const Text(
+                  children: const <Widget>[
+                    Text(
                       "My Habits",
                       textAlign: TextAlign.left,
                       style: TextStyle(
@@ -94,7 +101,7 @@ class _MyHabitsSectionState extends State<MyHabitsSection> {
                               habitNum: index + 1,
                               habitName: habitList[index].title,
                               habitDescription: habitList[index].info),
-                          Divider(
+                          const Divider(
                             color: Colors.grey,
                           )
                         ],

@@ -9,6 +9,7 @@ class LogAllHabitsDialogue extends StatefulWidget {
 
 class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
+  final ScrollController _controller = ScrollController();
 
   // Map of which checkboxes are checked
   Map<int, bool> _habitMap = {};
@@ -46,7 +47,7 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      insetPadding: EdgeInsets.all(15),
+      insetPadding: const EdgeInsets.all(15),
       backgroundColor: _boxColor,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -54,15 +55,15 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
         ),
       ),
       child: Container(
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppBar(
-              title: Text(
+              title: const Text(
                 "",
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.black,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -94,13 +95,19 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Container(
+                SizedBox(
                   height: 415,
-                  child: SingleChildScrollView(
-                    child: Column(children: [
-                      for (var i = 0; i < habitList.length; i++)
-                        _makeHabitCheckbox(setState, habitList[i], i),
-                    ]),
+                  child: Scrollbar(
+                    controller: _controller,
+                    child: SingleChildScrollView(
+                      controller: _controller,
+                      child: Column(
+                        children: [
+                          for (var i = 0; i < habitList.length; i++)
+                            _makeHabitCheckbox(setState, habitList[i], i),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
                 Row(

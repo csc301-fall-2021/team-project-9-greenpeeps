@@ -72,7 +72,7 @@ class _HabitButtonsState extends State<HabitButtons> {
                 showDialog(
                   context: context,
                   builder: (context) {
-                    return LogAllHabitsDialogue();
+                    return const LogAllHabitsDialogue();
                   },
                 );
               },

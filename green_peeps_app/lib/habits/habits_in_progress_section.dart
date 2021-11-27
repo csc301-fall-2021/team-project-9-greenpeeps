@@ -30,12 +30,12 @@ class _HabitsInProgressSectionState extends State<HabitsInProgressSection> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                padding: EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const Text(
+                  children: const <Widget>[
+                    Text(
                       "Habits In Progress",
                       textAlign: TextAlign.left,
                       style: TextStyle(
@@ -49,8 +49,8 @@ class _HabitsInProgressSectionState extends State<HabitsInProgressSection> {
                   ],
                 ),
               ),
-              HabitButtons(),
-              Divider(),
+              const HabitButtons(),
+              const Divider(),
               Material(
                 color: const Color.fromRGBO(248, 244, 219, 1),
                 borderRadius: BorderRadius.circular(5.0),
@@ -70,11 +70,11 @@ class _HabitsInProgressSectionState extends State<HabitsInProgressSection> {
                               habitNum: index + 1,
                               habitName: habitList[index],
                               habitDescription: "TBD"),
-                          HabitProgressBar(
+                          const HabitProgressBar(
                             userCompleted: 2,
                             userTotal: 10,
                           ),
-                          Divider(
+                          const Divider(
                             color: Colors.grey,
                           ),
                         ],

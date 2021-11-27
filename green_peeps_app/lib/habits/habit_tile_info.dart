@@ -22,7 +22,7 @@ class _HabitTileInfoState extends State<HabitTileInfo> {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: const EdgeInsets.all(0),
-      trailing: Icon(
+      trailing: const Icon(
         Icons.short_text_rounded,
       ),
       title: Text(

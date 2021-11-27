@@ -12,6 +12,8 @@ class LogHabits extends StatefulWidget {
 }
 
 class _LogHabitsState extends State<LogHabits> {
+  final ScrollController _controller = ScrollController();
+
   // Map of which checkboxes are checked
   Map<int, bool> _habitMap = {};
   List dailyHabitKeys = [];
@@ -20,18 +22,26 @@ class _LogHabitsState extends State<LogHabits> {
   @override
   void initState() {
     super.initState();
-    getHabitKeys().then((result) {
-      setState(() {
-        dailyHabitKeys = result;
-        for (var key in dailyHabitKeys) {
-          getHabitFromStore(key).then((r) {
-            setState(() {
-              dailyHabitList.add(r);
-            });
-          });
-        }
-      });
-    });
+    getHabitKeys().then(
+      (result) {
+        setState(
+          () {
+            dailyHabitKeys = result;
+            for (var key in dailyHabitKeys) {
+              getHabitFromStore(key).then(
+                (r) {
+                  setState(
+                    () {
+                      dailyHabitList.add(r);
+                    },
+                  );
+                },
+              );
+            }
+          },
+        );
+      },
+    );
   }
 
   // Fetch Habit IDs from user's habit list
@@ -79,25 +89,33 @@ class _LogHabitsState extends State<LogHabits> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        Divider(color: Colors.transparent),
-        Container(
+        const Divider(color: Colors.transparent),
+        SizedBox(
           height: 275,
-          child: SingleChildScrollView(
-            child: Column(children: [
-              for (var i = 0; i < dailyHabitList.length; i++)
-                _makeHabitCheckbox(setState, dailyHabitList[i].title, i),
-            ]),
+          child: Scrollbar(
+            controller: _controller,
+            child: SingleChildScrollView(
+              controller: _controller,
+              child: Column(
+                children: [
+                  for (var i = 0; i < dailyHabitList.length; i++)
+                    _makeHabitCheckbox(setState, dailyHabitList[i].title, i),
+                ],
+              ),
+            ),
           ),
         ),
         Row(
           children: <Widget>[
             const Spacer(),
             TextButton(
-              child: const Text('Save',
-                style: const TextStyle(
+              child: const Text(
+                'Save',
+                style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
-                ),),
+                ),
+              ),
               onPressed: () {
                 widget.saveHabits();
               },
