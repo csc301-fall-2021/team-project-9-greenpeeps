@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:green_peeps_app/habits/recommended_come_back_later.dart';
 import 'package:green_peeps_app/habits/recommended_habit_item.dart';
 import 'dart:math';
 import 'package:green_peeps_app/services/habit_firestore.dart';
@@ -82,13 +83,19 @@ class _RecommendedBoxState extends State<RecommendedBox> {
             Map<String, dynamic> testMap = temp.data() as Map<String, dynamic>;
             var lst = testMap['habitInfo'].keys.toList();
             print("USER SNAPSHOT: " + lst.toString());
-            return ListView(shrinkWrap: true, children: _getTestArticles(snapshot, testLst, lst));
+            var nonUserHabits = _getTestArticles(snapshot, testLst, lst);
+            if (nonUserHabits.length > 0) {
+              return ListView(shrinkWrap: true, children: nonUserHabits);
+            } else {
+              return const RecommendedComeBackLater();
+            }
+            
           } else {
-            return ListView(shrinkWrap: true, children: []);
+            return const RecommendedComeBackLater();
           }
           
         } else {
-          return ListView(shrinkWrap: true, children: []);
+          return const RecommendedComeBackLater();
         }
       }
 
