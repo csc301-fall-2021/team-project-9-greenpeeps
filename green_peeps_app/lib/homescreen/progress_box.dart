@@ -2,14 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class SecondBox extends StatefulWidget {
-  const SecondBox({Key? key}) : super(key: key);
+class ProgressBox extends StatefulWidget {
+  const ProgressBox({Key? key}) : super(key: key);
 
   @override
-  _SecondBoxState createState() => _SecondBoxState();
+  _ProgressBoxState createState() => _ProgressBoxState();
 }
 
-class _SecondBoxState extends State<SecondBox> {
+class _ProgressBoxState extends State<ProgressBox> {
   // Box Variables
   final double _boxPadding = 10.0;
   final double _boxElevation = 5.0; // The height of shadow beneath box
