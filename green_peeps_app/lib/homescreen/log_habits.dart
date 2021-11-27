@@ -14,19 +14,19 @@ class LogHabits extends StatefulWidget {
 class _LogHabitsState extends State<LogHabits> {
   // Map of which checkboxes are checked
   Map<int, bool> _habitMap = {};
-  List habitKeys = [];
-  List habitList = [];
+  List dailyHabitKeys = [];
+  List dailyHabitList = [];
 
   @override
   void initState() {
     super.initState();
     getHabitKeys().then((result) {
       setState(() {
-        habitKeys = result;
-        for (var key in habitKeys) {
+        dailyHabitKeys = result;
+        for (var key in dailyHabitKeys) {
           getHabitFromStore(key).then((r) {
             setState(() {
-              habitList.add(r);
+              dailyHabitList.add(r);
             });
           });
         }
@@ -41,8 +41,8 @@ class _LogHabitsState extends State<LogHabits> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
     if (userSnapshot.exists) {
-      habitKeys = userSnapshot['habitInfo'].keys.toList();
-      return habitKeys;
+      dailyHabitKeys = userSnapshot['dailyHabits'].keys.toList();
+      return dailyHabitKeys;
     } else {
       return null;
     }
@@ -83,8 +83,8 @@ class _LogHabitsState extends State<LogHabits> {
           height: 415,
           child: SingleChildScrollView(
             child: Column(children: [
-              for (var i = 0; i < habitList.length; i++)
-                _makeHabitCheckbox(setState, habitList[i].title, i),
+              for (var i = 0; i < dailyHabitList.length; i++)
+                _makeHabitCheckbox(setState, dailyHabitList[i].title, i),
             ]),
           ),
         ),
