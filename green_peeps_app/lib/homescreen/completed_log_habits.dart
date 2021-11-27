@@ -60,20 +60,27 @@ class _CompletedLogHabitsState extends State<CompletedLogHabits> {
     return Container(
       padding: EdgeInsets.all(_boxPadding + 5),
       width: double.infinity,
-      height: 520,
+      // height: 520,
       child: Column(
         children: <Widget>[
-          Spacer(),
-          const Text(
-            "Thank you for logging your daily habits! "
-                "You have received XX points.",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 28.0,
-              fontWeight: FontWeight.bold,
+          Container(
+            height: 455,
+            child: Column(
+              children: [
+                Spacer(),
+                const Text(
+                  "Thank you for logging your daily habits! "
+                      "You have received XX points.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 28.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Spacer(),]
             ),
           ),
-          Spacer(),
+
           Row(
             children: _buttonRow
           ),

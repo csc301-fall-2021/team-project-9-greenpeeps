@@ -57,7 +57,15 @@ class _AppState extends State<MyApp> {
     }
 
     return MaterialApp(
-      theme: ThemeData(fontFamily: "Nunito"),
+      theme: ThemeData(
+        fontFamily: "Nunito",
+        scrollbarTheme: ScrollbarThemeData(
+          isAlwaysShown: true,
+          thickness: MaterialStateProperty.all(10),
+          thumbColor: MaterialStateProperty.all(Colors.teal),
+          radius: const Radius.circular(10),
+        ),
+      ),
       initialRoute: '/welcome',
       routes: {
         // '/': (context) => Loading(),
