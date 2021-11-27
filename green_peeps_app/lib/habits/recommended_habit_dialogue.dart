@@ -139,19 +139,19 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
                       .get()
                       .then((DocumentSnapshot snapshot) {
                         // if allHabits doesn't exist yet
-                        if(!(snapshot.data().toString().contains("allHabits"))) {
+                        if(!(snapshot.data().toString().contains("userHabits"))) {
                           FirebaseFirestore.instance
                           .collection('users')
                           .doc(FirebaseAuth.instance.currentUser!.uid)
                           .set(
-                            {'allHabits' : '{}'},
+                            {'userHabits' : '{}'},
                             SetOptions(merge: true)
                           ).then((onValue) {
                             FirebaseFirestore.instance
                             .collection('users')
                             .doc(FirebaseAuth.instance.currentUser!.uid)
                             .update(
-                              {'allHabits.'+widget.hid : _generateCompletedHabitDict()},
+                              {'userHabits.'+widget.hid : _generateCompletedHabitDict()},
                             );
                           });
 
@@ -162,7 +162,7 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
                             .collection('users')
                             .doc(FirebaseAuth.instance.currentUser!.uid)
                             .update(
-                              {'allHabits.'+widget.hid : _generateCompletedHabitDict()},
+                              {'userHabits.'+widget.hid : _generateCompletedHabitDict()},
                             );
                         }
                       });
@@ -189,19 +189,19 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
                       .get()
                       .then((DocumentSnapshot snapshot) {
                         // if user doesn't have allHabits
-                        if(!(snapshot.data().toString().contains("allHabits"))) {
+                        if(!(snapshot.data().toString().contains("userHabits"))) {
                           FirebaseFirestore.instance
                           .collection('users')
                           .doc(FirebaseAuth.instance.currentUser!.uid)
                           .set(
-                            {'allHabits' : '{}'},
+                            {'userHabits' : '{}'},
                             SetOptions(merge: true)
                           ).then((onValue) {
                             FirebaseFirestore.instance
                             .collection('users')
                             .doc(FirebaseAuth.instance.currentUser!.uid)
                             .update(
-                              {'allHabits.'+widget.hid : _generateHabitDict()},
+                              {'userHabits.'+widget.hid : _generateHabitDict()},
                             );
                           });
 
@@ -209,12 +209,12 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
                         } else {
                           // firebase structure automatically prevents repeats additions with the same key
                           // if doesn't already exist
-                          if (!(snapshot.get(FieldPath(const ["allHabits"])).toString().contains(widget.hid))) {
+                          if (!(snapshot.get(FieldPath(const ["userHabits"])).toString().contains(widget.hid))) {
                             FirebaseFirestore.instance
                             .collection('users')
                             .doc(FirebaseAuth.instance.currentUser!.uid)
                             .update(
-                              {'allHabits.'+widget.hid : _generateHabitDict()},
+                              {'userHabits.'+widget.hid : _generateHabitDict()},
                             );
                             ScaffoldMessenger.of(context).showSnackBar(addedHabitInProgressSnackBar);
 
