@@ -14,129 +14,35 @@ class RecommendedBox extends StatefulWidget {
 
 class _RecommendedBoxState extends State<RecommendedBox> {
 
-    /*List userHabitKeys = [];
-    List habitKeys = [];
-    List nonUserHabitKeys = [];
-    List nonUserHabitsList = [];
-    @override 
-    void initState() {
-      super.initState();
-      getUserHabitKeys().then((userHabitKeysResult) {
-        setState(() {
-          userHabitKeys = userHabitKeysResult;
-          getHabitKeys().then((habitKeysResult) {
-            setState(() {
-              habitKeys = habitKeysResult;
-              // get only habits user doesn't have
-              for (var key in habitKeys) {
-                if (!userHabitKeys.contains(key)) {
-                  nonUserHabitKeys.add(key);
-                }
-              }
-              for (var key in habitKeys) {
-                getHabitFromStore(key).then((r) {
-                  setState(() {
-                    nonUserHabitsList.add(r);
-                  });
-                });
-              }
-            });
-          });
-        });
-      });
-    }*/
-
-    /*getUserHabitKeys() async {
-      var userSnapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .get();
-      if (userSnapshot.exists) {
-        userHabitKeys = userSnapshot['habitInfo'].keys.toList();
-        return userHabitKeys;
-      } else {
-        return null;
-      }     
-
-    }*/
-
   // get all habits from firebase
   // select three random habits
-  Widget _listRecommendedHabits(Stream<QuerySnapshot> habits) {
+  Widget _listRecommendedHabits(Stream<QuerySnapshot> habits, Stream<DocumentSnapshot> userHabits) {
     //CollectionReference articles = FirebaseFirestore.instance.collection('articles');
 
     return StreamBuilder<QuerySnapshot>(
       stream: habits,
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (!snapshot.hasData) return const Text("Come back later for more :)");
-        return ListView(shrinkWrap: true, children: _getArticles(snapshot));
+        return Container(child: _getArticles(snapshot, userHabits));
       }
 
     );
   }
 
-// FirebaseAuth.instance.currentUser!.uid
-  /*_test(QueryDocumentSnapshot<Object?> doc) {
-    
-    /*if (
-      FirebaseFirestore.instance
-      .collection('users')
-      .doc("wNerzhxjCpf0so9mHQnab8BWjo52")
-      .get() ?? true)
-    {*/
-    Stream<DocumentSnapshot> users = FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .snapshots();
-    
-      /*FirebaseFirestore.instance
-      .collection('users')
-      .doc("wNerzhxjCpf0so9mHQnab8BWjo52")
-      .get()
-      .then((DocumentSnapshot docSnapshot) {
-        print("HERE: " + docSnapshot.get(FieldPath(const ["habitInfo"])).toString());
-        // if user has habits added
-        if(docSnapshot.get(FieldPath(const ["habitInfo"])).toString().contains(doc.id)) {
-          // get those habits
-          // turn into map
-          return true;
-
-        } else {return false;}
-      });*/
-    /*} else {
-      print("NULL REACHED");
-    }*/
-    
-  }*/
-
-  _getArticles(AsyncSnapshot<QuerySnapshot> snapshot) {
-    /*FirebaseFirestore.instance
-    .collection('users')
-    .doc(FirebaseAuth.instance.currentUser!.uid)
-    .get()
-    .then((DocumentSnapshot snapshot) {
-      // if user has habits added
-      if(snapshot.data().toString().contains("habitInfo")) {
-        // get those habits
-        // turn into map
-
+  _getTestArticles(AsyncSnapshot<QuerySnapshot> snapshot, List<String> allHabitsList, List<String> userHabitsList) {
+    List<String> filteredHabitsList = [];
+    for (var habitKey in allHabitsList) {
+      if (!userHabitsList.contains(habitKey)) {
+        filteredHabitsList.add(habitKey);
       }
-    });*/
+    }
 
-    
+    print("TEST ARTICLES: " + filteredHabitsList.toString());
 
-    // get user habits
-    // turn to map
-    // if id in user habits, pass, otherwise, do stuff
-    List<RecommendedHabitItem?> unfilteredHabitsList = snapshot.data!.docs
-    .map(
-      (doc) => RecommendedHabitItem(hid: doc.id, title: doc["title"], info: doc["info"], amount: doc["amount"], points: doc["points"],)
-    )
-    .toList();
-
-    unfilteredHabitsList.removeWhere((element) => element == null);
-    //final List<RecommendedHabitItem> habitsList = unfilteredHabitsList.whereType<RecommendedHabitItem>().toList();
-    final habitsList = List<RecommendedHabitItem>.from(unfilteredHabitsList);
+    List<RecommendedHabitItem> habitsList = [];
+    snapshot.data!.docs.forEach((doc) { 
+      habitsList.add(RecommendedHabitItem(hid: doc.id, title: doc["title"], info: doc["info"], amount: doc["amount"], points: doc["points"],));
+    });
 
     if (habitsList.length >= 4) { // if random selection needs to be made
       List<RecommendedHabitItem> randomHabitsList = [];
@@ -151,20 +57,53 @@ class _RecommendedBoxState extends State<RecommendedBox> {
     } else {
       return habitsList;
     }
-    
+
   }
 
-  // pass info to recommended habit item
-  // display title inside
+  _getArticles(AsyncSnapshot<QuerySnapshot> snapshot, Stream<DocumentSnapshot> userHabits) {
 
-  // popup when plus button pressed
-  // display info
-  // proceed as according to UI
+  // get all habits
+  List<String> testLst = [];
+  for (var element in snapshot.data!.docs) { testLst.add(element.id);}
+
+  print("TEST REACHED: " + testLst.toString());
+
+  return StreamBuilder<DocumentSnapshot>(
+      stream: userHabits,
+      builder: (context, AsyncSnapshot<DocumentSnapshot> userSnapshot) {
+        if (userSnapshot.connectionState == ConnectionState.active) {
+          var temp = userSnapshot.data;
+          //if (!userSnapshot.hasData) return const Text("Come back later for more :)");
+          
+          if (temp!.data().toString().contains('habitInfo') == true) {
+            Map<String, dynamic> testMap = temp.data() as Map<String, dynamic>;
+            var lst = testMap['habitInfo'].keys.toList();
+            print("USER SNAPSHOT: " + lst.toString());
+            return ListView(shrinkWrap: true, children: _getTestArticles(snapshot, testLst, lst));
+          } else {
+            return ListView(shrinkWrap: true, children: []);
+          }
+          
+        } else {
+          return ListView(shrinkWrap: true, children: []);
+        }
+      }
+
+  );
+  }
 
 
   @override 
   Widget build(BuildContext context) {
     Stream<QuerySnapshot> habits = FirebaseFirestore.instance.collection('habits').snapshots();
+    Stream<DocumentSnapshot> userHabits = FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).snapshots();
+
+    //_test();
+    //StreamBuilder<QuerySnapshot> testList = _listAllHabits(habits, userHabits);
+
+    //print("TESTING: " + testList.toString());
+
+    //_listRecommendedHabits(habits, userHabits);
 
     return SliverSafeArea(
       sliver: SliverPadding(
@@ -175,7 +114,7 @@ class _RecommendedBoxState extends State<RecommendedBox> {
             (BuildContext context, int index) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
+                children:  <Widget>[
                   const Text(
                     "Recommended",
                     textAlign: TextAlign.left,
@@ -184,15 +123,7 @@ class _RecommendedBoxState extends State<RecommendedBox> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  _listRecommendedHabits(habits),
-                  /*ListView(
-                    shrinkWrap: true,
-                    children: const <Widget>[
-                      Text("test"),
-                      Text("Test2"),
-                      Text("test3"),
-                    ],
-                  ),*/
+                  _listRecommendedHabits(habits, userHabits),
                 ],
               );
             },
