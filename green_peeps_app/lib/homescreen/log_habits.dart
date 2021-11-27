@@ -15,7 +15,7 @@ class _LogHabitsState extends State<LogHabits> {
   final ScrollController _controller = ScrollController();
 
   // Map of which checkboxes are checked
-  Map<int, bool> _habitMap = {};
+  Map<String, bool> _habitMap = {};
   List dailyHabitKeys = [];
   List dailyHabitList = [];
 
@@ -52,13 +52,18 @@ class _LogHabitsState extends State<LogHabits> {
         .get();
     if (userSnapshot.exists) {
       dailyHabitKeys = userSnapshot['dailyHabits'].keys.toList();
+      // for (var key in dailyHabitKeys) {
+      //   if (userSnapshot['dailyHabits'][key]['dailyComplete']) {
+      //     dailyHabitKeys.remove(key);
+      //   }
+      // }
       return dailyHabitKeys;
     } else {
       return null;
     }
   }
 
-  Widget _makeHabitCheckbox(setState, String habitName, int habitID) {
+  Widget _makeHabitCheckbox(setState, String habitName, String habitID) {
     if (_habitMap[habitID] == null) {
       _habitMap[habitID] = false;
     }
@@ -99,7 +104,7 @@ class _LogHabitsState extends State<LogHabits> {
               child: Column(
                 children: [
                   for (var i = 0; i < dailyHabitList.length; i++)
-                    _makeHabitCheckbox(setState, dailyHabitList[i].title, i),
+                    _makeHabitCheckbox(setState, dailyHabitList[i].title, dailyHabitList[i].id),
                 ],
               ),
             ),

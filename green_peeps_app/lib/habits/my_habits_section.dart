@@ -13,23 +13,23 @@ class MyHabitsSection extends StatefulWidget {
 }
 
 class _MyHabitsSectionState extends State<MyHabitsSection> {
-  List habitKeys = [];
-  List habitList = [];
+  List completedhabitKeys = [];
+  List completedhabitList = [];
 
   @override
   void initState() {
     super.initState();
-    getHabitKeys().then(
+    getCompletedHabitKeys().then(
       (result) {
         setState(
           () {
-            habitKeys = result;
-            for (var key in habitKeys) {
+            completedhabitKeys = result;
+            for (var key in completedhabitKeys) {
               getHabitFromStore(key).then(
                 (r) {
                   setState(
                     () {
-                      habitList.add(r);
+                      completedhabitList.add(r);
                     },
                   );
                 },
@@ -41,16 +41,22 @@ class _MyHabitsSectionState extends State<MyHabitsSection> {
     );
   }
 
-  getHabitKeys() async {
+  getCompletedHabitKeys() async {
     var userSnapshot = await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
-    if (userSnapshot.exists) {
-      habitKeys = userSnapshot['completedHabits'].keys.toList();
+    if (userSnapshot.exists && userSnapshot['allHabits'] != null) {
+      var habitKeys = userSnapshot['allHabits'].keys.toList();
+      var copyKeys = [...habitKeys];
+      for (var key in copyKeys) {
+        if (userSnapshot['allHabits'][key]['completed'] == false) {
+          habitKeys.remove(key);
+        }
+      }
       return habitKeys;
     } else {
-      return null;
+      return [];
     }
   }
 
@@ -88,7 +94,7 @@ class _MyHabitsSectionState extends State<MyHabitsSection> {
                 elevation: 5,
                 child: ListView.builder(
                   shrinkWrap: true,
-                  itemCount: habitList.length,
+                  itemCount: completedhabitList.length,
                   itemBuilder: (context, index) {
                     return Container(
                       width: double.infinity,
@@ -99,8 +105,8 @@ class _MyHabitsSectionState extends State<MyHabitsSection> {
                         children: <Widget>[
                           HabitTileInfo(
                               habitNum: index + 1,
-                              habitName: habitList[index].title,
-                              habitDescription: habitList[index].info),
+                              habitName: completedhabitList[index].title,
+                              habitDescription: completedhabitList[index].info),
                           const Divider(
                             color: Colors.grey,
                           )

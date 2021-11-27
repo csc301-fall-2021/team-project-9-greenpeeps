@@ -49,8 +49,14 @@ class _HabitsInProgressSectionState extends State<HabitsInProgressSection> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
     if (userSnapshot.exists && userSnapshot['allHabits'] != null) {
-      allHabitKeys = userSnapshot['allHabits'].keys.toList();
-      return allHabitKeys;
+      var habitKeys = userSnapshot['allHabits'].keys.toList();
+      var copyKeys = [...habitKeys];
+      for (var key in copyKeys) {
+        if (userSnapshot['allHabits'][key]['completed']) {
+          habitKeys.remove(key);
+        }
+      }
+      return habitKeys;
     } else {
       return [];
     }

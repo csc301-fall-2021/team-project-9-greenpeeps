@@ -57,8 +57,14 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
     if (userSnapshot.exists && userSnapshot['allHabits'] != null) {
-      allHabitKeys = userSnapshot['allHabits'].keys.toList();
-      return allHabitKeys;
+      var habitKeys = userSnapshot['allHabits'].keys.toList();
+      var copyKeys = [...habitKeys];
+      for (var key in copyKeys) {
+        if (userSnapshot['allHabits'][key]['completed']) {
+          habitKeys.remove(key);
+        }
+      }
+      return habitKeys;
     } else {
       return [];
     }
@@ -71,8 +77,8 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
     if (userSnapshot.exists && userSnapshot['dailyHabits'] != null) {
-      dailyHabitKeys = userSnapshot['dailyHabits'].keys.toList();
-      return dailyHabitKeys;
+      var habitKeys = userSnapshot['dailyHabits'].keys.toList();
+      return habitKeys;
     } else {
       return [];
     }
@@ -89,15 +95,14 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
             .collection('users')
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .update({
-          'dailyHabits.' + key: {'completed': true, 'user_completed': 0}
+          'dailyHabits.' + key: {'dailyComplete': false, 'user_completed': 0}
         }).then((value) => {});
       } else {
         await FirebaseFirestore.instance
             .collection('users')
             .doc(FirebaseAuth.instance.currentUser!.uid)
-            .update({
-          'dailyHabits.' + key: FieldValue.delete()
-        }).then((value) => {});
+            .update({'dailyHabits.' + key: FieldValue.delete()}).then(
+                (value) => {});
       }
     }
   }
