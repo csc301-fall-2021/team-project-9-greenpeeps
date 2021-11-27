@@ -208,32 +208,40 @@ class _ProfileState extends State<ProfileScreen> {
       ),
     );
   }
+  ScrollController _controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: CustomScrollView(slivers: <Widget>[
-      SliverSafeArea(
-        sliver: SliverPadding(
-          padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
-          sliver: _buildFirstBox(
-              context, _boxPadding, _boxElevation, _boxColor, "Hayden"),
-        ),
-      ),
-      SliverPadding(
-        padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
-        sliver:
-            _buildSecondBox(context, _boxPadding, _boxElevation, _boxColor, 32),
-      ),
-      SliverPadding(
-        padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
-        sliver: _buildThirdBox(context, _boxPadding, _boxElevation, _boxColor),
-      ),
-      SliverPadding(
-        padding: EdgeInsets.only(left: 30, right: 30, top: 0, bottom: 0),
-        sliver: _buildFourthBox(
-            context, _boxPadding, _boxElevation, _boxColor, _scrollController),
-      )
-    ]));
+        child: Scrollbar(
+          controller: _controller,
+          child: CustomScrollView(
+              controller: _controller,
+              slivers: <Widget>[
+              SliverSafeArea(
+                sliver: SliverPadding(
+                  padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
+                  sliver: _buildFirstBox(
+                      context, _boxPadding, _boxElevation, _boxColor, "Hayden"),
+                ),
+              ),
+              SliverPadding(
+                padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
+                sliver:
+                    _buildSecondBox(context, _boxPadding, _boxElevation, _boxColor, 32),
+              ),
+              SliverPadding(
+                padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
+                sliver: _buildThirdBox(context, _boxPadding, _boxElevation, _boxColor),
+              ),
+              SliverPadding(
+                padding: EdgeInsets.only(left: 30, right: 30, top: 0, bottom: 0),
+                sliver: _buildFourthBox(
+                    context, _boxPadding, _boxElevation, _boxColor, _scrollController),
+              )
+            ]
+          ),
+        )
+    );
   }
 }
