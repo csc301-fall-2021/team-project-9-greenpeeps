@@ -40,9 +40,9 @@ class _RecommendedBoxState extends State<RecommendedBox> {
     print("TEST ARTICLES: " + filteredHabitsList.toString());
 
     List<RecommendedHabitItem> habitsList = [];
-    snapshot.data!.docs.forEach((doc) { 
+    for (var doc in snapshot.data!.docs) { 
       habitsList.add(RecommendedHabitItem(hid: doc.id, title: doc["title"], info: doc["info"], amount: doc["amount"], points: doc["points"],));
-    });
+    }
 
     if (habitsList.length >= 4) { // if random selection needs to be made
       List<RecommendedHabitItem> randomHabitsList = [];
