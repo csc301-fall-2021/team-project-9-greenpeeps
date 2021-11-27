@@ -56,11 +56,11 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
-    if (userSnapshot.exists) {
+    if (userSnapshot.exists && userSnapshot['allHabits'] != null) {
       allHabitKeys = userSnapshot['allHabits'].keys.toList();
       return allHabitKeys;
     } else {
-      return null;
+      return [];
     }
   }
 
@@ -70,21 +70,21 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
-    if (userSnapshot.exists) {
+    if (userSnapshot.exists && userSnapshot['dailyHabits'] != null) {
       dailyHabitKeys = userSnapshot['dailyHabits'].keys.toList();
       return dailyHabitKeys;
     } else {
-      return null;
+      return [];
     }
   }
 
-  updateHabitToDailyDB(key, is_in) async {
+  updateHabitToDailyDB(key, inDaily) async {
     var userSnapshot = await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
     if (userSnapshot.exists) {
-      if (is_in) {
+      if (inDaily) {
         await FirebaseFirestore.instance
             .collection('users')
             .doc(FirebaseAuth.instance.currentUser!.uid)

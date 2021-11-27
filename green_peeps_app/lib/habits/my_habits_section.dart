@@ -47,7 +47,7 @@ class _MyHabitsSectionState extends State<MyHabitsSection> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
     if (userSnapshot.exists) {
-      habitKeys = userSnapshot['allHabits'].keys.toList();
+      habitKeys = userSnapshot['completedHabits'].keys.toList();
       return habitKeys;
     } else {
       return null;

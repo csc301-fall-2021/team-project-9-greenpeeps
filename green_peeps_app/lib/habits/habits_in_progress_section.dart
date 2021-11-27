@@ -5,6 +5,7 @@ import 'package:green_peeps_app/habits/habit_buttons.dart';
 import 'package:green_peeps_app/habits/habit_tile_info.dart';
 import 'package:green_peeps_app/habits/habit_tile_info_dialogue.dart';
 import 'package:green_peeps_app/habits/habit_tile_progress_bar.dart';
+import 'package:green_peeps_app/services/habit_firestore.dart';
 
 List habitList = [
   "Use Kettle",
@@ -21,6 +22,40 @@ class HabitsInProgressSection extends StatefulWidget {
 }
 
 class _HabitsInProgressSectionState extends State<HabitsInProgressSection> {
+  List allHabitKeys = [];
+  List allHabitList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getHabitKeys().then((result) {
+      setState(() {
+        allHabitKeys = result;
+        for (var key in allHabitKeys) {
+          getHabitFromStore(key).then((r) {
+            setState(() {
+              allHabitList.add(r);
+            });
+          });
+        }
+      });
+    });
+  }
+
+  // Fetch Habit IDs from user's habit list
+  getHabitKeys() async {
+    var userSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    if (userSnapshot.exists && userSnapshot['allHabits'] != null) {
+      allHabitKeys = userSnapshot['allHabits'].keys.toList();
+      return allHabitKeys;
+    } else {
+      return [];
+    }
+  }
+
   Widget _buildHabitsInProgressSection(BuildContext context) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
@@ -57,7 +92,7 @@ class _HabitsInProgressSectionState extends State<HabitsInProgressSection> {
                 elevation: 5,
                 child: ListView.builder(
                   shrinkWrap: true,
-                  itemCount: habitList.length,
+                  itemCount: allHabitList.length,
                   itemBuilder: (context, index) {
                     return Container(
                       width: double.infinity,
@@ -68,8 +103,8 @@ class _HabitsInProgressSectionState extends State<HabitsInProgressSection> {
                         children: <Widget>[
                           HabitTileInfo(
                               habitNum: index + 1,
-                              habitName: habitList[index],
-                              habitDescription: "TBD"),
+                              habitName: allHabitList[index].title,
+                              habitDescription: allHabitList[index].info),
                           const HabitProgressBar(
                             userCompleted: 2,
                             userTotal: 10,
