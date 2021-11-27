@@ -22,7 +22,12 @@ class _RecommendedBoxState extends State<RecommendedBox> {
     return StreamBuilder<QuerySnapshot>(
       stream: habits,
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (!snapshot.hasData) return const Text("Come back later for more :)");
+        if (!snapshot.hasData) return const Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: 150, vertical: 50),
+            child: CircularProgressIndicator(
+              color: Colors.white,
+            ));
         return Container(child: _getNonUserHabits(snapshot, userHabits));
       }
 
@@ -113,13 +118,20 @@ class _RecommendedBoxState extends State<RecommendedBox> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children:  <Widget>[
-                  const Text(
-                    "Recommended",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
+                  Row(
+                    children: [
+                      const Text(
+                      "Recommended",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
+                      Icon(
+                          Icons.add_task_rounded,
+                      ),
+                    ]
                   ),
                   _listRecommendedHabits(habits, userHabits),
                 ],

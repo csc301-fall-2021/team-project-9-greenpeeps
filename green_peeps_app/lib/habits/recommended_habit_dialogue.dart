@@ -26,8 +26,8 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
             fontSize: 12,
           ),
           primary: Colors.green,
-          maximumSize: const Size(120, 50),
-          minimumSize: const Size(120, 50),
+          maximumSize: const Size(150, 75),
+          minimumSize: const Size(150, 75),
         );
 
   // dev testing: "nFSUjg7UBookPXllvk0d"
@@ -49,6 +49,7 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
   Widget build(BuildContext context) {
     return Dialog( 
       backgroundColor: _boxColor,
+      insetPadding: EdgeInsets.all(15),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(5.0),
@@ -57,7 +58,6 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
       child: Container(
         padding: EdgeInsets.all(_boxPadding + 5),
         width: double.infinity,
-        height: 535,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,6 +85,16 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
               child: Text(
                 widget.title,
                 style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: Text(
+                "Leaves: ${widget.points}",
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
@@ -93,19 +103,21 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
             Container(
               padding: const EdgeInsets.all(10),
               child: Text(
-                "Leaves: " + widget.points.toString()
+                widget.info,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             Container(
               padding: const EdgeInsets.all(10),
               child: Text(
-                widget.info
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: Text(
-                "Do this habit " + widget.amount.toString() + " times"
+                "Do this habit ${widget.amount} times",
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             Align(
@@ -153,6 +165,11 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
                     child: const Text(
                       'I already preform this habit in my life',
                       textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontFamily: "Nunito",
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
                       ),
                   ),
                   ElevatedButton(
@@ -199,13 +216,18 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
                     },
                     child: const Text(
                       'Add this to Habits In Progress',
-                      textAlign: TextAlign.center
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontFamily: "Nunito",
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ]
               ),
             ),
-            
+            SizedBox(height: 10),
           ]
         )
       )
