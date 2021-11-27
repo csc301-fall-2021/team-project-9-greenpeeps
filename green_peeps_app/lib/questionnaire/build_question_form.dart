@@ -57,7 +57,6 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
   Widget _buildDropDown(BuildContext context) {
     // String dropDownValue = widget.question.getAnswers()[0];
 
-
     return SizedBox(
       width: double.infinity,
       child: Consumer2<QuestionListModel, ResponseListModel>(
@@ -78,8 +77,8 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
                       iconDisabledColor: Colors.grey,
                       iconEnabledColor: Colors.grey,
                       style: const TextStyle(color: Colors.black),
-                      validator: (value) => value == null
-                          ? 'Please choose an option': null,
+                      validator: (value) =>
+                          value == null ? 'Please choose an option' : null,
                       onChanged: (newValue) {
                         setState(
                           () {
@@ -95,13 +94,13 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
                             //   break;
                             //   }
                             // }
-
                           },
                         );
                       },
                       // validator: (value) => value == null ? 'field required' : null,
-                      items:
-                          widget.question.getAnswerText().map<DropdownMenuItem<String>>(
+                      items: widget.question
+                          .getAnswerList()
+                          .map<DropdownMenuItem<String>>(
                         (String value) {
                           return DropdownMenuItem<String>(
                             value: value,
@@ -112,7 +111,7 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
                     ),
                   ),
                 ),
-                Visibility (
+                Visibility(
                   visible: ignoreEnabled,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -120,24 +119,27 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
                       Icons.check_circle_rounded,
                       color: Colors.green,
                       size: 24.0,
-                      semanticLabel: "A checkmark to indicate that this question has been completed",
+                      semanticLabel:
+                          "A checkmark to indicate that this question has been completed",
                     ),
                   ),
                 ),
-                Visibility (
+                Visibility(
                   visible: !ignoreEnabled,
                   child: TextButton.icon(
-                      onPressed: (){
+                      onPressed: () {
                         // check that dropdown value is not null
-                        if(dropDownValue != null){
-                          setState((){
+                        if (dropDownValue != null) {
+                          setState(() {
                             responseListModel.addResponse(Response(
-                                qID: widget.question.id, answer: dropDownValue!));
+                                qID: widget.question.id,
+                                answer: dropDownValue!));
                             // dropDownValue cannot be null because this is on changed
                             for (Answer answer in widget.question.answers) {
                               if (answer.text == dropDownValue) {
                                 if (answer.nextQuestion != null) {
-                                  questionListModel.addQuestion(answer.nextQuestion!);
+                                  questionListModel
+                                      .addQuestion(answer.nextQuestion!);
                                 }
                                 break;
                               }
@@ -146,11 +148,11 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
                             inputError = false;
                           });
                         } else {
-                          setState((){
-                            inputError = true; // if null tell user to choose an option
+                          setState(() {
+                            inputError =
+                                true; // if null tell user to choose an option
                           });
                         }
-
                       },
                       icon: Icon(Icons.check_circle_outline_rounded),
                       style: TextButton.styleFrom(
@@ -161,13 +163,11 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical:4.0, horizontal: 4),
-              child: Visibility (
+              padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4),
+              child: Visibility(
                 visible: inputError,
                 child: Text("Please choose an option!",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 15)),
+                    style: TextStyle(color: Colors.grey, fontSize: 15)),
               ),
             ),
           ],
@@ -239,7 +239,7 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
                     ),
                   ),
                 ),
-                Visibility (
+                Visibility(
                   visible: ignoreEnabled,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -247,24 +247,26 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
                       Icons.check_circle_rounded,
                       color: Colors.green,
                       size: 24.0,
-                      semanticLabel: "A checkmark to indicate that this question has been completed",
+                      semanticLabel:
+                          "A checkmark to indicate that this question has been completed",
                     ),
                   ),
                 ),
-                Visibility (
+                Visibility(
                   visible: !ignoreEnabled,
                   child: TextButton.icon(
-                      onPressed: (){
+                      onPressed: () {
                         // check that input value is not empty
-                        if(input.isNotEmpty){
-                          setState((){
+                        if (input.isNotEmpty) {
+                          setState(() {
                             responseListModel.addResponse(Response(
                                 qID: widget.question.id, answer: input));
                             // dropDownValue cannot be null because this is on changed
                             for (Answer answer in widget.question.answers) {
                               if (answer.text == dropDownValue) {
                                 if (answer.nextQuestion != null) {
-                                  questionListModel.addQuestion(answer.nextQuestion!);
+                                  questionListModel
+                                      .addQuestion(answer.nextQuestion!);
                                 }
                                 break;
                               }
@@ -273,11 +275,11 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
                             inputError = false;
                           });
                         } else {
-                          setState((){
-                            inputError = true; // if null tell user to choose an option
+                          setState(() {
+                            inputError =
+                                true; // if null tell user to choose an option
                           });
                         }
-
                       },
                       icon: Icon(Icons.check_circle_outline_rounded),
                       style: TextButton.styleFrom(
@@ -289,13 +291,11 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
             );
           }),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical:4.0, horizontal: 4),
-            child: Visibility (
+            padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 4),
+            child: Visibility(
               visible: inputError,
               child: Text("Please enter a value!",
-                  style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 15)),
+                  style: TextStyle(color: Colors.grey, fontSize: 15)),
             ),
           ),
           SizedBox(
@@ -309,7 +309,7 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
   String? dropDownValue = null;
   void _setDefaultDropDownValue() {
     if (dropDownValue == "") {
-      dropDownValue = widget.question.getAnswerText()[0];
+      dropDownValue = widget.question.getAnswerList()[0];
     }
 
     // if(dropDownItems == []){
@@ -333,7 +333,7 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
       return _buildDropDown(context);
     } else {
       return const SizedBox(
-          child:Text("Error: There is no form for this question"));
+          child: Text("Error: There is no form for this question"));
     }
   }
 }
