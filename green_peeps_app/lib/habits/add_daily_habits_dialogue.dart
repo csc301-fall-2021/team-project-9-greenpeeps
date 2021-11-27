@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:green_peeps_app/services/habit_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddDailyHabitsDialogue extends StatefulWidget {
   const AddDailyHabitsDialogue({Key? key}) : super(key: key);
@@ -9,21 +12,60 @@ class AddDailyHabitsDialogue extends StatefulWidget {
 
 class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
-  Map<int, bool> _habitMap = {};
+  Map<String, bool> _habitMap = {};
 
-  List habitList = [
-    "Use Kettle",
-    "Turn off Lights",
-    "Recycle",
-    "Turn off Computer",
-    "Be Green",
-    "Filler 1",
-    "Filler 2",
-    "Be cool",
-    "B)))"
-  ];
+  List habitKeys = [];
+  List habitList = [];
 
-  Widget _makeHabitSwitchList(setState, String habitName, int habitID) {
+  @override
+  void initState() {
+    super.initState();
+    getHabitKeys().then((result) {
+      setState(() {
+        habitKeys = result;
+        for (var key in habitKeys) {
+          getHabitFromStore(key).then((r) {
+            setState(() {
+              habitList.add(r);
+            });
+          });
+        }
+      });
+    });
+  }
+
+  // Fetch Habit IDs from user's habit list
+  getHabitKeys() async {
+    var userSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    if (userSnapshot.exists) {
+      habitKeys = userSnapshot['habitInfo'].keys.toList();
+      return habitKeys;
+    } else {
+      return null;
+    }
+  }
+
+  addHabitToDailyDB(key) async {
+    var userSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    if (userSnapshot.exists) {
+      var dailyHabits = userSnapshot['dailyHabits'];
+      print(dailyHabits);
+      dailyHabits[key] = {'completed': true, 'user_completed': 0};
+      print(dailyHabits);
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .update({'dailyHabits': dailyHabits}).then((value) => {});
+    }
+  }
+
+  Widget _makeHabitSwitchList(setState, String habitName, String habitID) {
     if (_habitMap[habitID] == null) {
       _habitMap[habitID] = false;
     }
@@ -118,7 +160,8 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
                 child: SingleChildScrollView(
                   child: Column(children: [
                     for (var i = 0; i < habitList.length; i++)
-                      _makeHabitSwitchList(setState, habitList[i], i),
+                      _makeHabitSwitchList(
+                          setState, habitList[i].title, habitList[i].id),
                   ]),
                 ),
               ),
@@ -127,7 +170,13 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
                   const Spacer(),
                   TextButton(
                     child: const Text('Save'),
-                    onPressed: () {},
+                    onPressed: () {
+                      _habitMap.forEach((key, value) {
+                        if (value) {
+                          addHabitToDailyDB(key).then((value) => {});
+                        }
+                      });
+                    },
                     style: TextButton.styleFrom(
                       primary: Colors.white,
                       backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
