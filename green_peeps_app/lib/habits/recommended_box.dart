@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:green_peeps_app/habits/recommended_come_back_later.dart';
 import 'package:green_peeps_app/habits/recommended_habit_item.dart';
 import 'dart:math';
-import 'package:green_peeps_app/services/habit_firestore.dart';
 
 class RecommendedBox extends StatefulWidget {
   const RecommendedBox({Key? key}) : super(key: key);
@@ -24,21 +23,56 @@ class _RecommendedBoxState extends State<RecommendedBox> {
       stream: habits,
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (!snapshot.hasData) return const Text("Come back later for more :)");
-        return Container(child: _getArticles(snapshot, userHabits));
+        return Container(child: _getNonUserHabits(snapshot, userHabits));
       }
 
     );
   }
 
-  _getTestArticles(AsyncSnapshot<QuerySnapshot> snapshot, List<String> allHabitsList, List<String> userHabitsList) {
+
+  _getNonUserHabits(AsyncSnapshot<QuerySnapshot> snapshot, Stream<DocumentSnapshot> userHabits) {
+    // get all habits
+    List<String> testLst = [];
+    for (var element in snapshot.data!.docs) { testLst.add(element.id);}
+
+    return StreamBuilder<DocumentSnapshot>(
+        stream: userHabits,
+        builder: (context, AsyncSnapshot<DocumentSnapshot> userSnapshot) {
+
+          if (userSnapshot.connectionState == ConnectionState.active) {
+
+            var userData = userSnapshot.data;
+
+            if (userData!.data().toString().contains('habitInfo') == true) {
+
+              Map<String, dynamic> userHabitsMap = userData.data() as Map<String, dynamic>;
+              var userHabitKeys = userHabitsMap['habitInfo'].keys.toList();
+              var nonUserHabits = _filterHabits(snapshot, testLst, userHabitKeys);
+              if (nonUserHabits.length > 0) {
+                return ListView(shrinkWrap: true, children: nonUserHabits);
+              } else {
+                return const RecommendedComeBackLater();
+              }
+              
+            } else {
+              return const RecommendedComeBackLater();
+            }
+            
+          } else {
+            return const RecommendedComeBackLater();
+          }
+        }
+
+    );
+  }
+
+ _filterHabits(AsyncSnapshot<QuerySnapshot> snapshot, List<String> allHabitsList, List<String> userHabitsList) {
     List<String> filteredHabitsList = [];
     for (var habitKey in allHabitsList) {
       if (!userHabitsList.contains(habitKey)) {
         filteredHabitsList.add(habitKey);
       }
     }
-
-    print("TEST ARTICLES: " + filteredHabitsList.toString());
 
     List<RecommendedHabitItem> habitsList = [];
     for (var doc in snapshot.data!.docs) { // should be in filteredhabitslist
@@ -64,56 +98,10 @@ class _RecommendedBoxState extends State<RecommendedBox> {
 
   }
 
-  _getArticles(AsyncSnapshot<QuerySnapshot> snapshot, Stream<DocumentSnapshot> userHabits) {
-
-  // get all habits
-  List<String> testLst = [];
-  for (var element in snapshot.data!.docs) { testLst.add(element.id);}
-
-  print("TEST REACHED: " + testLst.toString());
-
-  return StreamBuilder<DocumentSnapshot>(
-      stream: userHabits,
-      builder: (context, AsyncSnapshot<DocumentSnapshot> userSnapshot) {
-        if (userSnapshot.connectionState == ConnectionState.active) {
-          var temp = userSnapshot.data;
-          //if (!userSnapshot.hasData) return const Text("Come back later for more :)");
-          
-          if (temp!.data().toString().contains('habitInfo') == true) {
-            Map<String, dynamic> testMap = temp.data() as Map<String, dynamic>;
-            var lst = testMap['habitInfo'].keys.toList();
-            print("USER SNAPSHOT: " + lst.toString());
-            var nonUserHabits = _getTestArticles(snapshot, testLst, lst);
-            if (nonUserHabits.length > 0) {
-              return ListView(shrinkWrap: true, children: nonUserHabits);
-            } else {
-              return const RecommendedComeBackLater();
-            }
-            
-          } else {
-            return const RecommendedComeBackLater();
-          }
-          
-        } else {
-          return const RecommendedComeBackLater();
-        }
-      }
-
-  );
-  }
-
-
   @override 
   Widget build(BuildContext context) {
     Stream<QuerySnapshot> habits = FirebaseFirestore.instance.collection('habits').snapshots();
     Stream<DocumentSnapshot> userHabits = FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).snapshots();
-
-    //_test();
-    //StreamBuilder<QuerySnapshot> testList = _listAllHabits(habits, userHabits);
-
-    //print("TESTING: " + testList.toString());
-
-    //_listRecommendedHabits(habits, userHabits);
 
     return SliverSafeArea(
       sliver: SliverPadding(
