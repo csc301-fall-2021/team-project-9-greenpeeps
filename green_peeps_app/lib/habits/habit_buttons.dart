@@ -27,7 +27,7 @@ class _HabitButtonsState extends State<HabitButtons> {
             ListTile(
               tileColor: const Color.fromRGBO(0, 176, 60, 1),
               title: const Text(
-                "Add Daily Habits",
+                "Set Daily Habits",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 18.0,
@@ -72,7 +72,7 @@ class _HabitButtonsState extends State<HabitButtons> {
                 showDialog(
                   context: context,
                   builder: (context) {
-                    return LogAllHabitsDialogue();
+                    return const LogAllHabitsDialogue();
                   },
                 );
               },

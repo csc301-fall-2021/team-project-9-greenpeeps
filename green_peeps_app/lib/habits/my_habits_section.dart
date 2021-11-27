@@ -5,8 +5,6 @@ import 'package:green_peeps_app/habits/habit_tile_info.dart';
 import 'package:green_peeps_app/habits/habit_tile_info_dialogue.dart';
 import 'package:green_peeps_app/services/habit_firestore.dart';
 
-// List habitList = ["Turn off Computer", "Be Green", "Filler 1", "Filler 2"];
-
 class MyHabitsSection extends StatefulWidget {
   const MyHabitsSection({Key? key}) : super(key: key);
 
@@ -15,35 +13,50 @@ class MyHabitsSection extends StatefulWidget {
 }
 
 class _MyHabitsSectionState extends State<MyHabitsSection> {
-  List habitKeys = [];
-  List habitList = [];
+  List completedhabitKeys = [];
+  List completedhabitList = [];
+
   @override
   void initState() {
     super.initState();
-    getHabitKeys().then((result) {
-      setState(() {
-        habitKeys = result;
-        for (var key in habitKeys) {
-          getHabitFromStore(key).then((r) {
-            setState(() {
-              habitList.add(r);
-            });
-          });
-        }
-      });
-    });
+    getCompletedHabitKeys().then(
+      (result) {
+        setState(
+          () {
+            completedhabitKeys = result;
+            for (var key in completedhabitKeys) {
+              getHabitFromStore(key).then(
+                (r) {
+                  setState(
+                    () {
+                      completedhabitList.add(r);
+                    },
+                  );
+                },
+              );
+            }
+          },
+        );
+      },
+    );
   }
 
-  getHabitKeys() async {
+  getCompletedHabitKeys() async {
     var userSnapshot = await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
-    if (userSnapshot.exists) {
-      habitKeys = userSnapshot['habitInfo'].keys.toList();
+    if (userSnapshot.exists && userSnapshot['allHabits'] != null) {
+      var habitKeys = userSnapshot['allHabits'].keys.toList();
+      var copyKeys = [...habitKeys];
+      for (var key in copyKeys) {
+        if (userSnapshot['allHabits'][key]['completed'] == false) {
+          habitKeys.remove(key);
+        }
+      }
       return habitKeys;
     } else {
-      return null;
+      return [];
     }
   }
 
@@ -56,13 +69,13 @@ class _MyHabitsSectionState extends State<MyHabitsSection> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                padding: EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const Text(
-                      "My Habits",
+                  children: const <Widget>[
+                    Text(
+                      "Completed Habits",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontSize: 18.0,
@@ -81,7 +94,7 @@ class _MyHabitsSectionState extends State<MyHabitsSection> {
                 elevation: 5,
                 child: ListView.builder(
                   shrinkWrap: true,
-                  itemCount: habitList.length,
+                  itemCount: completedhabitList.length,
                   itemBuilder: (context, index) {
                     return Container(
                       width: double.infinity,
@@ -92,9 +105,9 @@ class _MyHabitsSectionState extends State<MyHabitsSection> {
                         children: <Widget>[
                           HabitTileInfo(
                               habitNum: index + 1,
-                              habitName: habitList[index].title,
-                              habitDescription: habitList[index].info),
-                          Divider(
+                              habitName: completedhabitList[index].title,
+                              habitDescription: completedhabitList[index].info),
+                          const Divider(
                             color: Colors.grey,
                           )
                         ],

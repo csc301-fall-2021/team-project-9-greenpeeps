@@ -27,7 +27,7 @@ class _HabitProgressBarState extends State<HabitProgressBar> {
             minHeight: 16,
           ),
         ),
-        Container(
+        SizedBox(
           width: double.infinity,
           child: Text(
             widget.userCompleted.toString() + "/" + widget.userTotal.toString(),

@@ -12,26 +12,36 @@ class LogHabits extends StatefulWidget {
 }
 
 class _LogHabitsState extends State<LogHabits> {
+  final ScrollController _controller = ScrollController();
+
   // Map of which checkboxes are checked
-  Map<int, bool> _habitMap = {};
+  Map<String, bool> _habitMap = {};
   List dailyHabitKeys = [];
   List dailyHabitList = [];
 
   @override
   void initState() {
     super.initState();
-    getHabitKeys().then((result) {
-      setState(() {
-        dailyHabitKeys = result;
-        for (var key in dailyHabitKeys) {
-          getHabitFromStore(key).then((r) {
-            setState(() {
-              dailyHabitList.add(r);
-            });
-          });
-        }
-      });
-    });
+    getHabitKeys().then(
+      (result) {
+        setState(
+          () {
+            dailyHabitKeys = result;
+            for (var key in dailyHabitKeys) {
+              getHabitFromStore(key).then(
+                (r) {
+                  setState(
+                    () {
+                      dailyHabitList.add(r);
+                    },
+                  );
+                },
+              );
+            }
+          },
+        );
+      },
+    );
   }
 
   // Fetch Habit IDs from user's habit list
@@ -42,13 +52,18 @@ class _LogHabitsState extends State<LogHabits> {
         .get();
     if (userSnapshot.exists) {
       dailyHabitKeys = userSnapshot['dailyHabits'].keys.toList();
+      // for (var key in dailyHabitKeys) {
+      //   if (userSnapshot['dailyHabits'][key]['dailyComplete']) {
+      //     dailyHabitKeys.remove(key);
+      //   }
+      // }
       return dailyHabitKeys;
     } else {
       return null;
     }
   }
 
-  Widget _makeHabitCheckbox(setState, String habitName, int habitID) {
+  Widget _makeHabitCheckbox(setState, String habitName, String habitID) {
     if (_habitMap[habitID] == null) {
       _habitMap[habitID] = false;
     }
@@ -79,20 +94,33 @@ class _LogHabitsState extends State<LogHabits> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        Container(
-          height: 415,
-          child: SingleChildScrollView(
-            child: Column(children: [
-              for (var i = 0; i < dailyHabitList.length; i++)
-                _makeHabitCheckbox(setState, dailyHabitList[i].title, i),
-            ]),
+        const Divider(color: Colors.transparent),
+        SizedBox(
+          height: 275,
+          child: Scrollbar(
+            controller: _controller,
+            child: SingleChildScrollView(
+              controller: _controller,
+              child: Column(
+                children: [
+                  for (var i = 0; i < dailyHabitList.length; i++)
+                    _makeHabitCheckbox(setState, dailyHabitList[i].title, dailyHabitList[i].id),
+                ],
+              ),
+            ),
           ),
         ),
         Row(
           children: <Widget>[
             const Spacer(),
             TextButton(
-              child: const Text('Save'),
+              child: const Text(
+                'Save',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               onPressed: () {
                 widget.saveHabits();
               },
@@ -100,7 +128,7 @@ class _LogHabitsState extends State<LogHabits> {
                 primary: Colors.white,
                 backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
                 elevation: 5,
-                fixedSize: const Size(61, 25),
+                fixedSize: const Size(60, 30),
               ),
             ),
           ],

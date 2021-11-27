@@ -48,10 +48,10 @@ class _RecommendedBoxState extends State<RecommendedBox> {
 
             var userData = userSnapshot.data;
 
-            if (userData!.data().toString().contains('habitInfo') == true) {
+            if (userData!.data().toString().contains('allHabits') == true) {
 
               Map<String, dynamic> userHabitsMap = userData.data() as Map<String, dynamic>;
-              var userHabitKeys = userHabitsMap['habitInfo'].keys.toList();
+              var userHabitKeys = userHabitsMap['allHabits'].keys.toList();
               var nonUserHabits = _filterHabits(snapshot, testLst, userHabitKeys);
               if (nonUserHabits.length > 0) {
                 return ListView(shrinkWrap: true, children: nonUserHabits);

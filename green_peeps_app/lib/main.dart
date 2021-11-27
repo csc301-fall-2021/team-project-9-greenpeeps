@@ -62,7 +62,7 @@ class _AppState extends State<MyApp> {
         scrollbarTheme: ScrollbarThemeData(
           isAlwaysShown: true,
           thickness: MaterialStateProperty.all(10),
-          thumbColor: MaterialStateProperty.all(Colors.teal),
+          thumbColor: MaterialStateProperty.all(Colors.grey),
           radius: const Radius.circular(10),
         ),
       ),

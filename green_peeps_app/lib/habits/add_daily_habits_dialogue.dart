@@ -12,21 +12,37 @@ class AddDailyHabitsDialogue extends StatefulWidget {
 
 class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
+  final ScrollController _controller = ScrollController();
   Map<String, bool> _habitMap = {};
 
-  List habitKeys = [];
-  List habitList = [];
+  List allHabitKeys = [];
+  List allHabitList = [];
+  List dailyHabitKeys = [];
+  List dailyHabitList = [];
 
   @override
   void initState() {
     super.initState();
     getHabitKeys().then((result) {
       setState(() {
-        habitKeys = result;
-        for (var key in habitKeys) {
+        allHabitKeys = result;
+        for (var key in allHabitKeys) {
           getHabitFromStore(key).then((r) {
             setState(() {
-              habitList.add(r);
+              allHabitList.add(r);
+              _habitMap[key] = false;
+            });
+          });
+        }
+      });
+    });
+    getDailyHabitKeys().then((result) {
+      setState(() {
+        dailyHabitKeys = result;
+        for (var key in dailyHabitKeys) {
+          getHabitFromStore(key).then((r) {
+            setState(() {
+              _habitMap[key] = true;
             });
           });
         }
@@ -40,28 +56,54 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
-    if (userSnapshot.exists) {
-      habitKeys = userSnapshot['habitInfo'].keys.toList();
+    if (userSnapshot.exists && userSnapshot['allHabits'] != null) {
+      var habitKeys = userSnapshot['allHabits'].keys.toList();
+      var copyKeys = [...habitKeys];
+      for (var key in copyKeys) {
+        if (userSnapshot['allHabits'][key]['completed']) {
+          habitKeys.remove(key);
+        }
+      }
       return habitKeys;
     } else {
-      return null;
+      return [];
     }
   }
 
-  addHabitToDailyDB(key) async {
+  // Fetch Daily Habit IDs from user's daily habit list
+  getDailyHabitKeys() async {
+    var userSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    if (userSnapshot.exists && userSnapshot['dailyHabits'] != null) {
+      var habitKeys = userSnapshot['dailyHabits'].keys.toList();
+      return habitKeys;
+    } else {
+      return [];
+    }
+  }
+
+  updateHabitToDailyDB(key, inDaily) async {
     var userSnapshot = await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
     if (userSnapshot.exists) {
-      var dailyHabits = userSnapshot['dailyHabits'];
-      print(dailyHabits);
-      dailyHabits[key] = {'completed': true, 'user_completed': 0};
-      print(dailyHabits);
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .update({'dailyHabits': dailyHabits}).then((value) => {});
+      if (inDaily) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({
+          'dailyHabits.' + key: {'dailyComplete': false, 'user_completed': 0}
+        }).then((value) => {});
+      } else {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({'dailyHabits.' + key: FieldValue.delete()}).then(
+                (value) => {});
+      }
     }
   }
 
@@ -95,7 +137,7 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      insetPadding: EdgeInsets.all(15),
+      insetPadding: const EdgeInsets.all(15),
       backgroundColor: _boxColor,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -103,90 +145,100 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
         ),
       ),
       child: Container(
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppBar(
-                title: Text(
-                  "",
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                elevation: 0,
-                toolbarHeight: 30,
-                backgroundColor: _boxColor,
-                automaticallyImplyLeading: false, // No back arrow
-                actions: <Widget>[
-                  IconButton(
-                    padding: const EdgeInsets.all(0),
-                    onPressed: () {
-                      Navigator.of(context).pop(); // Closes popup
-                    },
-                    icon: const Icon(Icons.close),
-                    color: Colors.black,
-                    splashRadius: 15,
-                  )
-                ],
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: const Text(
-                  "Which habits do you want to appear on your homescreen?",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AppBar(
+              title: const Text(
+                "",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: const Text(
-                  "Limit: 5",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+              elevation: 0,
+              toolbarHeight: 30,
+              backgroundColor: _boxColor,
+              automaticallyImplyLeading: false, // No back arrow
+              actions: <Widget>[
+                IconButton(
+                  padding: const EdgeInsets.all(0),
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Closes popup
+                  },
+                  icon: const Icon(Icons.close),
+                  color: Colors.black,
+                  splashRadius: 15,
+                )
+              ],
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: const Text(
+                "Which habits do you want to appear on your homescreen?",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 28.0,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              Container(
-                height: 300,
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: const Text(
+                "Limit: 5",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 300,
+              child: Scrollbar(
+                controller: _controller,
                 child: SingleChildScrollView(
-                  child: Column(children: [
-                    for (var i = 0; i < habitList.length; i++)
-                      _makeHabitSwitchList(
-                          setState, habitList[i].title, habitList[i].id),
-                  ]),
+                  controller: _controller,
+                  child: Column(
+                    children: [
+                      for (var i = 0; i < allHabitList.length; i++)
+                        _makeHabitSwitchList(setState, allHabitList[i].title,
+                            allHabitList[i].id),
+                    ],
+                  ),
                 ),
               ),
-              Row(
-                children: <Widget>[
-                  const Spacer(),
-                  TextButton(
-                    child: const Text('Save'),
-                    onPressed: () {
-                      _habitMap.forEach((key, value) {
-                        if (value) {
-                          addHabitToDailyDB(key).then((value) => {});
-                        }
-                      });
-                    },
-                    style: TextButton.styleFrom(
-                      primary: Colors.white,
-                      backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
-                      elevation: 5,
-                      fixedSize: const Size(61, 25),
-                    ),
+            ),
+            Row(
+              children: <Widget>[
+                const Spacer(),
+                TextButton(
+                  child: const Text('Save'),
+                  onPressed: () {
+                    _habitMap.forEach(
+                      (key, value) {
+                        updateHabitToDailyDB(key, value).then(
+                          (value) => {},
+                        );
+                      },
+                    );
+                    Navigator.of(context).pop();
+                  },
+                  style: TextButton.styleFrom(
+                    primary: Colors.white,
+                    backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
+                    elevation: 5,
+                    fixedSize: const Size(61, 25),
                   ),
-                ],
-              ),
-            ]),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

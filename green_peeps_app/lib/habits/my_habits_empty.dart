@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-class RecommendedComeBackLater extends StatefulWidget {
-  const RecommendedComeBackLater({Key? key}) : super(key: key);
+class MyHabitsEmpty extends StatefulWidget {
+  const MyHabitsEmpty({Key? key}) : super(key: key);
 
   @override
-  _RecommendedComeBackLaterState createState() => _RecommendedComeBackLaterState();
+  _MyHabitsEmptyState createState() => _MyHabitsEmptyState();
 }
 
-class _RecommendedComeBackLaterState extends State<RecommendedComeBackLater> {
+class _MyHabitsEmptyState extends State<MyHabitsEmpty> {
   final double _habitItemPadding = 10.0;
   final double _habitItemElevation = 5.0; // The height of shadow beneath box
   final Color _habitItemColor = const Color.fromRGBO(248, 244, 219, 1);
 
-  @override 
+  @override
   Widget build(BuildContext context) {
     return Material(
       color: _habitItemColor,
@@ -23,13 +23,10 @@ class _RecommendedComeBackLaterState extends State<RecommendedComeBackLater> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: const <Widget>[
-            Text("Come back later for more :)",
-            style: TextStyle(
-                fontSize: 20,
-            )),
-          ]
-        )
-      )
+            Text("You have no completed habits :("),
+          ],
+        ),
+      ),
     );
   }
 }

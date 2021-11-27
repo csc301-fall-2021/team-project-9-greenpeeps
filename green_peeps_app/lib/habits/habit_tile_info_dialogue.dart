@@ -26,43 +26,44 @@ class _HabitTileDialogueState extends State<HabitTileDialogue> {
         ),
       ),
       child: Container(
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppBar(
-                title: Text(
-                  widget.habitName,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                elevation: 0,
-                toolbarHeight: 30,
-                backgroundColor: _boxColor,
-                automaticallyImplyLeading: false, // No back arrow
-                actions: <Widget>[
-                  IconButton(
-                    padding: const EdgeInsets.all(0),
-                    onPressed: () {
-                      Navigator.of(context).pop(); // Closes popup
-                    },
-                    icon: const Icon(Icons.close),
-                    color: Colors.black,
-                    splashRadius: 15,
-                  )
-                ],
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Text(
-                  widget.habitDescription,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AppBar(
+              title: Text(
+                widget.habitName,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ]),
+              elevation: 0,
+              toolbarHeight: 30,
+              backgroundColor: _boxColor,
+              automaticallyImplyLeading: false, // No back arrow
+              actions: <Widget>[
+                IconButton(
+                  padding: const EdgeInsets.all(0),
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Closes popup
+                  },
+                  icon: const Icon(Icons.close),
+                  color: Colors.black,
+                  splashRadius: 15,
+                )
+              ],
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Text(
+                widget.habitDescription,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

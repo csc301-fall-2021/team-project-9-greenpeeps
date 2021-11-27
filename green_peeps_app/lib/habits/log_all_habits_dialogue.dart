@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:green_peeps_app/services/habit_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LogAllHabitsDialogue extends StatefulWidget {
   const LogAllHabitsDialogue({Key? key}) : super(key: key);
@@ -9,20 +12,43 @@ class LogAllHabitsDialogue extends StatefulWidget {
 
 class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
+  final ScrollController _controller = ScrollController();
 
   // Map of which checkboxes are checked
   Map<int, bool> _habitMap = {};
-  List habitList = [
-    "Use Kettle",
-    "Turn off Lights",
-    "Recycle",
-    "Turn off Computer",
-    "Be Green",
-    "Filler 1",
-    "Filler 2",
-    "Be cool",
-    "B)))"
-  ];
+  List allHabitKeys = [];
+  List allHabitList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getHabitKeys().then((result) {
+      setState(() {
+        allHabitKeys = result;
+        for (var key in allHabitKeys) {
+          getHabitFromStore(key).then((r) {
+            setState(() {
+              allHabitList.add(r);
+            });
+          });
+        }
+      });
+    });
+  }
+
+  // Fetch Habit IDs from user's habit list
+  getHabitKeys() async {
+    var userSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    if (userSnapshot.exists && userSnapshot['allHabits'] != null) {
+      allHabitKeys = userSnapshot['allHabits'].keys.toList();
+      return allHabitKeys;
+    } else {
+      return [];
+    }
+  }
 
   Widget _makeHabitCheckbox(setState, String habitName, int habitID) {
     if (_habitMap[habitID] == null) {
@@ -46,7 +72,7 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      insetPadding: EdgeInsets.all(15),
+      insetPadding: const EdgeInsets.all(15),
       backgroundColor: _boxColor,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -54,15 +80,15 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
         ),
       ),
       child: Container(
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppBar(
-              title: Text(
+              title: const Text(
                 "",
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.black,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -94,13 +120,19 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Container(
+                SizedBox(
                   height: 415,
-                  child: SingleChildScrollView(
-                    child: Column(children: [
-                      for (var i = 0; i < habitList.length; i++)
-                        _makeHabitCheckbox(setState, habitList[i], i),
-                    ]),
+                  child: Scrollbar(
+                    controller: _controller,
+                    child: SingleChildScrollView(
+                      controller: _controller,
+                      child: Column(
+                        children: [
+                          for (var i = 0; i < allHabitList.length; i++)
+                            _makeHabitCheckbox(setState, allHabitList[i].title, i),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
                 Row(
