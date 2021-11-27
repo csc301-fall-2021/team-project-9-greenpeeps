@@ -79,8 +79,9 @@ class _LogHabitsState extends State<LogHabits> {
             fontWeight: FontWeight.bold,
           ),
         ),
+        Divider(color: Colors.transparent),
         Container(
-          height: 415,
+          height: 275,
           child: SingleChildScrollView(
             child: Column(children: [
               for (var i = 0; i < dailyHabitList.length; i++)
@@ -92,7 +93,11 @@ class _LogHabitsState extends State<LogHabits> {
           children: <Widget>[
             const Spacer(),
             TextButton(
-              child: const Text('Save'),
+              child: const Text('Save',
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),),
               onPressed: () {
                 widget.saveHabits();
               },
@@ -100,7 +105,7 @@ class _LogHabitsState extends State<LogHabits> {
                 primary: Colors.white,
                 backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
                 elevation: 5,
-                fixedSize: const Size(61, 25),
+                fixedSize: const Size(60, 30),
               ),
             ),
           ],

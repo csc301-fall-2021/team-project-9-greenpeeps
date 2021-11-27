@@ -78,8 +78,9 @@ class _QuestionCategoryPopupState extends State<QuestionCategoryPopup> {
             style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.black),
+                color: Colors.black87),
           ),
+          Divider(color: _boxColor),
           // If the number of categories exceed the box, it becomes scrollable
           SingleChildScrollView(
             // If the number of categories per row overflow, it will start at a new row
