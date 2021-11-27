@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:green_peeps_app/habits/new_habit_card.dart';
 
 class AddHabit extends StatefulWidget {
   const AddHabit({Key? key, required this.title,
@@ -32,96 +33,20 @@ class _AddHabitState extends State<AddHabit> {
       height: 415,
       child: Column(
         children: [
+          Spacer(),
           Container(
             height: 355,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Spacer(),
-                Card(
-                  color: const Color.fromRGBO(248, 244, 219, 1),
-                  elevation: 10,
-                  child: Column(
-                    children: [
-                      Container(
-                      padding: const EdgeInsets.all(10),
-                      child: Text(
-                        widget.title,
-                        textAlign: TextAlign.left,
-                        style: const TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                      Container(
-                        padding: const EdgeInsets.all(5),
-                        child: Text(
-                          "Leaves: ${widget.points}",
-                          textAlign: TextAlign.left,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                        child: Text(
-                          widget.info,
-                          textAlign: TextAlign.left,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      // Container(
-                      //   padding: const EdgeInsets.all(10),
-                      //   child: Text(
-                      //       "Do this habit ${widget.amount} times",
-                      //     textAlign: TextAlign.left,
-                      //     style: const TextStyle(
-                      //       fontSize: 20,
-                      //       fontWeight: FontWeight.bold,
-                      //     ),
-                      //   ),
-                      // ),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        child: Stack(
-                          children: <Widget>[
-                            ClipRRect(
-                              // Used to make the bar round
-                              borderRadius: BorderRadius.circular(10),
-                              child: const LinearProgressIndicator(
-                                backgroundColor: Color.fromRGBO(180, 180, 180, 1),
-                                valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-                                value: 0.0,
-                                minHeight: 25,
-                              ),
-                            ),
-                            Container(
-                              width: double.infinity,
-                              child: Text(
-                                "0/${widget.amount}" ,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-
-                              ),
-                            )
-                          ],
-                        ),
-                      ),]
-                  )
-                ),
-                const Spacer(),
-              ],
+            child: SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+                child: NewHabitCard(title: widget.title,
+                    info: widget.info,
+                    amount: widget.amount,
+                    points: widget.points),
+              ),
             ),
           ),
+          Spacer(),
           Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[

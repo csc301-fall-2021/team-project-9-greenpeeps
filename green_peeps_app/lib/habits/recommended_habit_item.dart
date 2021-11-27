@@ -34,6 +34,7 @@ class _RecommendedHabitItemState extends State<RecommendedHabitItem> {
   @override 
   Widget build(BuildContext context) {
 
+
     return InkWell(
       onTap: (){
         showDialog(

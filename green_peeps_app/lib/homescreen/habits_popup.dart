@@ -39,6 +39,7 @@ class _LogHabitPopup extends State<LogHabitPopup> {
         title: "Bike to work",
         info:
             "Driving everyday contributes to producing more CO2 which has a huge effect on the environment. The best way is drive less when possible.",
+        // "I am writing even more words in an effort to see what this looks like. Hi mom!!!! how are you doing today?",
         amount: 4,
         points: 5));
   }
