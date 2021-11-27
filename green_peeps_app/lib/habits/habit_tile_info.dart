@@ -21,6 +21,7 @@ class _HabitTileInfoState extends State<HabitTileInfo> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      contentPadding: const EdgeInsets.all(0),
       trailing: Icon(
         Icons.short_text_rounded,
       ),
@@ -32,7 +33,7 @@ class _HabitTileInfoState extends State<HabitTileInfo> {
           fontWeight: FontWeight.bold,
         ),
       ),
-      onTap: (){
+      onTap: () {
         showDialog(
           context: context,
           builder: (context) {
@@ -42,7 +43,6 @@ class _HabitTileInfoState extends State<HabitTileInfo> {
           },
         );
       },
-
     );
   }
 }
