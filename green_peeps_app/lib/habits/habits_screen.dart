@@ -19,32 +19,35 @@ class _HabitsScreenState extends State<HabitsScreen> {
     return Center(
       child: Scrollbar(
         controller: _controller,
-        child: CustomScrollView(
-          controller: _controller,
-          slivers: const <Widget>[
-            SliverSafeArea(
-              sliver: SliverPadding(
-                padding:
-                    EdgeInsets.only(left: 30, right: 30, top: 15, bottom: 0),
-                sliver: TitleBox(),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: CustomScrollView(
+            controller: _controller,
+            slivers: const <Widget>[
+              SliverSafeArea(
+                sliver: SliverPadding(
+                  padding:
+                      EdgeInsets.only(left: 30, right: 30, top: 15, bottom: 0),
+                  sliver: TitleBox(),
+                ),
               ),
-            ),
-            RecommendedBox(),
-            SliverSafeArea(
-              sliver: SliverPadding(
-                padding:
-                    EdgeInsets.only(left: 30, right: 30, top: 15, bottom: 0),
-                sliver: HabitsInProgressSection(),
+              RecommendedBox(),
+              SliverSafeArea(
+                sliver: SliverPadding(
+                  padding:
+                      EdgeInsets.only(left: 30, right: 30, top: 15, bottom: 0),
+                  sliver: HabitsInProgressSection(),
+                ),
               ),
-            ),
-            SliverSafeArea(
-              sliver: SliverPadding(
-                padding:
-                    EdgeInsets.only(left: 30, right: 30, top: 15, bottom: 25),
-                sliver: MyHabitsSection(),
+              SliverSafeArea(
+                sliver: SliverPadding(
+                  padding:
+                      EdgeInsets.only(left: 30, right: 30, top: 15, bottom: 25),
+                  sliver: MyHabitsSection(),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

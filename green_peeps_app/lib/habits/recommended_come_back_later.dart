@@ -23,7 +23,10 @@ class _RecommendedComeBackLaterState extends State<RecommendedComeBackLater> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: const <Widget>[
-            Text("Come back later for more :)"),
+            Text("Come back later for more :)",
+            style: TextStyle(
+                fontSize: 20,
+            )),
           ]
         )
       )
