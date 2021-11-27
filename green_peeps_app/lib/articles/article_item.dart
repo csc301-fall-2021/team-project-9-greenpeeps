@@ -48,17 +48,15 @@ class _ArticleItem extends State<ArticleItem> {
               ),
             ),
             Positioned.fill(
-              top: 50,
-              left: 50,
-              right: 50,
-              bottom: 50,
-              child: Text(
-                widget.title,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+              child: Center(
+                child: Text(
+                  widget.title,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
