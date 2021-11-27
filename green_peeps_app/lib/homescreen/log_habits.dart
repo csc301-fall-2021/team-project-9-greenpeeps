@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:green_peeps_app/services/habit_firestore.dart';
 
 class LogHabits extends StatefulWidget {
   final VoidCallback saveHabits;
@@ -11,17 +14,39 @@ class LogHabits extends StatefulWidget {
 class _LogHabitsState extends State<LogHabits> {
   // Map of which checkboxes are checked
   Map<int, bool> _habitMap = {};
-  List habitList = [
-    "Use Kettle",
-    "Turn off Lights",
-    "Recycle",
-    "Turn off Computer",
-    "Be Green",
-    "Filler 1",
-    "Filler 2",
-    "Be cool",
-    "B)))"
-  ];
+  List dailyHabitKeys = [];
+  List dailyHabitList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getHabitKeys().then((result) {
+      setState(() {
+        dailyHabitKeys = result;
+        for (var key in dailyHabitKeys) {
+          getHabitFromStore(key).then((r) {
+            setState(() {
+              dailyHabitList.add(r);
+            });
+          });
+        }
+      });
+    });
+  }
+
+  // Fetch Habit IDs from user's habit list
+  getHabitKeys() async {
+    var userSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    if (userSnapshot.exists) {
+      dailyHabitKeys = userSnapshot['dailyHabits'].keys.toList();
+      return dailyHabitKeys;
+    } else {
+      return null;
+    }
+  }
 
   Widget _makeHabitCheckbox(setState, String habitName, int habitID) {
     if (_habitMap[habitID] == null) {
@@ -34,7 +59,7 @@ class _LogHabitsState extends State<LogHabits> {
       value: _habitMap[habitID],
       onChanged: (bool? value) {
         setState(
-              () {
+          () {
             _habitMap[habitID] = value!;
           },
         );
@@ -57,14 +82,11 @@ class _LogHabitsState extends State<LogHabits> {
         Container(
           height: 415,
           child: SingleChildScrollView(
-            child: Column(
-                children: [
-                  for (var i = 0; i < habitList.length; i++)
-                    _makeHabitCheckbox(setState, habitList[i], i),
-                ]
-            ),
+            child: Column(children: [
+              for (var i = 0; i < dailyHabitList.length; i++)
+                _makeHabitCheckbox(setState, dailyHabitList[i].title, i),
+            ]),
           ),
-
         ),
         Row(
           children: <Widget>[
@@ -87,5 +109,3 @@ class _LogHabitsState extends State<LogHabits> {
     );
   }
 }
-
-
