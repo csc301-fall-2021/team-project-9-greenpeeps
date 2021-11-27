@@ -68,7 +68,7 @@ class _CompletedLogHabitsState extends State<CompletedLogHabits> {
     return Container(
       padding: EdgeInsets.all(_boxPadding + 5),
       width: double.infinity,
-      // height: 520,
+      // height: 415,
       child: Column(
         children: <Widget>[
           Container(

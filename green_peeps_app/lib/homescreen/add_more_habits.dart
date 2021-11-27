@@ -40,7 +40,7 @@ class _AddHabitState extends State<AddHabit> {
                 Spacer(),
                 Card(
                   color: const Color.fromRGBO(248, 244, 219, 1),
-
+                  elevation: 10,
                   child: Column(
                     children: [
                       Container(
@@ -55,7 +55,7 @@ class _AddHabitState extends State<AddHabit> {
                       ),
                     ),
                       Container(
-                        padding: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(5),
                         child: Text(
                           "Leaves: ${widget.points}",
                           textAlign: TextAlign.left,
@@ -66,7 +66,7 @@ class _AddHabitState extends State<AddHabit> {
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                         child: Text(
                           widget.info,
                           textAlign: TextAlign.left,
@@ -76,17 +76,17 @@ class _AddHabitState extends State<AddHabit> {
                           ),
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: Text(
-                            "Do this habit ${widget.amount} times",
-                          textAlign: TextAlign.left,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
+                      // Container(
+                      //   padding: const EdgeInsets.all(10),
+                      //   child: Text(
+                      //       "Do this habit ${widget.amount} times",
+                      //     textAlign: TextAlign.left,
+                      //     style: const TextStyle(
+                      //       fontSize: 20,
+                      //       fontWeight: FontWeight.bold,
+                      //     ),
+                      //   ),
+                      // ),
                       Container(
                         padding: EdgeInsets.all(10),
                         child: Stack(
@@ -98,7 +98,7 @@ class _AddHabitState extends State<AddHabit> {
                                 backgroundColor: Color.fromRGBO(180, 180, 180, 1),
                                 valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
                                 value: 0.0,
-                                minHeight: 16,
+                                minHeight: 25,
                               ),
                             ),
                             Container(
