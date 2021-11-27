@@ -145,6 +145,27 @@ class _ProfileState extends State<ProfileScreen> {
 
   Widget _buildFourthBox(BuildContext context, double boxPadding,
       double boxElevation, Color boxColor, ScrollController _scrollController) {
+    List<String> text = ["A1", "A2", "A3", "A4", "A5"];
+    List<String> image = [
+      "images/Habits.png",
+      "images/Habits.png",
+      "images/Habits.png",
+      "images/Habits.png",
+      "images/Habits.png"
+    ];
+    final children = <Widget>[];
+    for (int i = 0; i < text.length; i++) {
+      children.add(new Container(
+          padding: EdgeInsets.all(boxPadding),
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Image(image: AssetImage(image[i]), height: 50, width: 50),
+            Text(
+              text[i],
+              style: TextStyle(fontSize: 28),
+            )
+          ])));
+    }
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
@@ -180,116 +201,7 @@ class _ProfileState extends State<ProfileScreen> {
                                 controller: _scrollController,
                                 child: SingleChildScrollView(
                                     controller: _scrollController,
-                                    child: Column(children: [
-                                      Container(
-                                          padding: EdgeInsets.all(boxPadding),
-                                          child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Image(
-                                                    image: AssetImage(
-                                                        "images/Habits.png"),
-                                                    height: 50,
-                                                    width: 50),
-                                                Text(
-                                                  "A1",
-                                                  style:
-                                                      TextStyle(fontSize: 28),
-                                                )
-                                              ])),
-                                      Container(
-                                          padding: EdgeInsets.all(boxPadding),
-                                          child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Image(
-                                                    image: AssetImage(
-                                                        "images/Habits.png"),
-                                                    height: 50,
-                                                    width: 50),
-                                                Text(
-                                                  "A2",
-                                                  style:
-                                                      TextStyle(fontSize: 28),
-                                                )
-                                              ])),
-                                      Container(
-                                          padding: EdgeInsets.all(boxPadding),
-                                          child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Image(
-                                                    image: AssetImage(
-                                                        "images/Habits.png"),
-                                                    height: 50,
-                                                    width: 50),
-                                                Text(
-                                                  "A3",
-                                                  style:
-                                                      TextStyle(fontSize: 28),
-                                                )
-                                              ])),
-                                      Container(
-                                          padding: EdgeInsets.all(boxPadding),
-                                          child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Image(
-                                                    image: AssetImage(
-                                                        "images/Habits.png"),
-                                                    height: 50,
-                                                    width: 50),
-                                                Text(
-                                                  "A4",
-                                                  style:
-                                                      TextStyle(fontSize: 28),
-                                                )
-                                              ])),
-                                      Container(
-                                          padding: EdgeInsets.all(boxPadding),
-                                          child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Image(
-                                                    image: AssetImage(
-                                                        "images/Habits.png"),
-                                                    height: 50,
-                                                    width: 50),
-                                                Text(
-                                                  "A5",
-                                                  style:
-                                                      TextStyle(fontSize: 28),
-                                                )
-                                              ])),
-                                      Container(
-                                          padding: EdgeInsets.all(boxPadding),
-                                          child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Image(
-                                                    image: AssetImage(
-                                                        "images/Habits.png"),
-                                                    height: 50,
-                                                    width: 50),
-                                                Text(
-                                                  "A6",
-                                                  style:
-                                                      TextStyle(fontSize: 28),
-                                                )
-                                              ]))
-                                    ])))),
+                                    child: Column(children: children)))),
                       ]))));
         },
         childCount: 1,
