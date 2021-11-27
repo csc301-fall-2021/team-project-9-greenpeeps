@@ -197,7 +197,7 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
             return Row(
               children: [
                 Container(
-                  width: width,
+                  width: width ,
                   child: TextFormField(
                     enabled: !ignoreEnabled,
                     keyboardType: TextInputType.number,
