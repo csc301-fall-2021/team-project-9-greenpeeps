@@ -25,7 +25,11 @@ class _CompletedLogHabitsState extends State<CompletedLogHabits> {
   Widget build(BuildContext context) {
     _buttonRow.clear();
     _buttonRow.add(TextButton(
-      child: const Text('Done!'),
+      child: const Text('Done!',
+        style: const TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+        ),),
       onPressed: () {
         widget.quit();
       },
@@ -42,6 +46,10 @@ class _CompletedLogHabitsState extends State<CompletedLogHabits> {
         TextButton(
           child: const Text('Add more habits!',
             textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           onPressed: () {
             widget.addNew();
@@ -64,7 +72,7 @@ class _CompletedLogHabitsState extends State<CompletedLogHabits> {
       child: Column(
         children: <Widget>[
           Container(
-            height: 455,
+            height: 355,
             child: Column(
               children: [
                 Spacer(),

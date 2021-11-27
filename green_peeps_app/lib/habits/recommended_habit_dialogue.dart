@@ -161,6 +161,7 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
                             );
                         }
                       });
+                      Navigator.of(context).pop();
                     },
                     child: const Text(
                       'I already preform this habit in my life',
@@ -208,11 +209,12 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
                             .update(
                               {'habitInfo.'+widget.hid : _generateHabitDict()},
                             );
+
                           }
-                          
+
                         }
-                      })                  
-                      
+                      }),
+                    Navigator.of(context).pop(),
                     },
                     child: const Text(
                       'Add this to Habits In Progress',

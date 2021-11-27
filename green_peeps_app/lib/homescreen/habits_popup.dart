@@ -86,7 +86,7 @@ class _LogHabitPopup extends State<LogHabitPopup> {
       child: Container(
         padding: EdgeInsets.all(_boxPadding + 5),
         width: double.infinity,
-        height: 600,
+        height: 500,
         child: Column(
           children: <Widget>[
             AppBar(
