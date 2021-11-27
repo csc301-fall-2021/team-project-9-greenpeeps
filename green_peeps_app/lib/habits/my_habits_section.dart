@@ -47,7 +47,7 @@ class _MyHabitsSectionState extends State<MyHabitsSection> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
     if (userSnapshot.exists) {
-      habitKeys = userSnapshot['habitInfo'].keys.toList();
+      habitKeys = userSnapshot['allHabits'].keys.toList();
       return habitKeys;
     } else {
       return null;
@@ -69,7 +69,7 @@ class _MyHabitsSectionState extends State<MyHabitsSection> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const <Widget>[
                     Text(
-                      "My Habits",
+                      "Completed Habits",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontSize: 18.0,

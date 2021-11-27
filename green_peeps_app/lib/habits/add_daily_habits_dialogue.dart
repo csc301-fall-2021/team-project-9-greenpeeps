@@ -15,19 +15,34 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
   final ScrollController _controller = ScrollController();
   Map<String, bool> _habitMap = {};
 
-  List habitKeys = [];
-  List habitList = [];
+  List allHabitKeys = [];
+  List allHabitList = [];
+  List dailyHabitKeys = [];
+  List dailyHabitList = [];
 
   @override
   void initState() {
     super.initState();
     getHabitKeys().then((result) {
       setState(() {
-        habitKeys = result;
-        for (var key in habitKeys) {
+        allHabitKeys = result;
+        for (var key in allHabitKeys) {
           getHabitFromStore(key).then((r) {
             setState(() {
-              habitList.add(r);
+              allHabitList.add(r);
+              _habitMap[key] = false;
+            });
+          });
+        }
+      });
+    });
+    getDailyHabitKeys().then((result) {
+      setState(() {
+        dailyHabitKeys = result;
+        for (var key in dailyHabitKeys) {
+          getHabitFromStore(key).then((r) {
+            setState(() {
+              _habitMap[key] = true;
             });
           });
         }
@@ -42,27 +57,48 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
     if (userSnapshot.exists) {
-      habitKeys = userSnapshot['habitInfo'].keys.toList();
-      return habitKeys;
+      allHabitKeys = userSnapshot['allHabits'].keys.toList();
+      return allHabitKeys;
     } else {
       return null;
     }
   }
 
-  addHabitToDailyDB(key) async {
+  // Fetch Daily Habit IDs from user's daily habit list
+  getDailyHabitKeys() async {
     var userSnapshot = await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
     if (userSnapshot.exists) {
-      var dailyHabits = userSnapshot['dailyHabits'];
-      print(dailyHabits);
-      dailyHabits[key] = {'completed': true, 'user_completed': 0};
-      print(dailyHabits);
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .update({'dailyHabits': dailyHabits}).then((value) => {});
+      dailyHabitKeys = userSnapshot['dailyHabits'].keys.toList();
+      return dailyHabitKeys;
+    } else {
+      return null;
+    }
+  }
+
+  updateHabitToDailyDB(key, is_in) async {
+    var userSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    if (userSnapshot.exists) {
+      if (is_in) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({
+          'dailyHabits.' + key: {'completed': true, 'user_completed': 0}
+        }).then((value) => {});
+      } else {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({
+          'dailyHabits.' + key: FieldValue.delete()
+        }).then((value) => {});
+      }
     }
   }
 
@@ -164,9 +200,9 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
                   controller: _controller,
                   child: Column(
                     children: [
-                      for (var i = 0; i < habitList.length; i++)
-                        _makeHabitSwitchList(
-                            setState, habitList[i].title, habitList[i].id),
+                      for (var i = 0; i < allHabitList.length; i++)
+                        _makeHabitSwitchList(setState, allHabitList[i].title,
+                            allHabitList[i].id),
                     ],
                   ),
                 ),
@@ -180,13 +216,12 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
                   onPressed: () {
                     _habitMap.forEach(
                       (key, value) {
-                        if (value) {
-                          addHabitToDailyDB(key).then(
-                            (value) => {},
-                          );
-                        }
+                        updateHabitToDailyDB(key, value).then(
+                          (value) => {},
+                        );
                       },
                     );
+                    Navigator.of(context).pop();
                   },
                   style: TextButton.styleFrom(
                     primary: Colors.white,
