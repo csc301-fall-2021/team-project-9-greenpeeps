@@ -42,8 +42,8 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
-    if (userSnapshot.exists && userSnapshot['allHabits'] != null) {
-      allHabitKeys = userSnapshot['allHabits'].keys.toList();
+    if (userSnapshot.exists && userSnapshot['userHabits'] != null) {
+      allHabitKeys = userSnapshot['userHabits'].keys.toList();
       return allHabitKeys;
     } else {
       return [];
