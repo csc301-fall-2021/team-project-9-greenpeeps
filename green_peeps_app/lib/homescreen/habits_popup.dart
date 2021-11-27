@@ -32,10 +32,7 @@ class _LogHabitPopup extends State<LogHabitPopup> {
         },
         addNew: (){
         _addNewHabit();
-        print(_popupIndex);
-        print(_popupViews.length);
         _nextPage(setState);
-        print(_popupIndex);
         }
     ));
   }
@@ -43,7 +40,7 @@ class _LogHabitPopup extends State<LogHabitPopup> {
 
   void _addNewHabit(){
     _popupViews.add(AddHabit(title: "Bike to work",
-      info: "Bike to work once a week for a month!",
+      info: "Driving everyday contributes to producing more CO2 which has a huge effect on the environment. The best way is drive less when possible.",
       amount: 4,
       points: 5));
   }
