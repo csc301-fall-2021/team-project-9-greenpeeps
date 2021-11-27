@@ -46,11 +46,11 @@ class _MyHabitsSectionState extends State<MyHabitsSection> {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
-    if (userSnapshot.exists && userSnapshot['allHabits'] != null) {
-      var habitKeys = userSnapshot['allHabits'].keys.toList();
+    if (userSnapshot.exists && userSnapshot['userHabits'] != null) {
+      var habitKeys = userSnapshot['userHabits'].keys.toList();
       var copyKeys = [...habitKeys];
       for (var key in copyKeys) {
-        if (userSnapshot['allHabits'][key]['completed'] == false) {
+        if (userSnapshot['userHabits'][key]['completed'] == false) {
           habitKeys.remove(key);
         }
       }
