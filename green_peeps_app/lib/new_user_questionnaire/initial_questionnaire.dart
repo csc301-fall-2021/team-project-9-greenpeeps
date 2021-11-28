@@ -3,6 +3,7 @@ import 'package:green_peeps_app/models/question.dart';
 import 'package:green_peeps_app/models/response.dart';
 import 'package:provider/provider.dart';
 import 'package:green_peeps_app/questionnaire/questionnaire_card.dart';
+import 'package:green_peeps_app/new_user_questionnaire/initial_questionnaire_info_card.dart';
 
 class InitialQuestionnaire extends StatefulWidget {
   final List<String> remainingQuestions;
@@ -16,11 +17,27 @@ class InitialQuestionnaire extends StatefulWidget {
 
 class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
   String rootQuestion = "";
+  ScrollController _controller = ScrollController();
 
   @override
   void initState() {
     super.initState();
+    _controller = ScrollController();
     rootQuestion = widget.remainingQuestions.removeLast();
+  }
+
+  void _ScrollDown() {
+    if (_controller.hasClients) {
+      setState(
+        () {
+          _controller.animateTo(
+            _controller.position.maxScrollExtent,
+            duration: Duration(seconds: 1),
+            curve: Curves.ease,
+          );
+        },
+      );
+    }
   }
 
   @override
@@ -36,42 +53,73 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
           backgroundColor: Colors.transparent,
           floatingActionButton: Consumer<ResponseListModel>(
               builder: (context, responseListModel, child) {
-            if (widget.remainingQuestions.isEmpty) {
-              return FloatingActionButton.extended(
-                onPressed: () {
-                  responseListModel.saveResponsesToStore();
-                  Navigator.popAndPushNamed(context, '/nav');
-                },
-                label: const Text(
-                  "Save & Quit",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontFamily: "Nunito",
-                    fontWeight: FontWeight.w700,
+            return Consumer<ResponseListModel>(
+              builder: (context, responseListModel, child) {
+                return Container(
+                  padding: EdgeInsets.all(10),
+                  child: Row(
+                    // fit: StackFit.expand,
+                    children: [
+                      FloatingActionButton.extended(
+                        heroTag: null,
+                        onPressed: () {
+                          // TODO skip question / add new question to list
+                          // note that this would have to somehow tell build_question_card
+                          // to no longer accept questions
+                          // or you need to insert the follow up questions from the skipped question
+                          // above new questions if the user decides to answer the skipped question
+                          // after they said they want to skip it
+                          // please ask eryka for clarification
+                          _ScrollDown();
+                        },
+                        label: const Text(
+                          "Skip Question",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontFamily: "Nunito",
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        backgroundColor: Colors.green,
+                      ),
+                      Spacer(),
+                      FloatingActionButton.extended(
+                        onPressed: () {
+                          responseListModel.saveResponsesToStore();
+                          if (widget.remainingQuestions.isEmpty) {
+                            Navigator.popAndPushNamed(context, '/nav');
+                          } else {
+                            Navigator.popAndPushNamed(
+                                context, '/init_questionnaire',
+                                arguments: widget.remainingQuestions);
+                          }
+                        },
+                        heroTag: null,
+                        label: widget.remainingQuestions.isEmpty
+                            ? const Text(
+                                "Save & Quit",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontFamily: "Nunito",
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              )
+                            : const Text("Save & Continue",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontFamily: "Nunito",
+                                  fontWeight: FontWeight.w700,
+                                )),
+                        backgroundColor: Colors.green,
+                      )
+                    ],
                   ),
-                ),
-                backgroundColor: Colors.green,
-              );
-            } else {
-              return FloatingActionButton.extended(
-                onPressed: () {
-                  responseListModel.saveResponsesToStore();
-                  Navigator.popAndPushNamed(context, '/init_questionnaire',
-                      arguments: widget.remainingQuestions);
-                },
-                label: const Text(
-                  "Save & Continue",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontFamily: "Nunito",
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                backgroundColor: Colors.green,
-              );
-            }
+                );
+              },
+            );
           }),
           body: CustomScrollView(slivers: [
             SliverFillRemaining(
@@ -84,11 +132,26 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                           colors: [Colors.black, Colors.purple])),
                   child: Consumer<QuestionListModel>(
                       builder: (context, questionListModel, child) {
-                    return Column(children: [
-                      for (Future<Question?> question
-                          in questionListModel.questionList)
-                        QuestionnaireCard(question: question),
-                    ]);
+                    return Column(
+                      children: [
+                        InitialQuestionnaireInfoCard(),
+                        ListView.builder(
+                          itemCount: questionListModel.questionList.length + 1,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            if (index ==
+                                questionListModel.questionList.length) {
+                              return Container(
+                                height: 90,
+                              );
+                            }
+                            return QuestionnaireCard(
+                                question:
+                                    questionListModel.questionList[index]);
+                          },
+                        ),
+                      ],
+                    );
                   })),
             )
           ]),

@@ -25,7 +25,11 @@ class _CompletedLogHabitsState extends State<CompletedLogHabits> {
   Widget build(BuildContext context) {
     _buttonRow.clear();
     _buttonRow.add(TextButton(
-      child: const Text('Done!'),
+      child: const Text('Done!',
+        style: const TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+        ),),
       onPressed: () {
         widget.quit();
       },
@@ -42,6 +46,10 @@ class _CompletedLogHabitsState extends State<CompletedLogHabits> {
         TextButton(
           child: const Text('Add more habits!',
             textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           onPressed: () {
             widget.addNew();
@@ -60,23 +68,31 @@ class _CompletedLogHabitsState extends State<CompletedLogHabits> {
     return Container(
       padding: EdgeInsets.all(_boxPadding + 5),
       width: double.infinity,
-      height: 520,
+      // height: 415,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Spacer(),
-          const Text(
-            "Thank you for logging your daily habits! "
-                "You have received XX points.",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 28.0,
-              fontWeight: FontWeight.bold,
+          Container(
+            height: 355,
+            child: Column(
+              children: [
+                Spacer(),
+                const Text(
+                  "Thank you for logging your daily habits! "
+                      "You have received XX points.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 28.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Spacer(),]
             ),
           ),
-          Spacer(),
+
           Row(
-            children: _buttonRow
-          ),
+          children: _buttonRow
+            ),
         ],
       ),
     );

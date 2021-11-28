@@ -2,21 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FirstBox extends StatefulWidget {
-  const FirstBox({Key? key}) : super(key: key);
+class TitleBox extends StatefulWidget {
+  const TitleBox({Key? key}) : super(key: key);
 
   @override
-  _FirstBoxState createState() => _FirstBoxState();
+  _TitleBoxState createState() => _TitleBoxState();
 }
 
-class _FirstBoxState extends State<FirstBox> {
+class _TitleBoxState extends State<TitleBox> {
   // Box Variables
   final double _boxPadding = 10.0;
   final double _boxElevation = 5.0; // The height of shadow beneath box
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
-  // First box when looking at boxes from top to bottom
-  // (consider making each box its own dart file)
-  Widget _buildFirstBox(BuildContext context, double boxPadding,
+
+  Widget _buildTitleBox(BuildContext context, double boxPadding,
       double boxElevation, Color boxColor) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
@@ -45,6 +44,6 @@ class _FirstBoxState extends State<FirstBox> {
 
   @override
   Widget build(BuildContext context) {
-    return _buildFirstBox(context, _boxPadding, _boxElevation, _boxColor);
+    return _buildTitleBox(context, _boxPadding, _boxElevation, _boxColor);
   }
 }

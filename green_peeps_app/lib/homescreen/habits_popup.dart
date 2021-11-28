@@ -14,38 +14,34 @@ class _LogHabitPopup extends State<LogHabitPopup> {
   // Current index of which popup view to look at
   int _popupIndex = 0;
 
-
-
   // Box Variables
   final double _boxPadding = 10.0;
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
 
   // Database Information
   bool addingNewHabit = true;
-  void _addCompletedHabits(){
+  void _addCompletedHabits() {
     // todo compute the number of points the user gets
     //  for completing these habits
     _popupViews.add(CompletedLogHabits(
         addingNewHabit: addingNewHabit,
-        quit: (){
+        quit: () {
           Navigator.of(context).pop(); // Closes popup
         },
-        addNew: (){
-        _addNewHabit();
-        print(_popupIndex);
-        print(_popupViews.length);
-        _nextPage(setState);
-        print(_popupIndex);
-        }
-    ));
+        addNew: () {
+          _addNewHabit();
+          _nextPage(setState);
+        }));
   }
 
-
-  void _addNewHabit(){
-    _popupViews.add(AddHabit(title: "Bike to work",
-      info: "Bike to work once a week for a month!",
-      amount: 4,
-      points: 5));
+  void _addNewHabit() {
+    _popupViews.add(AddHabit(
+        title: "Bike to work",
+        info:
+            "Driving everyday contributes to producing more CO2 which has a huge effect on the environment. The best way is drive less when possible.",
+        // "I am writing even more words in an effort to see what this looks like. Hi mom!!!! how are you doing today?",
+        amount: 4,
+        points: 5));
   }
 
   // Changes popup view being viewed
@@ -61,10 +57,10 @@ class _LogHabitPopup extends State<LogHabitPopup> {
 
   final List<Widget> _popupViews = <Widget>[];
 
-  void _addLogHabits(){
-    if (_popupViews.length == 0){
+  void _addLogHabits() {
+    if (_popupViews.length == 0) {
       _popupViews.add(LogHabits(
-        saveHabits: (){
+        saveHabits: () {
           _addCompletedHabits();
           _nextPage(setState);
         },
@@ -75,7 +71,7 @@ class _LogHabitPopup extends State<LogHabitPopup> {
   @override
   Widget build(BuildContext context) {
     _addLogHabits();
-    return  Dialog(
+    return Dialog(
       insetPadding: EdgeInsets.all(15),
       backgroundColor: _boxColor,
       shape: const RoundedRectangleBorder(
@@ -86,7 +82,7 @@ class _LogHabitPopup extends State<LogHabitPopup> {
       child: Container(
         padding: EdgeInsets.all(_boxPadding + 5),
         width: double.infinity,
-        height: 600,
+        height: 500,
         child: Column(
           children: <Widget>[
             AppBar(
@@ -107,9 +103,9 @@ class _LogHabitPopup extends State<LogHabitPopup> {
               ],
             ),
 
-          SingleChildScrollView(
-            child: _popupViews.elementAt(_popupIndex),
-          )
+            SingleChildScrollView(
+              child: _popupViews.elementAt(_popupIndex),
+            )
             // const Expanded(child: Divider()),
           ],
         ),

@@ -40,7 +40,9 @@ class _DailyLogsBoxState extends State<DailyLogsBox> {
                     ),
                   ),
                   const Expanded(
-                    child: Divider(),
+                    child: Divider(
+                      color: Colors.transparent,
+                    ),
                   ),
                   ElevatedButton(
                     onPressed: () {

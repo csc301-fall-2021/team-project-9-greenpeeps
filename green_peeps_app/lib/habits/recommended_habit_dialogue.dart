@@ -4,12 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 
 class RecommendedHabitDialogue extends StatefulWidget {
+  final String hid;
   final String title;
   final String info;
   final int amount;
   final int points;
 
-  const RecommendedHabitDialogue({Key? key, required this.title, required this.info, required this.amount, required this.points}) : super(key: key);
+  const RecommendedHabitDialogue({Key? key, required this.hid, required this.title, required this.info, required this.amount, required this.points}) : super(key: key);
 
   @override
   _RecommendedHabitDialogueState createState() => _RecommendedHabitDialogueState();
@@ -25,14 +26,35 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
             fontSize: 12,
           ),
           primary: Colors.green,
-          maximumSize: const Size(120, 50),
-          minimumSize: const Size(120, 50),
+          maximumSize: const Size(150, 75),
+          minimumSize: const Size(150, 75),
         );
+
+  // dev testing: "nFSUjg7UBookPXllvk0d"
+  // prod: FirebaseAuth.instance.currentUser!.uid
+
+  _generateHabitDict() {
+    Map<dynamic, dynamic> habitMap = <dynamic, dynamic>{'user_completed' : 0, 'completed': false};
+    // add with hid as key
+    return habitMap;
+  }
+
+  _generateCompletedHabitDict() {
+    Map<dynamic, dynamic> habitMap = <dynamic, dynamic>{'user_completed' : 0, 'completed': true};
+    // add with hid as key
+    return habitMap;
+  }
   
   @override
   Widget build(BuildContext context) {
-    return Dialog( 
+    SnackBar addedHabitInProgressSnackBar = SnackBar(
+        content: Text('Added \"${widget.title}\" to your Habits In Progress'));
+    SnackBar addedCompletedHabitSnackBar = SnackBar(
+        content: Text('Added \"${widget.title}\" to your Completed Habits '));
+
+    return Dialog(
       backgroundColor: _boxColor,
+      insetPadding: EdgeInsets.all(15),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(5.0),
@@ -41,7 +63,6 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
       child: Container(
         padding: EdgeInsets.all(_boxPadding + 5),
         width: double.infinity,
-        height: 535,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,6 +90,16 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
               child: Text(
                 widget.title,
                 style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: Text(
+                "Leaves: ${widget.points}",
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
@@ -77,19 +108,21 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
             Container(
               padding: const EdgeInsets.all(10),
               child: Text(
-                "Leaves: " + widget.points.toString()
+                widget.info,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             Container(
               padding: const EdgeInsets.all(10),
               child: Text(
-                widget.info
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: Text(
-                "Do this habit " + widget.amount.toString() + " times"
+                "Do this habit ${widget.amount} times",
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             Align(
@@ -99,24 +132,115 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
                 children: <Widget>[
                   ElevatedButton(
                     style: style,
-                    onPressed: () {},
+                    onPressed: () {
+                      FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(FirebaseAuth.instance.currentUser!.uid)
+                      .get()
+                      .then((DocumentSnapshot snapshot) {
+                        // if allHabits doesn't exist yet
+                        if(!(snapshot.data().toString().contains("userHabits"))) {
+                          FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(FirebaseAuth.instance.currentUser!.uid)
+                          .set(
+                            {'userHabits' : '{}'},
+                            SetOptions(merge: true)
+                          ).then((onValue) {
+                            FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .update(
+                              {'userHabits.'+widget.hid : _generateCompletedHabitDict()},
+                            );
+                          });
+
+                        // if user already has allHabits
+                        } else {
+                          // update the appropriate habit inside allHabits
+                            FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .update(
+                              {'userHabits.'+widget.hid : _generateCompletedHabitDict()},
+                            );
+                        }
+                      });
+                      Navigator.of(context).pop();
+                      ScaffoldMessenger.of(context).showSnackBar(addedCompletedHabitSnackBar);
+
+                    },
                     child: const Text(
-                      'I already added this Habit',
+                      'I already preform this habit in my life',
                       textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontFamily: "Nunito",
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
                       ),
                   ),
                   ElevatedButton(
                     style: style,
-                    onPressed: () {},
+                    onPressed: () => {
+                      FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(FirebaseAuth.instance.currentUser!.uid)
+                      .get()
+                      .then((DocumentSnapshot snapshot) {
+                        // if user doesn't have allHabits
+                        if(!(snapshot.data().toString().contains("userHabits"))) {
+                          FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(FirebaseAuth.instance.currentUser!.uid)
+                          .set(
+                            {'userHabits' : '{}'},
+                            SetOptions(merge: true)
+                          ).then((onValue) {
+                            FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .update(
+                              {'userHabits.'+widget.hid : _generateHabitDict()},
+                            );
+                          });
+
+                        // if user already has allHabits
+                        } else {
+                          // firebase structure automatically prevents repeats additions with the same key
+                          // if doesn't already exist
+                          if (!(snapshot.get(FieldPath(const ["userHabits"])).toString().contains(widget.hid))) {
+                            FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .update(
+                              {'userHabits.'+widget.hid : _generateHabitDict()},
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(addedHabitInProgressSnackBar);
+
+
+                      }
+
+                        }
+                      }),
+
+                      Navigator.of(context).pop(),
+
+                    },
                     child: const Text(
-                      'Add this to My Habits',
-                      textAlign: TextAlign.center
+                      'Add this to Habits In Progress',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontFamily: "Nunito",
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ]
               ),
             ),
-            
+            SizedBox(height: 10),
           ]
         )
       )

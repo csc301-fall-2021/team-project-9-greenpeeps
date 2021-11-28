@@ -68,7 +68,7 @@ class _DailyQuestionQuestionState extends State<DailyQuestionQuestion> {
                               backgroundColor:
                                   const Color.fromRGBO(2, 152, 89, 1),
                               elevation: 5,
-                              fixedSize: const Size(146, 42),
+                              fixedSize: const Size(145, 60),
                             )),
                         Spacer(),
                         TextButton(
@@ -81,7 +81,7 @@ class _DailyQuestionQuestionState extends State<DailyQuestionQuestion> {
                             backgroundColor:
                                 const Color.fromRGBO(2, 152, 89, 1),
                             elevation: 5,
-                            fixedSize: const Size(146, 42),
+                            fixedSize: const Size(145, 60),
                           ),
                         )
                       ],

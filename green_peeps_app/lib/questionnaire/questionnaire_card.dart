@@ -23,7 +23,7 @@ class _QuestionnaireCardState extends State<QuestionnaireCard> {
       child: Column(children: <Widget>[
         Container(
           width: double.infinity,
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          padding: EdgeInsets.all(10),
           child: FutureBuilder<Question?>(
               future: widget.question,
               builder: (BuildContext context, AsyncSnapshot snapshot) {

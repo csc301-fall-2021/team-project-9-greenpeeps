@@ -21,10 +21,16 @@ class _CompletedDailyQuestionsState extends State<CompletedDailyQuestions> {
         children:  [
           Spacer(),
           Text("Thank you for completing all of your daily questions."
-            "You have recieved XX seeds!",
-            textAlign: TextAlign.center,
+,            textAlign: TextAlign.center,
             style: TextStyle(
 
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black),
+          ),
+          Text("You have recieved XX seeds!",
+            textAlign: TextAlign.center,
+            style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.black),
@@ -35,8 +41,13 @@ class _CompletedDailyQuestionsState extends State<CompletedDailyQuestions> {
             child: Row(
               children: [
                 TextButton(
-                    child: const Text('Quit'),
-
+                    child: const Text('Quit',
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontFamily: "Nunito",
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     onPressed: () {
                       widget.quit();
                     },
@@ -44,13 +55,21 @@ class _CompletedDailyQuestionsState extends State<CompletedDailyQuestions> {
                       primary: Colors.white,
                       backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
                       elevation: 5,
-                      fixedSize: const Size(146, 42),
-                    )
+                      fixedSize: const Size(145, 60),
+
+                    ),
+
                 ),
-                Spacer(),
+                const Spacer(),
                 TextButton(
                   child: Text('Answer more questions',
-                    textAlign: TextAlign.center,),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontFamily: "Nunito",
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   onPressed: () {
                     widget.answerMore();
                   },
@@ -58,7 +77,7 @@ class _CompletedDailyQuestionsState extends State<CompletedDailyQuestions> {
                     primary: Colors.white,
                     backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
                     elevation: 5,
-                    fixedSize: const Size(146, 50),
+                    fixedSize: const Size(145, 60),
                   ),
                 )
 
