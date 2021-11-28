@@ -70,6 +70,7 @@ class _CompletedLogHabitsState extends State<CompletedLogHabits> {
       width: double.infinity,
       // height: 415,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Container(
             height: 355,
@@ -90,8 +91,8 @@ class _CompletedLogHabitsState extends State<CompletedLogHabits> {
           ),
 
           Row(
-            children: _buttonRow
-          ),
+          children: _buttonRow
+            ),
         ],
       ),
     );

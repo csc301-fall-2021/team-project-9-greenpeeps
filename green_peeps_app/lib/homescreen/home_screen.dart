@@ -114,42 +114,48 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  final ScrollController _controller = ScrollController();
   @override
   Widget build(BuildContext context) {
+
     return Center(
       // List of scrollable widgets
       // You can customize to space between each widget/ box
-      child: CustomScrollView(
-        slivers: <Widget>[
-          const SliverSafeArea(
-            sliver: SliverPadding(
-              padding: EdgeInsets.only(left: 30, right: 30, top: 15, bottom: 0),
-              sliver: WelcomeBox(),
+      child: Scrollbar(
+        controller: _controller,
+        child: CustomScrollView(
+          controller: _controller,
+          slivers: <Widget>[
+            const SliverSafeArea(
+              sliver: SliverPadding(
+                padding: EdgeInsets.only(left: 30, right: 30, top: 15, bottom: 0),
+                sliver: WelcomeBox(),
+              ),
             ),
-          ),
-          const SliverPadding(
-            padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
-            sliver: ProgressBox(),
-          ),
-          const SliverPadding(
-            padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
-            sliver: DailyQuestionsBox(),
-          ),
-          const SliverPadding(
-            padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
-            sliver: DailyLogsBox(),
-          ),
-          SliverPadding(
-            padding:
-                const EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
-            sliver:
-                _buildThirdBox(context, _boxPadding, _boxElevation, _boxColor),
-          ),
-          const SliverPadding(
-            padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 25),
-            sliver: ArticlesBox(),
-          ),
-        ],
+            const SliverPadding(
+              padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
+              sliver: ProgressBox(),
+            ),
+            const SliverPadding(
+              padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
+              sliver: DailyQuestionsBox(),
+            ),
+            const SliverPadding(
+              padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
+              sliver: DailyLogsBox(),
+            ),
+            SliverPadding(
+              padding:
+                  const EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
+              sliver:
+                  _buildThirdBox(context, _boxPadding, _boxElevation, _boxColor),
+            ),
+            const SliverPadding(
+              padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 25),
+              sliver: ArticlesBox(),
+            ),
+          ],
+        ),
       ),
     );
   }
