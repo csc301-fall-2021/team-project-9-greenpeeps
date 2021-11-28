@@ -64,6 +64,23 @@ class _LogHabitsState extends State<LogHabits> {
     }
   }
 
+  logHabitToDB(key) async {
+    var userSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    if (userSnapshot.exists && userSnapshot['userHabits'] != null) {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .update({
+        'userHabits.' + key + '.reps': FieldValue.increment(1)
+      }).then((value) => {});
+      // var reps = userSnapshot['userHabits'][key]['reps'];
+      // if (reps == all)
+    }
+  }
+
   Widget _makeHabitCheckbox(setState, String habitName, String habitID) {
     if (_habitMap[habitID] == null) {
       _habitMap[habitID] = false;
@@ -124,6 +141,11 @@ class _LogHabitsState extends State<LogHabits> {
                 ),
               ),
               onPressed: () {
+                _habitMap.forEach((key, value) {
+                  if (value) {
+                    logHabitToDB(key).then((value) => {});
+                  }
+                });
                 widget.saveHabits();
               },
               style: TextButton.styleFrom(
