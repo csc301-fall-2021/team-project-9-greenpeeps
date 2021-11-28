@@ -59,6 +59,13 @@ class _AppState extends State<MyApp> {
     return MaterialApp(
       theme: ThemeData(fontFamily: "Nunito"),
       initialRoute: '/welcome',
+      onGenerateRoute: (settings) {
+        if (settings.name == '/init_questionnaire') {
+          final value = settings.arguments as List<String>;
+          return MaterialPageRoute(
+              builder: (_) => InitialQuestionnaire(remainingQuestions: value));
+        }
+      },
       routes: {
         // '/': (context) => Loading(),
         '/welcome': (context) => Welcome(),
@@ -66,7 +73,6 @@ class _AppState extends State<MyApp> {
         '/login': (context) => Login(),
         '/new': (context) => NewAccount(),
         '/learn_more': (context) => LearnMore(),
-        '/init_questionnaire': (context) => InitialQuestionnaire(),
       },
     );
   }
