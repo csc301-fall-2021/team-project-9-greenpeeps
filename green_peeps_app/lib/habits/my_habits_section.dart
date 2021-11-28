@@ -15,53 +15,6 @@ class MyHabitsSection extends StatefulWidget {
 }
 
 class _MyHabitsSectionState extends State<MyHabitsSection> {
-  // List completedhabitKeys = [];
-  // List completedhabitList = [];
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   getCompletedHabitKeys().then(
-  //     (result) {
-  //       setState(
-  //         () {
-  //           completedhabitKeys = result;
-  //           for (var key in completedhabitKeys) {
-  //             getHabitFromStore(key).then(
-  //               (r) {
-  //                 setState(
-  //                   () {
-  //                     completedhabitList.add(r);
-  //                   },
-  //                 );
-  //               },
-  //             );
-  //           }
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
-
-  // getCompletedHabitKeys() async {
-  //   var userSnapshot = await FirebaseFirestore.instance
-  //       .collection('users')
-  //       .doc(FirebaseAuth.instance.currentUser!.uid)
-  //       .get();
-  //   if (userSnapshot.exists && userSnapshot['userHabits'] != null) {
-  //     var habitKeys = userSnapshot['userHabits'].keys.toList();
-  //     var copyKeys = [...habitKeys];
-  //     for (var key in copyKeys) {
-  //       if (userSnapshot['userHabits'][key]['completed'] == false) {
-  //         habitKeys.remove(key);
-  //       }
-  //     }
-  //     return habitKeys;
-  //   } else {
-  //     return [];
-  //   }
-  // }
-
   Widget _buildMyHabitsSection(BuildContext context, List<Habit> habitList) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(

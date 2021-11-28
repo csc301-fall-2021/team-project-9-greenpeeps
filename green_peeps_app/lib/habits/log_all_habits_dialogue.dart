@@ -15,7 +15,7 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
   final ScrollController _controller = ScrollController();
 
   // Map of which checkboxes are checked
-  Map<int, bool> _habitMap = {};
+  Map<String, bool> _habitMap = {};
   List allHabitKeys = [];
   List allHabitList = [];
 
@@ -56,7 +56,24 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
     }
   }
 
-  Widget _makeHabitCheckbox(setState, String habitName, int habitID) {
+  logHabitToDB(key) async {
+    var userSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    if (userSnapshot.exists && userSnapshot['userHabits'] != null) {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .update({
+        'userHabits.' + key + '.reps': FieldValue.increment(1)
+      }).then((value) => {});
+      // var reps = userSnapshot['userHabits'][key]['reps'];
+      // if (reps == all)
+    }
+  }
+
+  Widget _makeHabitCheckbox(setState, String habitName, String habitID) {
     if (_habitMap[habitID] == null) {
       _habitMap[habitID] = false;
     }
@@ -135,8 +152,8 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
                       child: Column(
                         children: [
                           for (var i = 0; i < allHabitList.length; i++)
-                            _makeHabitCheckbox(
-                                setState, allHabitList[i].title, i),
+                            _makeHabitCheckbox(setState, allHabitList[i].title,
+                                allHabitList[i].id),
                         ],
                       ),
                     ),
@@ -147,7 +164,14 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
                     const Spacer(),
                     TextButton(
                       child: const Text('Save'),
-                      onPressed: () {},
+                      onPressed: () {
+                        _habitMap.forEach((key, value) {
+                          if (value) {
+                            logHabitToDB(key).then((value) => {});
+                          }
+                        });
+                        Navigator.of(context).pop();
+                      },
                       style: TextButton.styleFrom(
                         primary: Colors.white,
                         backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
