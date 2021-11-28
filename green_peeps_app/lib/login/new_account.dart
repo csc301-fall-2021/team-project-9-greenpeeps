@@ -33,7 +33,11 @@ class _NewAccountState extends State<NewAccount> {
                       'firstName': firstName,
                       'lastName': lastName
                     })
-                    .then((value) => Navigator.popAndPushNamed(context, '/init_questionnaire'))
+                    .then((value) => Navigator.popAndPushNamed(
+                            context, '/init_questionnaire', arguments: [
+                          'F3Ct0WCqgIaAlkdrqE7X',
+                          'rxxqFtUd9314aRYB8UiG'
+                        ]))
                     .catchError((error) => print("Failed to add user: $error"))
               });
     } on FirebaseAuthException catch (e) {
@@ -51,57 +55,57 @@ class _NewAccountState extends State<NewAccount> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
-          child: Container(
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-              child: Form(
-                  child: Column(
-                children: <Widget>[
-                  SizedBox(height: 20.0),
-                  Text("Email"),
-                  SizedBox(height: 1.0),
-                  TextFormField(
-                    onChanged: (val) {
-                      setState(() => {email = val});
-                    },
-                  ),
-                  SizedBox(height: 20.0),
-                  Text("Password"),
-                  SizedBox(height: 1.0),
-                  TextFormField(
-                    obscureText: true,
-                    onChanged: (val) {
-                      setState(() => {password = val});
-                    },
-                  ),
-                  SizedBox(height: 20.0),
-                  Text("First Name"),
-                  SizedBox(height: 1.0),
-                  TextFormField(
-                    onChanged: (val) {
-                      setState(() => {firstName = val});
-                    },
-                  ),
-                  SizedBox(height: 20.0),
-                  Text("Last Name"),
-                  SizedBox(height: 1.0),
-                  TextFormField(
-                    onChanged: (val) {
-                      setState(() => {lastName = val});
-                    },
-                  ),
-                  SizedBox(height: 20.0),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.pink[400],
-                    ),
-                    child: Text('Sign up', style: TextStyle(color: Colors.white)),
-                    onPressed: () async {
-                      createUserEmailPassword(email.trim(), password.trim(),
-                          firstName.trim(), lastName.trim());
-                    },
-                  )
-                ],
-              ))),
-        ));
+      child: Container(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+          child: Form(
+              child: Column(
+            children: <Widget>[
+              SizedBox(height: 20.0),
+              Text("Email"),
+              SizedBox(height: 1.0),
+              TextFormField(
+                onChanged: (val) {
+                  setState(() => {email = val});
+                },
+              ),
+              SizedBox(height: 20.0),
+              Text("Password"),
+              SizedBox(height: 1.0),
+              TextFormField(
+                obscureText: true,
+                onChanged: (val) {
+                  setState(() => {password = val});
+                },
+              ),
+              SizedBox(height: 20.0),
+              Text("First Name"),
+              SizedBox(height: 1.0),
+              TextFormField(
+                onChanged: (val) {
+                  setState(() => {firstName = val});
+                },
+              ),
+              SizedBox(height: 20.0),
+              Text("Last Name"),
+              SizedBox(height: 1.0),
+              TextFormField(
+                onChanged: (val) {
+                  setState(() => {lastName = val});
+                },
+              ),
+              SizedBox(height: 20.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.pink[400],
+                ),
+                child: Text('Sign up', style: TextStyle(color: Colors.white)),
+                onPressed: () async {
+                  createUserEmailPassword(email.trim(), password.trim(),
+                      firstName.trim(), lastName.trim());
+                },
+              )
+            ],
+          ))),
+    ));
   }
 }
