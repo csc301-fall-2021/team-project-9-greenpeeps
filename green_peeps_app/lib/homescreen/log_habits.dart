@@ -75,7 +75,7 @@ class _LogHabitsState extends State<LogHabits> {
           .collection('users')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .update({
-        'userHabits.' + key + '.reps': FieldValue.increment(1),
+        'userHabits.' + key + '.repsLeft': FieldValue.increment(-1),
         'userHabits.' + key + '.isDailyCompleted': true
       }).then((value) => {});
       // var reps = userSnapshot['userHabits'][key]['reps'];
@@ -143,12 +143,16 @@ class _LogHabitsState extends State<LogHabits> {
                 ),
               ),
               onPressed: () {
-                _habitMap.forEach((key, value) {
-                  if (value) {
-                    logHabitToDB(key).then((value) => {});
-                  }
-                });
-                widget.saveHabits();
+                if (dailyHabitList.isEmpty) {
+                  Navigator.of(context).pop(); // Closes popup
+                } else {
+                  _habitMap.forEach((key, value) {
+                    if (value) {
+                      logHabitToDB(key).then((value) => {});
+                    }
+                  });
+                  widget.saveHabits();
+                }
               },
               style: TextButton.styleFrom(
                 primary: Colors.white,

@@ -113,7 +113,7 @@ class _MyHabitsSectionState extends State<MyHabitsSection> {
                           hid: data['hid'],
                           totalAmount: data['amount'],
                           points: data['points'],
-                          reps: userData['userHabits'][doc.id]['reps']);
+                          repsLeft: userData['userHabits'][doc.id]['repsLeft']);
                       completedHabitList.add(newHabit);
                     }
                   }

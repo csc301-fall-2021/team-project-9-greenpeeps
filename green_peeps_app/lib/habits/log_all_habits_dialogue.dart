@@ -66,10 +66,8 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
           .collection('users')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .update({
-        'userHabits.' + key + '.reps': FieldValue.increment(1)
+        'userHabits.' + key + '.repsLeft': FieldValue.increment(-1)
       }).then((value) => {});
-      // var reps = userSnapshot['userHabits'][key]['reps'];
-      // if (reps == all)
     }
   }
 

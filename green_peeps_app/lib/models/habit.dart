@@ -6,7 +6,7 @@ class Habit {
   final String title;
   final String info;
   final String hid;
-  int reps;
+  int repsLeft;
   final int totalAmount;
   final int points;
 
@@ -15,7 +15,7 @@ class Habit {
       required this.title,
       required this.info,
       required this.hid,
-      this.reps = 0,
+      required this.repsLeft,
       required this.totalAmount,
       required this.points});
 
@@ -23,7 +23,7 @@ class Habit {
   String getTitle() => title;
   String getInfo() => info;
   String getHID() => hid;
-  int getReps() => reps;
+  int getReps() => repsLeft;
   int getTotalAmount() => totalAmount;
   int getPoints() => points;
 }

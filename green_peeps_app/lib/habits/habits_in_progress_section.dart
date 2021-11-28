@@ -68,7 +68,8 @@ class _HabitsInProgressSectionState extends State<HabitsInProgressSection> {
                               habitName: habitList[index].title,
                               habitDescription: habitList[index].info),
                           HabitProgressBar(
-                            userCompleted: habitList[index].reps,
+                            userCompleted: habitList[index]
+                                .totalAmount - habitList[index].repsLeft,
                             userTotal: habitList[index].totalAmount,
                           ),
                           const Divider(
@@ -122,7 +123,7 @@ class _HabitsInProgressSectionState extends State<HabitsInProgressSection> {
                           hid: data['hid'],
                           totalAmount: data['amount'],
                           points: data['points'],
-                          reps: userData['userHabits'][doc.id]['reps']);
+                          repsLeft: userData['userHabits'][doc.id]['repsLeft']);
                       allHabitList.add(newHabit);
                     }
                   }
