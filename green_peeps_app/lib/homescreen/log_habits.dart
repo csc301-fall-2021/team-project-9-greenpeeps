@@ -54,7 +54,8 @@ class _LogHabitsState extends State<LogHabits> {
       var dailyHabitKeys = userSnapshot['userHabits'].keys.toList();
       var copyKeys = [...dailyHabitKeys];
       for (var key in copyKeys) {
-        if (!userSnapshot['userHabits'][key]['isDailyHabit']) {
+        if (!userSnapshot['userHabits'][key]['isDailyHabit'] ||
+            userSnapshot['userHabits'][key]['isDailyCompleted']) {
           dailyHabitKeys.remove(key);
         }
       }
@@ -74,7 +75,8 @@ class _LogHabitsState extends State<LogHabits> {
           .collection('users')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .update({
-        'userHabits.' + key + '.reps': FieldValue.increment(1)
+        'userHabits.' + key + '.reps': FieldValue.increment(1),
+        'userHabits.' + key + '.isDailyCompleted': true
       }).then((value) => {});
       // var reps = userSnapshot['userHabits'][key]['reps'];
       // if (reps == all)
