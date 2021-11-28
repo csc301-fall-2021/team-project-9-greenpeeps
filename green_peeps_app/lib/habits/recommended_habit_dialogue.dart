@@ -34,13 +34,13 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
   // prod: FirebaseAuth.instance.currentUser!.uid
 
   _generateHabitDict() {
-    Map<dynamic, dynamic> habitMap = <dynamic, dynamic>{'userCompleted' : 0, 'reps': 0, 'completed': false};
+    Map<dynamic, dynamic> habitMap = <dynamic, dynamic>{'userCompleted' : 0, 'reps': 0, 'completed': false, 'isDailyHabit': false};
     // add with hid as key
     return habitMap;
   }
 
   _generateCompletedHabitDict() {
-    Map<dynamic, dynamic> habitMap = <dynamic, dynamic>{'userCompleted' : 0, 'reps': 0, 'completed': true};
+    Map<dynamic, dynamic> habitMap = <dynamic, dynamic>{'userCompleted' : 0, 'reps': 0, 'completed': true, 'isDailyHabit': false};
     // add with hid as key
     return habitMap;
   }

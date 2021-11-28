@@ -51,12 +51,13 @@ class _LogHabitsState extends State<LogHabits> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
     if (userSnapshot.exists) {
-      dailyHabitKeys = userSnapshot['dailyHabits'].keys.toList();
-      // for (var key in dailyHabitKeys) {
-      //   if (userSnapshot['dailyHabits'][key]['dailyComplete']) {
-      //     dailyHabitKeys.remove(key);
-      //   }
-      // }
+      var dailyHabitKeys = userSnapshot['userHabits'].keys.toList();
+      var copyKeys = [...dailyHabitKeys];
+      for (var key in copyKeys) {
+        if (!userSnapshot['userHabits'][key]['isDailyHabit']) {
+          dailyHabitKeys.remove(key);
+        }
+      }
       return dailyHabitKeys;
     } else {
       return null;
@@ -104,7 +105,8 @@ class _LogHabitsState extends State<LogHabits> {
               child: Column(
                 children: [
                   for (var i = 0; i < dailyHabitList.length; i++)
-                    _makeHabitCheckbox(setState, dailyHabitList[i].title, dailyHabitList[i].id),
+                    _makeHabitCheckbox(setState, dailyHabitList[i].title,
+                        dailyHabitList[i].id),
                 ],
               ),
             ),
