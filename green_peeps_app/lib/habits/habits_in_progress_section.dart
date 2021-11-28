@@ -195,19 +195,3 @@ class _HabitsInProgressSectionState extends State<HabitsInProgressSection> {
         });
   }
 }
-
-// return SliverList(
-//                   delegate: SliverChildBuilderDelegate(
-//                     (BuildContext context, int index) {
-//                       return Card(
-//                         margin: const EdgeInsets.all(15),
-//                         child: Container(
-//                           color: Colors.blue[100 * (index % 9 + 1)],
-//                           height: 80,
-//                           alignment: Alignment.center,
-//                           child: const Text(''),
-//                         ),
-//                       );
-//                     }
-//                   )
-//               );
