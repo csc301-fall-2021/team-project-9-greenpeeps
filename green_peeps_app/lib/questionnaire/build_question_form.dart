@@ -99,7 +99,7 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
                       },
                       // validator: (value) => value == null ? 'field required' : null,
                       items: widget.question
-                          .getAnswerList()
+                          .getAnswerText()
                           .map<DropdownMenuItem<String>>(
                         (String value) {
                           return DropdownMenuItem<String>(
@@ -309,7 +309,7 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
   String? dropDownValue = null;
   void _setDefaultDropDownValue() {
     if (dropDownValue == "") {
-      dropDownValue = widget.question.getAnswerList()[0];
+      dropDownValue = widget.question.getAnswerText()[0];
     }
 
     // if(dropDownItems == []){

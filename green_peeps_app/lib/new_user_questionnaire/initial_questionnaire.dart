@@ -61,7 +61,8 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                 child: Consumer<QuestionListModel>(
                     builder: (context, questionListModel, child) {
                   return Column(children: [
-                    for (Question question in questionListModel.questionList)
+                    for (Future<Question?> question
+                        in questionListModel.questionList)
                       QuestionnaireCard(question: question),
                     SizedBox(height: 600) // TODO remove
                   ]);

@@ -4,22 +4,21 @@ import 'package:flutter/foundation.dart';
 import '../services/question_firestore.dart';
 
 class QuestionListModel extends ChangeNotifier {
-  final List<Question> _questions = [];
+  final List<Future<Question?>> _questions = [];
 
   QuestionListModel(String id) {
+    loadQuestionTree(id);
     addQuestion(id);
   }
 
-  UnmodifiableListView get questionList {
+  UnmodifiableListView<Future<Question?>> get questionList {
     return UnmodifiableListView(_questions);
   }
 
   void addQuestion(String id) async {
-    Question? question = await getQuestionFromStore(id);
-    if (question != null) {
-      _questions.add(question);
-      notifyListeners();
-    }
+    Future<Question?> question = getQuestion(id);
+    _questions.add(question);
+    notifyListeners();
   }
 }
 
