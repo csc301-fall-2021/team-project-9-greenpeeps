@@ -20,8 +20,7 @@ class _ProgressBoxState extends State<ProgressBox> {
       double boxPadding,
       double boxElevation,
       Color boxColor,
-      double progressCompleted,
-      int progressLeft) {
+      int totalPoints) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
@@ -39,7 +38,7 @@ class _ProgressBoxState extends State<ProgressBox> {
                 children: <Widget>[
                   Text(
                     "You are " +
-                        progressLeft.toString() +
+                        (50 - totalPoints % 50).toString() +
                         " seeds away from your next leaf!",
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
@@ -52,7 +51,7 @@ class _ProgressBoxState extends State<ProgressBox> {
                       backgroundColor: const Color.fromRGBO(180, 180, 180, 1),
                       valueColor:
                           const AlwaysStoppedAnimation<Color>(Colors.green),
-                      value: progressCompleted,
+                      value: (totalPoints % 50) / 50,
                       minHeight: 10,
                     ),
                   ),
@@ -73,32 +72,24 @@ class _ProgressBoxState extends State<ProgressBox> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .snapshots();
 
-    int progressLeft;
-    double progressCompleted;
+    int totalPoints;
     return StreamBuilder<DocumentSnapshot>(
         stream: users,
         builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
             var userData = snapshot.data;
 
-            if (userData!.data().toString().contains('progressLeft') == false) {
-              progressLeft = 0;
+            if (userData!.data().toString().contains('totalPoints') == false) {
+              totalPoints = 0;
             } else {
-              progressLeft = userData["progressLeft"];
-            }
-
-            if (userData.data().toString().contains('progressCompleted') ==
-                false) {
-              progressCompleted = 0;
-            } else {
-              progressCompleted = userData["progressCompleted"];
+              totalPoints = userData["totalPoints"];
             }
 
             return _buildSecondBox(context, _boxPadding, _boxElevation,
-                _boxColor, progressCompleted, progressLeft);
+                _boxColor, totalPoints);
           } else {
             return _buildSecondBox(
-                context, _boxPadding, _boxElevation, _boxColor, 0, 0);
+                context, _boxPadding, _boxElevation, _boxColor, 0);
           }
         });
   }
