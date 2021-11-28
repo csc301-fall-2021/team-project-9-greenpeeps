@@ -27,14 +27,24 @@ class _QuestionnaireCardState extends State<QuestionnaireCard> {
           child: FutureBuilder<Question?>(
               future: widget.question,
               builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  return Text(snapshot.data.text,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontFamily: "Nunito",
-                        fontWeight: FontWeight.w700,
-                      ));
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError || !snapshot.hasData) {
+                    return Text("Error loading data",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontFamily: "Nunito",
+                          fontWeight: FontWeight.w700,
+                        ));
+                  } else {
+                    return Text(snapshot.data.text,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontFamily: "Nunito",
+                          fontWeight: FontWeight.w700,
+                        ));
+                  }
                 } else {
                   return Text("Loading...",
                       style: TextStyle(

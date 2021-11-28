@@ -27,7 +27,7 @@ Future<Question?> getQuestion(String documentId) async {
   if (_cachedQuestions.containsKey(documentId)) {
     return _cachedQuestions[documentId];
   } else {
-    return getQuestionFromStore(documentId);
+    return await getQuestionFromStore(documentId);
   }
 }
 
@@ -59,7 +59,7 @@ Future<List<Answer>> _getAnswersFromStore(String documentId) async {
     Answer answer = Answer(
         text: data['text'],
         value: data['value'],
-        nextQuestion: data['next'].toString());
+        nextQuestion: data['next']?.toString());
     answerList.add(answer);
   }
 
