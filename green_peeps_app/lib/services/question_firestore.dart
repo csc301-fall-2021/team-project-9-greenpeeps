@@ -4,6 +4,33 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 final CollectionReference _questions =
     FirebaseFirestore.instance.collection('questions');
 
+final Map<String, Future<Question?>> _cachedQuestions = {};
+
+void loadQuestionTree(String documentId) async {
+  Future<Question?> future = getQuestionFromStore(documentId);
+  _cachedQuestions[documentId] = future;
+  Question? question = await future;
+  if (question != null) {
+    for (Answer answer in question.answers) {
+      if (answer.nextQuestion != null) {
+        loadQuestionTree(answer.nextQuestion!);
+      }
+    }
+  }
+}
+
+void clearQuestionCache() {
+  _cachedQuestions.clear();
+}
+
+Future<Question?> getQuestion(String documentId) async {
+  if (_cachedQuestions.containsKey(documentId)) {
+    return _cachedQuestions[documentId];
+  } else {
+    return await getQuestionFromStore(documentId);
+  }
+}
+
 Future<Question?> getQuestionFromStore(String documentId) async {
   var snapshot = await _questions.doc(documentId).get();
 
@@ -32,7 +59,7 @@ Future<List<Answer>> _getAnswersFromStore(String documentId) async {
     Answer answer = Answer(
         text: data['text'],
         value: data['value'],
-        nextQuestion: data['next'].toString());
+        nextQuestion: data['next']?.toString());
     answerList.add(answer);
   }
 

@@ -6,16 +6,25 @@ import 'package:green_peeps_app/questionnaire/questionnaire_card.dart';
 import 'package:green_peeps_app/new_user_questionnaire/initial_questionnaire_info_card.dart';
 
 class InitialQuestionnaire extends StatefulWidget {
-  const InitialQuestionnaire({Key? key}) : super(key: key);
+  final List<String> remainingQuestions;
+
+  const InitialQuestionnaire({Key? key, required this.remainingQuestions})
+      : super(key: key);
 
   @override
   _InitialQuestionnaireState createState() => _InitialQuestionnaireState();
 }
 
 class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
-  @override
-  String userID = "u1";
+  String rootQuestion = "";
   ScrollController _controller = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = ScrollController();
+    rootQuestion = widget.remainingQuestions.removeLast();
+  }
 
   void _ScrollDown() {
     if (_controller.hasClients) {
@@ -32,39 +41,19 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
   }
 
   @override
-  void initState() {
-    _controller = ScrollController();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    // this does not work rn :/ TODO
-
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => QuestionListModel('F3Ct0WCqgIaAlkdrqE7X'),
-        ),
-        Provider(
-          create: (context) => ResponseListModel(),
-        )
+            create: (context) => QuestionListModel(rootQuestion)),
+        Provider(create: (context) => ResponseListModel())
       ],
       child: SafeArea(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          // color: Colors.purple,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Colors.black, Colors.purple]),
-          ),
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: Consumer<ResponseListModel>(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          floatingActionButton: Consumer<ResponseListModel>(
+              builder: (context, responseListModel, child) {
+            return Consumer<ResponseListModel>(
               builder: (context, responseListModel, child) {
                 return Container(
                   padding: EdgeInsets.all(10),
@@ -98,36 +87,51 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                       FloatingActionButton.extended(
                         onPressed: () {
                           responseListModel.saveResponsesToStore();
-                          Navigator.popAndPushNamed(context, '/nav');
+                          if (widget.remainingQuestions.isEmpty) {
+                            Navigator.popAndPushNamed(context, '/nav');
+                          } else {
+                            Navigator.popAndPushNamed(
+                                context, '/init_questionnaire',
+                                arguments: widget.remainingQuestions);
+                          }
                         },
                         heroTag: null,
-                        label: const Text(
-                          "Save & Quit",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontFamily: "Nunito",
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
+                        label: widget.remainingQuestions.isEmpty
+                            ? const Text(
+                                "Save & Quit",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontFamily: "Nunito",
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              )
+                            : const Text("Save & Continue",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontFamily: "Nunito",
+                                  fontWeight: FontWeight.w700,
+                                )),
                         backgroundColor: Colors.green,
                       )
                     ],
                   ),
                 );
               },
-            ),
-            body: SingleChildScrollView(
-              controller: _controller,
+            );
+          }),
+          body: CustomScrollView(slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
               child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [Colors.black, Colors.purple]),
-                ),
-                child: Consumer<QuestionListModel>(
-                  builder: (context, questionListModel, child) {
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [Colors.black, Colors.purple])),
+                  child: Consumer<QuestionListModel>(
+                      builder: (context, questionListModel, child) {
                     return Column(
                       children: [
                         InitialQuestionnaireInfoCard(),
@@ -139,7 +143,6 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                                 questionListModel.questionList.length) {
                               return Container(
                                 height: 90,
-                                // child: Card(child:Text("HI!!!"))
                               );
                             }
                             return QuestionnaireCard(
@@ -147,16 +150,11 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                                     questionListModel.questionList[index]);
                           },
                         ),
-                        // for (Question question in questionListModel.questionList)
-                        //   QuestionnaireCard(question: question),
-                        // SizedBox(height: 90)
                       ],
                     );
-                  },
-                ),
-              ),
-            ),
-          ),
+                  })),
+            )
+          ]),
         ),
       ),
     );
