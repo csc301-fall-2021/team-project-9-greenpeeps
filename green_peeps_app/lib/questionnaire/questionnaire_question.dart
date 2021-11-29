@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:green_peeps_app/questionnaire/questionnaire_card.dart';
 
 class DailyQuestionQuestion extends StatefulWidget {
-  final Question question;
+  final Future<Question?> question;
   final VoidCallback skipQuestion;
   final VoidCallback saveQuestion;
   const DailyQuestionQuestion(

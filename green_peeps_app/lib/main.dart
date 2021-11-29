@@ -69,7 +69,7 @@ class _AppState extends State<MyApp> {
       initialRoute: '/welcome',
       onGenerateRoute: (settings) {
         if (settings.name == '/init_questionnaire') {
-          final value = settings.arguments as List<String>;
+          final value = settings.arguments as List<String>?;
           return MaterialPageRoute(
               builder: (_) => InitialQuestionnaire(remainingQuestions: value));
         }
