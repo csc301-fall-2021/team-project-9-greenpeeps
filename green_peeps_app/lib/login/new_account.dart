@@ -35,7 +35,15 @@ class _NewAccountState extends State<NewAccount> {
                     .set({
                       'email': email,
                       'firstName': firstName,
-                      'lastName': lastName
+                      'lastName': lastName,
+                      'achievements': [],
+                      'carbonEmissions': {
+                        'electricity': 1,
+                        'food': 1,
+                        'transportation': 1
+                      },
+                      'totalPoints': 0,
+                      'userHabits': {}
                     })
                     .then((value) => Navigator.popAndPushNamed(
                         context, '/init_questionnaire'))
