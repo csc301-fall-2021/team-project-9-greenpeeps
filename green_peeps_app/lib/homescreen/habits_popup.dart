@@ -20,11 +20,13 @@ class _LogHabitPopup extends State<LogHabitPopup> {
 
   // Database Information
   bool addingNewHabit = true;
-  void _addCompletedHabits() {
+  void _addCompletedHabits(habitList, count) {
     // todo compute the number of points the user gets
     //  for completing these habits
     _popupViews.add(CompletedLogHabits(
         addingNewHabit: addingNewHabit,
+        completedHabits: habitList,
+        pointsGained: count,
         quit: () {
           Navigator.of(context).pop(); // Closes popup
         },
@@ -35,7 +37,7 @@ class _LogHabitPopup extends State<LogHabitPopup> {
   }
 
   void _addNewHabit() {
-    _popupViews.add(AddHabit(
+    _popupViews.add(const AddHabit(
         title: "Bike to work",
         info:
             "Driving everyday contributes to producing more CO2 which has a huge effect on the environment. The best way is drive less when possible.",
@@ -60,8 +62,8 @@ class _LogHabitPopup extends State<LogHabitPopup> {
   void _addLogHabits() {
     if (_popupViews.length == 0) {
       _popupViews.add(LogHabits(
-        saveHabits: () {
-          _addCompletedHabits();
+        saveHabits: (habitList, count) {
+          _addCompletedHabits(habitList, count);
           _nextPage(setState);
         },
       ));
