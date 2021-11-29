@@ -50,9 +50,8 @@ class _LoginState extends State<Login> {
                       padding: const EdgeInsets.all(75.0),
                       decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage('images/GPSketch.png'),
+                            image: AssetImage('images/greenpeepswiz.png'),
                           ),
-                          color: Colors.white,
                           shape: BoxShape.circle),
                     ),
                   ),

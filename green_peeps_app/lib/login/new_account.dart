@@ -70,9 +70,8 @@ class _NewAccountState extends State<NewAccount> {
                       padding: const EdgeInsets.all(50.0),
                       decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage('images/GPSketch.png'),
+                            image: AssetImage('images/greenpeepswiz.png'),
                           ),
-                          color: Colors.white,
                           shape: BoxShape.circle),
                     ),
                   ),
@@ -218,64 +217,5 @@ class _NewAccountState extends State<NewAccount> {
         ),
       ),
     );
-    return Scaffold(
-        body: SingleChildScrollView(
-      child: Container(
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-          child: Form(
-              child: Column(
-            children: <Widget>[
-              SizedBox(height: 20.0),
-              Text("Email"),
-              SizedBox(height: 1.0),
-              TextFormField(
-                onChanged: (val) {
-                  setState(() => {email = val});
-                },
-              ),
-              SizedBox(height: 20.0),
-              Text("Password"),
-              SizedBox(height: 1.0),
-              TextFormField(
-                obscureText: true,
-                onChanged: (val) {
-                  setState(() => {password = val});
-                },
-              ),
-              SizedBox(height: 20.0),
-              Text("First Name"),
-              SizedBox(height: 1.0),
-              TextFormField(
-                onChanged: (val) {
-                  setState(() => {firstName = val});
-                },
-              ),
-              SizedBox(height: 20.0),
-              Text("Last Name"),
-              SizedBox(height: 1.0),
-              TextFormField(
-                onChanged: (val) {
-                  setState(() => {lastName = val});
-                },
-              ),
-              SizedBox(height: 20.0),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.pink[400],
-                ),
-                child: Text('Sign up', style: TextStyle(color: Colors.white)),
-                onPressed: () async {
-                  createUserEmailPassword(email.trim(), password.trim(),
-                      firstName.trim(), lastName.trim());
-                },
-              ),
-              SizedBox(height: 20.0),
-              Text(
-                error,
-                style: TextStyle(color: Colors.red, fontSize: 14.0),
-              )
-            ],
-          ))),
-    ));
   }
 }
