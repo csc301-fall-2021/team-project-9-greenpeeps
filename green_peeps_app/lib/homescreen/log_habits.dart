@@ -78,8 +78,14 @@ class _LogHabitsState extends State<LogHabits> {
         'userHabits.' + key + '.repsLeft': FieldValue.increment(-1),
         'userHabits.' + key + '.isDailyCompleted': true
       }).then((value) => {});
-      // var reps = userSnapshot['userHabits'][key]['reps'];
-      // if (reps == all)
+      var repsLeft = userSnapshot['userHabits'][key]['repsLeft'];
+      if (repsLeft == 1) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({'userHabits.' + key + '.completed': true}).then(
+                (value) => {});
+      }
     }
   }
 

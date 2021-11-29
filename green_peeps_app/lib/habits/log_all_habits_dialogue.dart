@@ -68,6 +68,14 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
           .update({
         'userHabits.' + key + '.repsLeft': FieldValue.increment(-1)
       }).then((value) => {});
+      int repsLeft = await userSnapshot['userHabits'][key]['repsLeft'];
+      if (repsLeft == 1) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .update({'userHabits.' + key + '.completed': true}).then(
+                (value) => {});
+      }
     }
   }
 
