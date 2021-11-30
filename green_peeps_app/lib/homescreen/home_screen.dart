@@ -80,13 +80,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisSize: MainAxisSize
                     .min, // Use the minimum space necessary to fit all widgets
                 children: <Widget>[
-                  const Text(
-                    "My Carbon Emissions",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
+                  Row(
+                    children: const <Widget>[
+                      Text(
+                        "My Carbon Emissions",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      ),
+                      Spacer(),
+                      Icon(
+                        Icons.info_outline_rounded,
+                        color: Colors.black,
+                        size: 30,
+                      ),
+                    ],
                   ),
                   PieDiagram(),
                 ],
@@ -117,7 +127,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _controller = ScrollController();
   @override
   Widget build(BuildContext context) {
-
     return Center(
       // List of scrollable widgets
       // You can customize to space between each widget/ box
@@ -128,7 +137,8 @@ class _HomeScreenState extends State<HomeScreen> {
           slivers: <Widget>[
             const SliverSafeArea(
               sliver: SliverPadding(
-                padding: EdgeInsets.only(left: 30, right: 30, top: 15, bottom: 0),
+                padding:
+                    EdgeInsets.only(left: 30, right: 30, top: 15, bottom: 0),
                 sliver: WelcomeBox(),
               ),
             ),
@@ -145,13 +155,14 @@ class _HomeScreenState extends State<HomeScreen> {
               sliver: DailyLogsBox(),
             ),
             SliverPadding(
-              padding:
-                  const EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
-              sliver:
-                  _buildThirdBox(context, _boxPadding, _boxElevation, _boxColor),
+              padding: const EdgeInsets.only(
+                  left: 30, right: 30, top: 25, bottom: 0),
+              sliver: _buildThirdBox(
+                  context, _boxPadding, _boxElevation, _boxColor),
             ),
             const SliverPadding(
-              padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 25),
+              padding:
+                  EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 25),
               sliver: ArticlesBox(),
             ),
           ],
