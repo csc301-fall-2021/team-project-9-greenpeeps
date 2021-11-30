@@ -13,7 +13,7 @@ class PieDiagramBox extends StatefulWidget {
 
 class _PieDiagramBoxState extends State<PieDiagramBox> {
   // Box Variables
-  final double _boxPadding = 10.0;
+  final double _boxPadding = 15.0;
   final double _boxElevation = 5.0; // The height of shadow beneath box
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
 
@@ -26,19 +26,12 @@ class _PieDiagramBoxState extends State<PieDiagramBox> {
             child: Container(
               padding: EdgeInsets.all(boxPadding),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize
                     .min, // Use the minimum space necessary to fit all widgets
                 children: <Widget>[
                   Row(
-                    children: const <Widget>[
-                      Text(
-                        "My Carbon Emissions",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
-                      ),
+                    children: [
                       Spacer(),
                       Icon(
                         Icons.info_outline_rounded,
@@ -47,6 +40,23 @@ class _PieDiagramBoxState extends State<PieDiagramBox> {
                       ),
                     ],
                   ),
+                  Row(
+                  children: const <Widget>[
+                    Text(
+                      "My Carbon Emissions",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+                    // Icon(
+                    //   Icons.info_outline_rounded,
+                    //   color: Colors.black,
+                    //   size: 30,
+                    // ),
+                  ],
+                    ),
                   PieDiagram(),
                 ],
               ),
