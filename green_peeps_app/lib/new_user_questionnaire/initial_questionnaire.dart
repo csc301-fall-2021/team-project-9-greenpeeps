@@ -112,14 +112,15 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                                 ),
                               )
                             : Container(
-                              padding: EdgeInsets.symmetric(horizontal:10, vertical: 100),
-                              child: const Text("Save & Continue",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w700,
-                                  )),
-                            ),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 100),
+                                child: const Text("Save & Continue",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w700,
+                                    )),
+                              ),
                         backgroundColor: Colors.green,
                       )
                     ],
