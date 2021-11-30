@@ -62,6 +62,25 @@ class _HabitTileDialogueState extends State<HabitTileDialogue> {
                 widget.habitDescription,
               ),
             ),
+            Row(
+              children: <Widget>[
+                const Spacer(),
+                TextButton(
+                  child: const Text(
+                    'Delete Habit',
+                    style: TextStyle(
+                      fontSize: 15,
+                    ),
+                  ),
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    primary: Colors.white,
+                    backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
+                    elevation: 5,
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
