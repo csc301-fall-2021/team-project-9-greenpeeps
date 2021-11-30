@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:green_peeps_app/homescreen/log_habits.dart';
-import 'package:green_peeps_app/homescreen/completed_log_habits.dart';
+import 'package:green_peeps_app/homescreen/completed_log_daily_habits.dart';
 import 'package:green_peeps_app/homescreen/add_more_habits.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,12 +22,9 @@ class _LogHabitPopup extends State<LogHabitPopup> {
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
 
   // Database Information
-  bool addingNewHabit = true;
   void _addCompletedHabits(habitList, count) {
-    // todo compute the number of points the user gets
-    //  for completing these habits
     _popupViews.add(
-      CompletedLogHabits(
+      CompletedLogDailyHabits(
         completedHabits: habitList,
         pointsGained: count,
         quit: () {
