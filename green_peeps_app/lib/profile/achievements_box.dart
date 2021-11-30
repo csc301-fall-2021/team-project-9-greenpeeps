@@ -28,31 +28,37 @@ class _AchievementsBoxState extends State<AchievementsBox> {
       List text,
       List image) {
     final children = <Widget>[];
-    for (int i = 0; i < text.length; i++) {
-      if (i < 5) {
-        children.add(new Container(
+    final children2 = <Widget>[];
+    if (text.isNotEmpty) {
+      for (int i = 0; i < text.length; i++) {
+        if (i < 5) {
+          children.add(new Container(
+              padding: EdgeInsets.all(boxPadding),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Icon(IconData(image[i], fontFamily: 'MaterialIcons'),
+                        size: 40),
+                    Text(
+                      text[i],
+                      style: TextStyle(fontSize: 28),
+                    )
+                  ])));
+        }
+      }
+      for (int i = 0; i < image.length; i++) {
+        children2.add(new Container(
             padding: EdgeInsets.all(boxPadding),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(IconData(image[i], fontFamily: 'MaterialIcons'),
-                      size: 40),
-                  Text(
-                    text[i],
-                    style: TextStyle(fontSize: 28),
-                  )
+                      size: 40)
                 ])));
       }
-    }
-    final children2 = <Widget>[];
-    for (int i = 0; i < image.length; i++) {
-      children2.add(new Container(
-          padding: EdgeInsets.all(boxPadding),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Icon(IconData(image[i], fontFamily: 'MaterialIcons'), size: 40)
-              ])));
+    } else {
+      children2.add(
+          new Container(padding: EdgeInsets.all(boxPadding), child: Text("")));
     }
     return SliverList(
       delegate: SliverChildBuilderDelegate(
@@ -65,7 +71,9 @@ class _AchievementsBoxState extends State<AchievementsBox> {
                 child: InkWell(
                     onTap: () {
                       setState(() {
-                        isVisible = !isVisible;
+                        if (text.isNotEmpty) {
+                          isVisible = !isVisible;
+                        }
                       });
                     },
                     child: Visibility(
@@ -161,14 +169,8 @@ class _AchievementsBoxState extends State<AchievementsBox> {
                         }
                       }
                     }
-                    return _buildThirdBox(
-                        context,
-                        _boxPadding,
-                        _boxElevation,
-                        _boxColor,
-                        _scrollController,
-                        achievementTitles,
-                        achievementIcons);
+                    return _buildThirdBox(context, _boxPadding, _boxElevation,
+                        _boxColor, _scrollController, [], []);
                   } else {
                     return _buildThirdBox(context, _boxPadding, _boxElevation,
                         _boxColor, _scrollController, [], []);
