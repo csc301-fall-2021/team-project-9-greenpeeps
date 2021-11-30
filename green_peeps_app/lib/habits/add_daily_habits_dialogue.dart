@@ -119,7 +119,10 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
       _habitMap[habitID] = false;
     }
     return SwitchListTile(
-      title: Text(habitName),
+      title: Text(habitName,
+          style: TextStyle(
+            fontSize: 20,
+          )),
       activeColor: const Color.fromRGBO(0, 154, 6, 1),
       controlAffinity: ListTileControlAffinity.leading,
       value: _habitMap[habitID]!,
@@ -158,14 +161,14 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppBar(
-              title: const Text(
-                "",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              // title: const Text(
+              //   "",
+              //   style: TextStyle(
+              //     color: Colors.black,
+              //     fontSize: 20,
+              //     fontWeight: FontWeight.bold,
+              //   ),
+              // ),
               elevation: 0,
               toolbarHeight: 30,
               backgroundColor: _boxColor,
@@ -188,7 +191,7 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
                 "Which habits do you want to appear on your homescreen?",
                 textAlign: TextAlign.left,
                 style: TextStyle(
-                  fontSize: 28.0,
+                  fontSize: 25.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -205,7 +208,7 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
               ),
             ),
             SizedBox(
-              height: 300,
+              height: 285,
               child: Scrollbar(
                 controller: _controller,
                 child: SingleChildScrollView(
@@ -224,7 +227,10 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
               children: <Widget>[
                 const Spacer(),
                 TextButton(
-                  child: const Text('Save'),
+                  child: const Text('Save',
+                      style: TextStyle(
+                        fontSize: 20,
+                      )),
                   onPressed: () {
                     _habitMap.forEach(
                       (key, value) {
@@ -239,7 +245,7 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
                     primary: Colors.white,
                     backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
                     elevation: 5,
-                    fixedSize: const Size(61, 25),
+                    fixedSize: const Size(75, 50),
                   ),
                 ),
               ],

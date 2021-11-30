@@ -19,7 +19,6 @@ class _LogHabitPopup extends State<LogHabitPopup> {
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
 
   // Database Information
-  bool addingNewHabit = true;
   void _addCompletedHabits(habitList, count) {
     _popupViews.add(CompletedLogDailyHabits(
         completedHabits: habitList,
