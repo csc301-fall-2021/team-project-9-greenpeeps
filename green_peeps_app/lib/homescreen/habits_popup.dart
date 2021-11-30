@@ -24,7 +24,6 @@ class _LogHabitPopup extends State<LogHabitPopup> {
     // todo compute the number of points the user gets
     //  for completing these habits
     _popupViews.add(CompletedLogHabits(
-        addingNewHabit: addingNewHabit,
         completedHabits: habitList,
         pointsGained: count,
         quit: () {
