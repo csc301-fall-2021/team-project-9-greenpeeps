@@ -17,63 +17,6 @@ class HabitsInProgressSection extends StatefulWidget {
 }
 
 class _HabitsInProgressSectionState extends State<HabitsInProgressSection> {
-  // List allHabitKeys = [];
-  // List allHabitList = [];
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   getHabitKeys().then((result) {
-  //     setState(() {
-  //       allHabitKeys = result;
-  //       for (var key in allHabitKeys) {
-  //         getHabitFromStore(key).then((r) {
-  //           getRepsFromDB(key).then((t) {
-  //             setState(() {
-  //               r!.reps = t;
-  //             });
-  //           });
-  //           setState(() {
-  //             allHabitList.add(r);
-  //           });
-  //         });
-  //       }
-  //     });
-  //   });
-  // }
-
-  // getRepsFromDB(key) async {
-  //   var userSnapshot = await FirebaseFirestore.instance
-  //       .collection('users')
-  //       .doc(FirebaseAuth.instance.currentUser!.uid)
-  //       .get();
-  //   if (userSnapshot.exists && userSnapshot['userHabits'] != null) {
-  //     return userSnapshot['userHabits'][key]['reps'];
-  //   } else {
-  //     return 0;
-  //   }
-  // }
-
-  // // Fetch Habit IDs from user's habit list
-  // getHabitKeys() async {
-  //   var userSnapshot = await FirebaseFirestore.instance
-  //       .collection('users')
-  //       .doc(FirebaseAuth.instance.currentUser!.uid)
-  //       .get();
-  //   if (userSnapshot.exists && userSnapshot['userHabits'] != null) {
-  //     var habitKeys = userSnapshot['userHabits'].keys.toList();
-  //     var copyKeys = [...habitKeys];
-  //     for (var key in copyKeys) {
-  //       if (userSnapshot['userHabits'][key]['completed']) {
-  //         habitKeys.remove(key);
-  //       }
-  //     }
-  //     return habitKeys;
-  //   } else {
-  //     return [];
-  //   }
-  // }
-
   Widget _buildHabitsInProgressSection(
       BuildContext context, List<Habit> habitList) {
     return SliverList(
@@ -125,7 +68,8 @@ class _HabitsInProgressSectionState extends State<HabitsInProgressSection> {
                               habitName: habitList[index].title,
                               habitDescription: habitList[index].info),
                           HabitProgressBar(
-                            userCompleted: habitList[index].reps,
+                            userCompleted: habitList[index]
+                                .totalAmount - habitList[index].repsLeft,
                             userTotal: habitList[index].totalAmount,
                           ),
                           const Divider(
@@ -179,7 +123,7 @@ class _HabitsInProgressSectionState extends State<HabitsInProgressSection> {
                           hid: data['hid'],
                           totalAmount: data['amount'],
                           points: data['points'],
-                          reps: userData['userHabits'][doc.id]['reps']);
+                          repsLeft: userData['userHabits'][doc.id]['repsLeft']);
                       allHabitList.add(newHabit);
                     }
                   }

@@ -30,7 +30,7 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
           getHabitFromStore(key).then((r) {
             setState(() {
               allHabitList.add(r);
-              _habitMap[key] = false;
+              // _habitMap[key] = false;
             });
           });
         }
@@ -40,11 +40,12 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
       setState(() {
         dailyHabitKeys = result;
         for (var key in dailyHabitKeys) {
-          getHabitFromStore(key).then((r) {
-            setState(() {
-              _habitMap[key] = true;
-            });
-          });
+          // getHabitFromStore(key).then((r) {
+          //   setState(() {
+          //     _habitMap[key] = true;
+          //   });
+          // });
+          _habitMap[key] = true;
         }
       });
     });
@@ -76,8 +77,14 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
-    if (userSnapshot.exists && userSnapshot['dailyHabits'] != null) {
-      var habitKeys = userSnapshot['dailyHabits'].keys.toList();
+    if (userSnapshot.exists && userSnapshot['userHabits'] != null) {
+      var habitKeys = userSnapshot['userHabits'].keys.toList();
+      var copyKeys = [...habitKeys];
+      for (var key in copyKeys) {
+        if (!userSnapshot['userHabits'][key]['isDailyHabit']) {
+          habitKeys.remove(key);
+        }
+      }
       return habitKeys;
     } else {
       return [];
@@ -95,13 +102,13 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
             .collection('users')
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .update({
-          'dailyHabits.' + key: {'dailyComplete': false, 'user_completed': 0}
+          'userHabits.' + key + '.isDailyHabit': true
         }).then((value) => {});
       } else {
         await FirebaseFirestore.instance
             .collection('users')
             .doc(FirebaseAuth.instance.currentUser!.uid)
-            .update({'dailyHabits.' + key: FieldValue.delete()}).then(
+            .update({'userHabits.' + key + '.isDailyHabit': false}).then(
                 (value) => {});
       }
     }

@@ -33,14 +33,16 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
   // dev testing: "nFSUjg7UBookPXllvk0d"
   // prod: FirebaseAuth.instance.currentUser!.uid
 
-  _generateHabitDict() {
-    Map<dynamic, dynamic> habitMap = <dynamic, dynamic>{'userCompleted' : 0, 'reps': 0, 'completed': false};
+  _generateHabitDict(int habitAmount) {
+    Map<dynamic, dynamic> habitMap = <dynamic, dynamic>{'userCompleted' : 0, 'repsLeft': habitAmount, 
+    'completed': false, 'isDailyHabit': false, 'isDailyCompleted': false};
     // add with hid as key
     return habitMap;
   }
 
   _generateCompletedHabitDict() {
-    Map<dynamic, dynamic> habitMap = <dynamic, dynamic>{'userCompleted' : 0, 'reps': 0, 'completed': true};
+    Map<dynamic, dynamic> habitMap = <dynamic, dynamic>{'userCompleted' : 0, 'repsLeft': 0, 
+    'completed': true, 'isDailyHabit': false, 'isDailyCompleted': false};
     // add with hid as key
     return habitMap;
   }
@@ -201,7 +203,7 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
                             .collection('users')
                             .doc(FirebaseAuth.instance.currentUser!.uid)
                             .update(
-                              {'userHabits.'+widget.hid : _generateHabitDict()},
+                              {'userHabits.'+widget.hid : _generateHabitDict(widget.amount)},
                             );
                           });
 
@@ -214,7 +216,7 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
                             .collection('users')
                             .doc(FirebaseAuth.instance.currentUser!.uid)
                             .update(
-                              {'userHabits.'+widget.hid : _generateHabitDict()},
+                              {'userHabits.'+widget.hid : _generateHabitDict(widget.amount)},
                             );
                             ScaffoldMessenger.of(context).showSnackBar(addedHabitInProgressSnackBar);
 

@@ -15,7 +15,8 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
   final ScrollController _controller = ScrollController();
 
   // Map of which checkboxes are checked
-  Map<int, bool> _habitMap = {};
+  Map<String, bool> _habitMap = {};
+  Map<String, String> keyToTitleHabit = {};
   List allHabitKeys = [];
   List allHabitList = [];
 
@@ -28,6 +29,7 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
         for (var key in allHabitKeys) {
           getHabitFromStore(key).then((r) {
             setState(() {
+              keyToTitleHabit[key] = r!.title;
               allHabitList.add(r);
             });
           });
@@ -46,7 +48,7 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
       var habitKeys = userSnapshot['userHabits'].keys.toList();
       var copyKeys = [...habitKeys];
       for (var key in copyKeys) {
-        if (userSnapshot['userHabits'][key]['completed']) {
+        if (userSnapshot['userHabits'][key]['completed'] || userSnapshot['userHabits'][key]['isDailyCompleted']) {
           habitKeys.remove(key);
         }
       }
@@ -56,7 +58,40 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
     }
   }
 
-  Widget _makeHabitCheckbox(setState, String habitName, int habitID) {
+  logHabitToDB(Map<String, dynamic> habitMap) async {
+    var userSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    if (userSnapshot.exists && userSnapshot['userHabits'] != null) {
+      List completedHabits = [];
+      int count = 0;
+      habitMap.forEach((key, value) async {
+        if (value) {
+          FirebaseFirestore.instance
+              .collection('users')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .update({
+            'userHabits.' + key + '.repsLeft': FieldValue.increment(-1),
+            'userHabits.' + key + '.isDailyCompleted': true
+          }).then((value) => {});
+          var repsLeft = userSnapshot['userHabits'][key]['repsLeft'];
+          if (repsLeft == 1) {
+            FirebaseFirestore.instance
+                .collection('users')
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .update({'userHabits.' + key + '.completed': true}).then(
+                    (value) => {});
+            completedHabits.add(keyToTitleHabit[key]);
+          }
+          count++;
+        }
+      });
+      return [completedHabits, count];
+    }
+  }
+
+  Widget _makeHabitCheckbox(setState, String habitName, String habitID) {
     if (_habitMap[habitID] == null) {
       _habitMap[habitID] = false;
     }
@@ -135,8 +170,8 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
                       child: Column(
                         children: [
                           for (var i = 0; i < allHabitList.length; i++)
-                            _makeHabitCheckbox(
-                                setState, allHabitList[i].title, i),
+                            _makeHabitCheckbox(setState, allHabitList[i].title,
+                                allHabitList[i].id),
                         ],
                       ),
                     ),
@@ -147,7 +182,14 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
                     const Spacer(),
                     TextButton(
                       child: const Text('Save'),
-                      onPressed: () {},
+                      onPressed: () async {
+                        List completedHabitsAndCount =
+                            await logHabitToDB(_habitMap);
+                        print(completedHabitsAndCount);
+                        // Fetch completed list of habit and points gained from variable above
+
+                        Navigator.of(context).pop();
+                      },
                       style: TextButton.styleFrom(
                         primary: Colors.white,
                         backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
