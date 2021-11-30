@@ -32,13 +32,13 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
     rootQuestion = widget.remainingQuestions!.removeLast();
   }
 
-  void _ScrollDown() {
+  void _scrollDown() {
     if (_controller.hasClients) {
       setState(
         () {
           _controller.animateTo(
             _controller.position.maxScrollExtent,
-            duration: Duration(seconds: 1),
+            duration: const Duration(seconds: 1),
             curve: Curves.ease,
           );
         },
@@ -51,101 +51,118 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-            create: (context) => QuestionListModel(rootQuestion)),
-        Provider(create: (context) => ResponseListModel())
+          create: (context) => QuestionListModel(rootQuestion),
+        ),
+        Provider(
+          create: (context) => ResponseListModel(),
+        )
       ],
       child: SafeArea(
         child: Scaffold(
           backgroundColor: Colors.transparent,
           floatingActionButton: Consumer<ResponseListModel>(
-              builder: (context, responseListModel, child) {
-            return Consumer<ResponseListModel>(
-              builder: (context, responseListModel, child) {
-                return Container(
-                  padding: EdgeInsets.all(10),
-                  child: Row(
-                    // fit: StackFit.expand,
-                    children: [
-                      FloatingActionButton.extended(
-                        heroTag: null,
-                        onPressed: () {
-                          // TODO skip question / add new question to list
-                          // note that this would have to somehow tell build_question_card
-                          // to no longer accept questions
-                          // or you need to insert the follow up questions from the skipped question
-                          // above new questions if the user decides to answer the skipped question
-                          // after they said they want to skip it
-                          // please ask eryka for clarification
-                          _ScrollDown();
-                        },
-                        label: const Text(
-                          "Skip Question",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontFamily: "Nunito",
-                            fontWeight: FontWeight.w700,
+            builder: (context, responseListModel, child) {
+              return Consumer<ResponseListModel>(
+                builder: (context, responseListModel, child) {
+                  return Container(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      // fit: StackFit.expand,
+                      children: [
+                        FloatingActionButton.extended(
+                          heroTag: null,
+                          onPressed: () {
+                            // TODO skip question / add new question to list
+                            // note that this would have to somehow tell build_question_card
+                            // to no longer accept questions
+                            // or you need to insert the follow up questions from the skipped question
+                            // above new questions if the user decides to answer the skipped question
+                            // after they said they want to skip it
+                            // please ask eryka for clarification
+                            _scrollDown();
+                          },
+                          label: const Text(
+                            "Skip Question",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontFamily: "Nunito",
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
+                          backgroundColor: Colors.green,
                         ),
-                        backgroundColor: Colors.green,
-                      ),
-                      Spacer(),
-                      FloatingActionButton.extended(
-                        onPressed: () {
-                          responseListModel.saveResponsesToStore();
-                          if (widget.remainingQuestions!.isEmpty) {
-                            Navigator.popAndPushNamed(context, '/nav');
-                          } else {
-                            Navigator.popAndPushNamed(
-                                context, '/init_questionnaire',
-                                arguments: widget.remainingQuestions);
-                          }
-                        },
-                        heroTag: null,
-                        label: widget.remainingQuestions!.isEmpty
-                            ? const Text(
-                                "Save & Quit",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                  fontFamily: "Nunito",
-                                  fontWeight: FontWeight.w700,
+                        const Spacer(),
+                        FloatingActionButton.extended(
+                          onPressed: () {
+                            responseListModel.saveResponsesToStore();
+                            if (widget.remainingQuestions!.isEmpty) {
+                              Navigator.popAndPushNamed(context, '/nav');
+                            } else {
+                              Navigator.popAndPushNamed(
+                                  context, '/init_questionnaire',
+                                  arguments: widget.remainingQuestions);
+                            }
+                          },
+                          heroTag: null,
+                          label: widget.remainingQuestions!.isEmpty
+                              ? const Text(
+                                  "Save & Quit",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontFamily: "Nunito",
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                )
+                              : const Text(
+                                  "Save & Continue",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontFamily: "Nunito",
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
-                              )
-                            : const Text("Save & Continue",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                  fontFamily: "Nunito",
-                                  fontWeight: FontWeight.w700,
-                                )),
-                        backgroundColor: Colors.green,
-                      )
-                    ],
+                          backgroundColor: Colors.green,
+                        )
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+          body: CustomScrollView(
+            slivers: [
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color.fromRGBO(212, 240, 255, 1),
+                        Color.fromRGBO(177, 157, 255, 1)
+                      ],
+                    ),
                   ),
-                );
-              },
-            );
-          }),
-          body: CustomScrollView(slivers: [
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: Container(
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Colors.black, Colors.purple])),
                   child: Consumer<QuestionListModel>(
-                      builder: (context, questionListModel, child) {
-                    return Column(children: [
-                      for (Future<Question?> question
-                          in questionListModel.questionList)
-                        QuestionnaireCard(question: question),
-                    ]);
-                  })),
-            )
-          ]),
+                    builder: (context, questionListModel, child) {
+                      return Column(
+                        children: [
+                          for (Future<Question?> question
+                              in questionListModel.questionList)
+                            QuestionnaireCard(question: question),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
