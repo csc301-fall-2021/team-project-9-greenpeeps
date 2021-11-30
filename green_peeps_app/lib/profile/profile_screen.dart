@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:green_peeps_app/profile/avatar_box.dart';
+import 'package:green_peeps_app/profile/score_box.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -208,40 +210,37 @@ class _ProfileState extends State<ProfileScreen> {
       ),
     );
   }
+
   ScrollController _controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     return Center(
         child: Scrollbar(
-          controller: _controller,
-          child: CustomScrollView(
-              controller: _controller,
-              slivers: <Widget>[
-              SliverSafeArea(
-                sliver: SliverPadding(
-                  padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
-                  sliver: _buildFirstBox(
-                      context, _boxPadding, _boxElevation, _boxColor, "Hayden"),
-                ),
-              ),
-              SliverPadding(
-                padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
-                sliver:
-                    _buildSecondBox(context, _boxPadding, _boxElevation, _boxColor, 32),
-              ),
-              SliverPadding(
-                padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
-                sliver: _buildThirdBox(context, _boxPadding, _boxElevation, _boxColor),
-              ),
-              SliverPadding(
-                padding: EdgeInsets.only(left: 30, right: 30, top: 0, bottom: 0),
-                sliver: _buildFourthBox(
-                    context, _boxPadding, _boxElevation, _boxColor, _scrollController),
-              )
-            ]
-          ),
+      controller: _controller,
+      child: CustomScrollView(controller: _controller, slivers: <Widget>[
+        const SliverSafeArea(
+            sliver: SliverPadding(
+          padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
+          sliver: AvatarBox(),
+        )),
+        const SliverPadding(
+          padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
+          sliver: ScoreBox(),
+        ),
+        SliverPadding(
+          padding:
+              const EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
+          sliver:
+              _buildThirdBox(context, _boxPadding, _boxElevation, _boxColor),
+        ),
+        SliverPadding(
+          padding:
+              const EdgeInsets.only(left: 30, right: 30, top: 0, bottom: 0),
+          sliver: _buildFourthBox(context, _boxPadding, _boxElevation,
+              _boxColor, _scrollController),
         )
-    );
+      ]),
+    ));
   }
 }
