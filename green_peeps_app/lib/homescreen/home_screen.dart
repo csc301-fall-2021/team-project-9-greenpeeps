@@ -6,6 +6,9 @@ import 'package:green_peeps_app/homescreen/articles_box.dart';
 import 'package:green_peeps_app/homescreen/progress_box.dart';
 import 'package:green_peeps_app/homescreen/daily_questions_box.dart';
 import 'package:green_peeps_app/homescreen/daily_habits_box.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:green_peeps_app/homescreen/pie_diagram_box.dart';
 
 // Database Information (variables)
 String userFirstName = "";
@@ -28,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final double _boxPadding = 10.0;
   final double _boxElevation = 5.0; // The height of shadow beneath box
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
+
 
 // This popup includes a more detailed breakdown of carbon emissions
 // (you could use tabs or use a scrollable, etc. to fit more visuals)
@@ -52,9 +56,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
             const Padding(padding: EdgeInsets.all(2)),
-            const Text("Placeholder",
+            Text('',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
             const Padding(padding: EdgeInsets.all(8)),
             const Text("Some ways to reduce carbon emissions: ",
                 textAlign: TextAlign.center,
@@ -117,7 +122,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _controller = ScrollController();
   @override
   Widget build(BuildContext context) {
-
     return Center(
       // List of scrollable widgets
       // You can customize to space between each widget/ box
@@ -125,33 +129,34 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: _controller,
         child: CustomScrollView(
           controller: _controller,
-          slivers: <Widget>[
-            const SliverSafeArea(
+          slivers: const <Widget>[
+            SliverSafeArea(
               sliver: SliverPadding(
-                padding: EdgeInsets.only(left: 30, right: 30, top: 15, bottom: 0),
+                padding:
+                    EdgeInsets.only(left: 30, right: 30, top: 15, bottom: 0),
                 sliver: WelcomeBox(),
               ),
             ),
-            const SliverPadding(
+            SliverPadding(
               padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
               sliver: ProgressBox(),
             ),
-            const SliverPadding(
+            SliverPadding(
               padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
               sliver: DailyQuestionsBox(),
             ),
-            const SliverPadding(
+            SliverPadding(
               padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
               sliver: DailyLogsBox(),
             ),
             SliverPadding(
-              padding:
-                  const EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 0),
-              sliver:
-                  _buildThirdBox(context, _boxPadding, _boxElevation, _boxColor),
+              padding: EdgeInsets.only(
+                  left: 30, right: 30, top: 25, bottom: 0),
+              sliver: PieDiagramBox(),
             ),
-            const SliverPadding(
-              padding: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 25),
+            SliverPadding(
+              padding:
+                  EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 25),
               sliver: ArticlesBox(),
             ),
           ],
