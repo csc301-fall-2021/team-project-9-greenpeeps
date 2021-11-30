@@ -132,10 +132,17 @@ class _HabitsInProgressSectionState extends State<HabitsInProgressSection> {
                     allHabitList.add(newHabit);
                   }
                 }
-                return _buildHabitsInProgressSection(
-                  context,
-                  _buildExistsHabits(allHabitList),
-                );
+                if (allHabitList.isNotEmpty) {
+                  return _buildHabitsInProgressSection(
+                    context,
+                    _buildExistsHabits(allHabitList),
+                  );
+                } else {
+                  return _buildHabitsInProgressSection(
+                    context,
+                    const HabitsInProgressEmpty(),
+                  );
+                }
               } else {
                 return _buildHabitsInProgressSection(
                   context,

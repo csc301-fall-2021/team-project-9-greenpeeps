@@ -121,8 +121,17 @@ class _MyHabitsSectionState extends State<MyHabitsSection> {
                     completedHabitList.add(newHabit);
                   }
                 }
-                return _buildMyHabitsSection(
-                    context, _buildExistsHabits(completedHabitList));
+                if (completedHabitList.isNotEmpty) {
+                  return _buildMyHabitsSection(
+                    context,
+                    _buildExistsHabits(completedHabitList),
+                  );
+                } else {
+                  return _buildMyHabitsSection(
+                    context,
+                    const MyHabitsEmpty(),
+                  );
+                }
               } else {
                 return _buildMyHabitsSection(
                   context,
