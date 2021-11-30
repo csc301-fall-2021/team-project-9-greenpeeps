@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:flutter/material.dart';
 import 'package:green_peeps_app/models/question.dart';
 import 'package:green_peeps_app/models/response.dart';
@@ -6,9 +8,9 @@ import 'package:green_peeps_app/questionnaire/questionnaire_card.dart';
 import 'package:green_peeps_app/new_user_questionnaire/initial_questionnaire_info_card.dart';
 
 class InitialQuestionnaire extends StatefulWidget {
-  final List<String> remainingQuestions;
+  List<String>? remainingQuestions;
 
-  const InitialQuestionnaire({Key? key, required this.remainingQuestions})
+  InitialQuestionnaire({Key? key, required this.remainingQuestions})
       : super(key: key);
 
   @override
@@ -23,7 +25,11 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
   void initState() {
     super.initState();
     _controller = ScrollController();
-    rootQuestion = widget.remainingQuestions.removeLast();
+    widget.remainingQuestions ??= [
+      'F3Ct0WCqgIaAlkdrqE7X',
+      'rxxqFtUd9314aRYB8UiG'
+    ];
+    rootQuestion = widget.remainingQuestions!.removeLast();
   }
 
   void _ScrollDown() {
@@ -87,7 +93,7 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                       FloatingActionButton.extended(
                         onPressed: () {
                           responseListModel.saveResponsesToStore();
-                          if (widget.remainingQuestions.isEmpty) {
+                          if (widget.remainingQuestions!.isEmpty) {
                             Navigator.popAndPushNamed(context, '/nav');
                           } else {
                             Navigator.popAndPushNamed(
@@ -96,7 +102,7 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                           }
                         },
                         heroTag: null,
-                        label: widget.remainingQuestions.isEmpty
+                        label: widget.remainingQuestions!.isEmpty
                             ? const Text(
                                 "Save & Quit",
                                 style: TextStyle(
@@ -132,26 +138,11 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                           colors: [Colors.black, Colors.purple])),
                   child: Consumer<QuestionListModel>(
                       builder: (context, questionListModel, child) {
-                    return Column(
-                      children: [
-                        InitialQuestionnaireInfoCard(),
-                        ListView.builder(
-                          itemCount: questionListModel.questionList.length + 1,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            if (index ==
-                                questionListModel.questionList.length) {
-                              return Container(
-                                height: 90,
-                              );
-                            }
-                            return QuestionnaireCard(
-                                question:
-                                    questionListModel.questionList[index]);
-                          },
-                        ),
-                      ],
-                    );
+                    return Column(children: [
+                      for (Future<Question?> question
+                          in questionListModel.questionList)
+                        QuestionnaireCard(question: question),
+                    ]);
                   })),
             )
           ]),
