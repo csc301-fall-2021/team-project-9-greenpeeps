@@ -98,7 +98,7 @@ class _LogHabitsState extends State<LogHabits> {
           count++;
         }
       });
-      return [completedHabits, count];
+      return [completedHabits, count]; // returns list<string>, list<int>
     }
   }
 
