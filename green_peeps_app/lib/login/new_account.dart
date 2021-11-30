@@ -38,9 +38,9 @@ class _NewAccountState extends State<NewAccount> {
                       'lastName': lastName,
                       'achievements': [],
                       'carbonEmissions': {
-                        'electricity': 1,
-                        'food': 1,
-                        'transportation': 1
+                        'electricity': 0,
+                        'food': 0,
+                        'transportation': 0
                       },
                       'totalPoints': 0,
                       'userHabits': {}
