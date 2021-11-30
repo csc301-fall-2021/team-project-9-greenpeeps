@@ -1,15 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CompletedLogHabits extends StatefulWidget {
-  final bool addingNewHabit;
+class CompletedLogDailyHabits extends StatefulWidget {
+
   final List completedHabits;
   final int pointsGained;
   final VoidCallback quit;
   final VoidCallback addNew;
-  const CompletedLogHabits(
+  const CompletedLogDailyHabits(
       {Key? key,
-      required this.addingNewHabit,
       required this.completedHabits,
       required this.pointsGained,
       required this.quit,
@@ -17,16 +16,33 @@ class CompletedLogHabits extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<CompletedLogHabits> createState() => _CompletedLogHabitsState();
+  State<CompletedLogDailyHabits> createState() => _CompletedLogDailyHabitsState();
 }
 
-class _CompletedLogHabitsState extends State<CompletedLogHabits> {
+class _CompletedLogDailyHabitsState extends State<CompletedLogDailyHabits> {
   final double _boxPadding = 10.0;
 
   final List<Widget> _buttonRow = [];
 
+  Widget _completedHabitsList(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        for (String completedHabitText in widget.completedHabits)
+          Text("• " + completedHabitText,
+            textAlign: TextAlign.left,
+            style: const TextStyle(
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
+            ),
+          )
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    bool addingNewHabit = widget.completedHabits.isNotEmpty;
     _buttonRow.clear();
     _buttonRow.add(TextButton(
       child: const Text(
@@ -46,7 +62,7 @@ class _CompletedLogHabitsState extends State<CompletedLogHabits> {
         fixedSize: const Size(100, 55),
       ),
     ));
-    if (widget.addingNewHabit) {
+    if (addingNewHabit) {
       _buttonRow.add(const Spacer());
       _buttonRow.add(TextButton(
         child: const Text(
@@ -78,17 +94,27 @@ class _CompletedLogHabitsState extends State<CompletedLogHabits> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Container(
+          SizedBox(
             height: 355,
             child: Column(children: [
               const Spacer(),
               Text(
                 "Thank you for logging your daily habits! "
-                "You have received " + widget.pointsGained.toString() + " points.",
+                "You have received ${widget.pointsGained} points.",
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  fontSize: 28.0,
+                  fontSize: 25.0,
                   fontWeight: FontWeight.bold,
+                ),
+              ),
+              Visibility(
+                visible: addingNewHabit,
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  height: 250,
+                  child: SingleChildScrollView(
+                    child: _completedHabitsList(),
+                  ),
                 ),
               ),
               const Spacer(),

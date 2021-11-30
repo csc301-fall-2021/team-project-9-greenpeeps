@@ -54,7 +54,12 @@ class PieDiagram extends StatelessWidget {
               "Transportation": 0,
             };
           } else {
-            carbonEmissions = Map<String, double>.from(userData['carbonEmissions']);
+            carbonEmissions = {};
+            Map<String, num> temp =
+                Map<String, num>.from(userData['carbonEmissions']);
+            for (String keyName in temp.keys) {
+              carbonEmissions[keyName] = temp[keyName]!.toDouble();
+            }
           }
 
           return PieChart(

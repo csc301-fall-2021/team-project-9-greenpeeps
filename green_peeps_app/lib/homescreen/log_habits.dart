@@ -98,7 +98,7 @@ class _LogHabitsState extends State<LogHabits> {
           count++;
         }
       });
-      return [completedHabits, count];
+      return [completedHabits, count]; // returns list<string>, list<int>
     }
   }
 
@@ -107,7 +107,11 @@ class _LogHabitsState extends State<LogHabits> {
       _habitMap[habitID] = false;
     }
     return CheckboxListTile(
-      title: Text(habitName),
+      title: Text(habitName,
+        style: TextStyle(
+        fontSize: 20,
+        )
+      ),
       activeColor: const Color.fromRGBO(0, 154, 6, 1),
       controlAffinity: ListTileControlAffinity.leading,
       value: _habitMap[habitID],
@@ -129,13 +133,13 @@ class _LogHabitsState extends State<LogHabits> {
           "What habits have you completed today?",
           textAlign: TextAlign.left,
           style: TextStyle(
-            fontSize: 28.0,
+            fontSize: 25.0,
             fontWeight: FontWeight.bold,
           ),
         ),
         const Divider(color: Colors.transparent),
         SizedBox(
-          height: 275,
+          height: 285,
           child: Scrollbar(
             controller: _controller,
             child: SingleChildScrollView(
@@ -157,8 +161,7 @@ class _LogHabitsState extends State<LogHabits> {
               child: const Text(
                 'Save',
                 style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
                 ),
               ),
               onPressed: () async {
@@ -175,7 +178,7 @@ class _LogHabitsState extends State<LogHabits> {
                 primary: Colors.white,
                 backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
                 elevation: 5,
-                fixedSize: const Size(60, 30),
+                fixedSize: const Size(75, 50),
               ),
             ),
           ],
