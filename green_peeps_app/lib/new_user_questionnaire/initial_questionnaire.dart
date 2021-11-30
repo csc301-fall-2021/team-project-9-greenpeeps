@@ -108,7 +108,6 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 20,
-                                  fontFamily: "Nunito",
                                   fontWeight: FontWeight.w700,
                                 ),
                               )
@@ -116,7 +115,6 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 20,
-                                  fontFamily: "Nunito",
                                   fontWeight: FontWeight.w700,
                                 )),
                         backgroundColor: Colors.green,

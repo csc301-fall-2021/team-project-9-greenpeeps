@@ -49,7 +49,6 @@ class _QuestionCategoryPopupState extends State<QuestionCategoryPopup> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: _boxPadding + 5, vertical: _boxPadding),
       width: double.infinity,
-
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -59,7 +59,6 @@ class _DailyQuestionsPopupState extends State<DailyQuestionsPopup> {
   List<String> getCategories() {
     // TODO pull categories from database
     return ["Food", "Electricity", "Water", "Transportation"];
-    // TODO: categories should have a [completed] indicator?
   }
 
   _getQuestionWidgets(questionList) {
