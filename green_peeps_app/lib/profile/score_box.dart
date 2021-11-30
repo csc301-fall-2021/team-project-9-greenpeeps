@@ -62,15 +62,37 @@ class _ScoreBoxState extends State<ScoreBox> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .snapshots();
 
+    Stream<QuerySnapshot<Map<String, dynamic>>> achievements =
+        FirebaseFirestore.instance.collection('achievements').snapshots();
+
     return StreamBuilder<DocumentSnapshot>(
         stream: users,
         builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
             var userData = snapshot.data;
             var userScore = userData!['totalPoints'];
+            var userAchievements = userData['achievements'];
 
-            return _buildSecondBox(
-                context, _boxPadding, _boxElevation, _boxColor, userScore);
+            return StreamBuilder<QuerySnapshot>(
+                stream: achievements,
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot2) {
+                  if (snapshot2.connectionState == ConnectionState.active) {
+                    var achievementData = snapshot2.data!.docs;
+                    for (int i = 0; i < achievementData.length; i++) {
+                      for (int j = 0; j < userAchievements.length; j++) {
+                        if (userAchievements[j] == achievementData[i].id) {
+                          userScore = userScore + achievementData[i]['score'];
+                        }
+                      }
+                    }
+                    userScore = userScore / 50;
+                    return _buildSecondBox(context, _boxPadding, _boxElevation,
+                        _boxColor, userScore.floor());
+                  } else {
+                    return _buildSecondBox(
+                        context, _boxPadding, _boxElevation, _boxColor, 0);
+                  }
+                });
           } else {
             return _buildSecondBox(
                 context, _boxPadding, _boxElevation, _boxColor, 0);
