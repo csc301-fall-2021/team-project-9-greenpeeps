@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:green_peeps_app/questionnaire/questionnaire_category.dart';
 import 'package:green_peeps_app/services/habit_firestore.dart';
 
 class LogHabits extends StatefulWidget {
-  final VoidCallback saveHabits;
+  // final VoidCallback saveHabits;
+  final Function(List, int) saveHabits;
   const LogHabits({Key? key, required this.saveHabits}) : super(key: key);
 
   @override
@@ -16,6 +18,7 @@ class _LogHabitsState extends State<LogHabits> {
 
   // Map of which checkboxes are checked
   Map<String, bool> _habitMap = {};
+  Map<String, String> keyToTitleHabit = {};
   List dailyHabitKeys = [];
   List dailyHabitList = [];
 
@@ -32,6 +35,7 @@ class _LogHabitsState extends State<LogHabits> {
                 (r) {
                   setState(
                     () {
+                      keyToTitleHabit[key] = r!.title;
                       dailyHabitList.add(r);
                     },
                   );
@@ -51,15 +55,50 @@ class _LogHabitsState extends State<LogHabits> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
     if (userSnapshot.exists) {
-      dailyHabitKeys = userSnapshot['dailyHabits'].keys.toList();
-      // for (var key in dailyHabitKeys) {
-      //   if (userSnapshot['dailyHabits'][key]['dailyComplete']) {
-      //     dailyHabitKeys.remove(key);
-      //   }
-      // }
+      var dailyHabitKeys = userSnapshot['userHabits'].keys.toList();
+      var copyKeys = [...dailyHabitKeys];
+      for (var key in copyKeys) {
+        if (!userSnapshot['userHabits'][key]['isDailyHabit'] ||
+            userSnapshot['userHabits'][key]['isDailyCompleted']) {
+          dailyHabitKeys.remove(key);
+        }
+      }
       return dailyHabitKeys;
     } else {
       return null;
+    }
+  }
+
+  logHabitToDB(Map<String, dynamic> habitMap) async {
+    var userSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    if (userSnapshot.exists && userSnapshot['userHabits'] != null) {
+      List completedHabits = [];
+      int count = 0;
+      habitMap.forEach((key, value) async {
+        if (value) {
+          FirebaseFirestore.instance
+              .collection('users')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .update({
+            'userHabits.' + key + '.repsLeft': FieldValue.increment(-1),
+            'userHabits.' + key + '.isDailyCompleted': true
+          }).then((value) => {});
+          var repsLeft = userSnapshot['userHabits'][key]['repsLeft'];
+          if (repsLeft == 1) {
+            FirebaseFirestore.instance
+                .collection('users')
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .update({'userHabits.' + key + '.completed': true}).then(
+                    (value) => {});
+            completedHabits.add(keyToTitleHabit[key]);
+          }
+          count++;
+        }
+      });
+      return [completedHabits, count]; // returns list<string>, list<int>
     }
   }
 
@@ -68,7 +107,11 @@ class _LogHabitsState extends State<LogHabits> {
       _habitMap[habitID] = false;
     }
     return CheckboxListTile(
-      title: Text(habitName),
+      title: Text(habitName,
+        style: TextStyle(
+        fontSize: 20,
+        )
+      ),
       activeColor: const Color.fromRGBO(0, 154, 6, 1),
       controlAffinity: ListTileControlAffinity.leading,
       value: _habitMap[habitID],
@@ -90,13 +133,13 @@ class _LogHabitsState extends State<LogHabits> {
           "What habits have you completed today?",
           textAlign: TextAlign.left,
           style: TextStyle(
-            fontSize: 28.0,
+            fontSize: 25.0,
             fontWeight: FontWeight.bold,
           ),
         ),
         const Divider(color: Colors.transparent),
         SizedBox(
-          height: 275,
+          height: 285,
           child: Scrollbar(
             controller: _controller,
             child: SingleChildScrollView(
@@ -104,7 +147,8 @@ class _LogHabitsState extends State<LogHabits> {
               child: Column(
                 children: [
                   for (var i = 0; i < dailyHabitList.length; i++)
-                    _makeHabitCheckbox(setState, dailyHabitList[i].title, dailyHabitList[i].id),
+                    _makeHabitCheckbox(setState, dailyHabitList[i].title,
+                        dailyHabitList[i].id),
                 ],
               ),
             ),
@@ -117,18 +161,24 @@ class _LogHabitsState extends State<LogHabits> {
               child: const Text(
                 'Save',
                 style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
                 ),
               ),
-              onPressed: () {
-                widget.saveHabits();
+              onPressed: () async {
+                if (dailyHabitList.isEmpty) {
+                  Navigator.of(context).pop(); // Closes popup
+                } else {
+                  List completedHabitsAndCount = await logHabitToDB(_habitMap);
+                  print(completedHabitsAndCount);
+                  widget.saveHabits(
+                      completedHabitsAndCount[0], completedHabitsAndCount[1]);
+                }
               },
               style: TextButton.styleFrom(
                 primary: Colors.white,
                 backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
                 elevation: 5,
-                fixedSize: const Size(60, 30),
+                fixedSize: const Size(75, 50),
               ),
             ),
           ],

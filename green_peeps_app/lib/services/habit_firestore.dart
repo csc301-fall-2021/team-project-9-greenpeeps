@@ -17,7 +17,8 @@ Future<Habit?> getHabitFromStore(String documentId) async {
         title: data['title'],
         info: data['info'],
         hid: data['hid'],
-        amount: data['amount'],
+        repsLeft: data['amount'],
+        totalAmount: data['amount'],
         points: data['points']
     );
   } catch (exception) {

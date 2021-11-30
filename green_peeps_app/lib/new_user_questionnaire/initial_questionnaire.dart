@@ -66,6 +66,7 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                   child: Row(
                     // fit: StackFit.expand,
                     children: [
+                      Spacer(),
                       FloatingActionButton.extended(
                         heroTag: null,
                         onPressed: () {
@@ -82,8 +83,7 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                           "Skip Question",
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 20,
-                            fontFamily: "Nunito",
+                            fontSize: 15,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -107,16 +107,20 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                                 "Save & Quit",
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 20,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.w700,
                                 ),
                               )
-                            : const Text("Save & Continue",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                )),
+                            : Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 100),
+                                child: const Text("Save & Continue",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w700,
+                                    )),
+                              ),
                         backgroundColor: Colors.green,
                       )
                     ],

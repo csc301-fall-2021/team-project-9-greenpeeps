@@ -13,65 +13,65 @@ class RecommendedBox extends StatefulWidget {
 }
 
 class _RecommendedBoxState extends State<RecommendedBox> {
-
   // get all habits from firebase
   // select three random habits
-  Widget _listRecommendedHabits(Stream<QuerySnapshot> habits, Stream<DocumentSnapshot> userHabits) {
+  Widget _listRecommendedHabits(
+      Stream<QuerySnapshot> habits, Stream<DocumentSnapshot> userHabits) {
     //CollectionReference articles = FirebaseFirestore.instance.collection('articles');
 
     return StreamBuilder<QuerySnapshot>(
       stream: habits,
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (!snapshot.hasData) return const Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: 150, vertical: 50),
+        if (!snapshot.hasData)
+          return const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 150, vertical: 50),
             child: CircularProgressIndicator(
               color: Colors.white,
-            ));
-        return Container(child: _getNonUserHabits(snapshot, userHabits));
-      }
-
+            ),
+          );
+        return Container(
+          child: _getNonUserHabits(snapshot, userHabits),
+        );
+      },
     );
   }
 
-
-  _getNonUserHabits(AsyncSnapshot<QuerySnapshot> snapshot, Stream<DocumentSnapshot> userHabits) {
+  _getNonUserHabits(AsyncSnapshot<QuerySnapshot> snapshot,
+      Stream<DocumentSnapshot> userHabits) {
     // get all habits
     List<String> testLst = [];
-    for (var element in snapshot.data!.docs) { testLst.add(element.id);}
+    for (var element in snapshot.data!.docs) {
+      testLst.add(element.id);
+    }
 
     return StreamBuilder<DocumentSnapshot>(
-        stream: userHabits,
-        builder: (context, AsyncSnapshot<DocumentSnapshot> userSnapshot) {
+      stream: userHabits,
+      builder: (context, AsyncSnapshot<DocumentSnapshot> userSnapshot) {
+        if (userSnapshot.connectionState == ConnectionState.active) {
+          var userData = userSnapshot.data;
 
-          if (userSnapshot.connectionState == ConnectionState.active) {
-
-            var userData = userSnapshot.data;
-
-            if (userData!.data().toString().contains('userHabits') == true) {
-
-              Map<String, dynamic> userHabitsMap = userData.data() as Map<String, dynamic>;
-              var userHabitKeys = userHabitsMap['userHabits'].keys.toList();
-              var nonUserHabits = _filterHabits(snapshot, testLst, userHabitKeys);
-              if (nonUserHabits.length > 0) {
-                return ListView(shrinkWrap: true, children: nonUserHabits);
-              } else {
-                return const RecommendedComeBackLater();
-              }
-              
+          if (userData!.data().toString().contains('userHabits') == true) {
+            Map<String, dynamic> userHabitsMap =
+                userData.data() as Map<String, dynamic>;
+            var userHabitKeys = userHabitsMap['userHabits'].keys.toList();
+            var nonUserHabits = _filterHabits(snapshot, testLst, userHabitKeys);
+            if (nonUserHabits.length > 0) {
+              return ListView(shrinkWrap: true, children: nonUserHabits);
             } else {
               return const RecommendedComeBackLater();
             }
-            
           } else {
             return const RecommendedComeBackLater();
           }
+        } else {
+          return const RecommendedComeBackLater();
         }
-
+      },
     );
   }
 
- _filterHabits(AsyncSnapshot<QuerySnapshot> snapshot, List<String> allHabitsList, List<String> userHabitsList) {
+  _filterHabits(AsyncSnapshot<QuerySnapshot> snapshot,
+      List<String> allHabitsList, List<String> userHabitsList) {
     List<String> filteredHabitsList = [];
     for (var habitKey in allHabitsList) {
       if (!userHabitsList.contains(habitKey)) {
@@ -80,14 +80,23 @@ class _RecommendedBoxState extends State<RecommendedBox> {
     }
 
     List<RecommendedHabitItem> habitsList = [];
-    for (var doc in snapshot.data!.docs) { // should be in filteredhabitslist
+    for (var doc in snapshot.data!.docs) {
+      // should be in filteredhabitslist
       if (filteredHabitsList.contains(doc.id)) {
-        habitsList.add(RecommendedHabitItem(hid: doc.id, title: doc["title"], info: doc["info"], amount: doc["amount"], points: doc["points"],));
+        habitsList.add(
+          RecommendedHabitItem(
+            hid: doc.id,
+            title: doc["title"],
+            info: doc["info"],
+            amount: doc["amount"],
+            points: doc["points"],
+          ),
+        );
       }
-      
     }
 
-    if (habitsList.length >= 4) { // if random selection needs to be made
+    if (habitsList.length >= 4) {
+      // if random selection needs to be made
       List<RecommendedHabitItem> randomHabitsList = [];
       // select 3 random habits
       while (randomHabitsList.length < 3) {
@@ -100,27 +109,28 @@ class _RecommendedBoxState extends State<RecommendedBox> {
     } else {
       return habitsList;
     }
-
   }
 
-  @override 
+  @override
   Widget build(BuildContext context) {
-    Stream<QuerySnapshot> habits = FirebaseFirestore.instance.collection('habits').snapshots();
-    Stream<DocumentSnapshot> userHabits = FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).snapshots();
+    Stream<QuerySnapshot> habits =
+        FirebaseFirestore.instance.collection('habits').snapshots();
+    Stream<DocumentSnapshot> userHabits = FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .snapshots();
 
     return SliverSafeArea(
       sliver: SliverPadding(
-        padding: const EdgeInsets.only(
-            left: 30, right: 30, top: 15, bottom: 0),
+        padding: const EdgeInsets.only(left: 30, right: 30, top: 15, bottom: 0),
         sliver: SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children:  <Widget>[
-                  Row(
-                    children: [
-                      const Text(
+                children: <Widget>[
+                  Row(children: const <Widget>[
+                    Text(
                       "Recommended",
                       textAlign: TextAlign.left,
                       style: TextStyle(
@@ -128,11 +138,10 @@ class _RecommendedBoxState extends State<RecommendedBox> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                      Icon(
-                          Icons.add_task_rounded,
-                      ),
-                    ]
-                  ),
+                    Icon(
+                      Icons.add_task_rounded,
+                    ),
+                  ]),
                   _listRecommendedHabits(habits, userHabits),
                 ],
               );

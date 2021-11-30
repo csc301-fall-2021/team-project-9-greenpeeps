@@ -30,7 +30,7 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
           getHabitFromStore(key).then((r) {
             setState(() {
               allHabitList.add(r);
-              _habitMap[key] = false;
+              // _habitMap[key] = false;
             });
           });
         }
@@ -40,11 +40,12 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
       setState(() {
         dailyHabitKeys = result;
         for (var key in dailyHabitKeys) {
-          getHabitFromStore(key).then((r) {
-            setState(() {
-              _habitMap[key] = true;
-            });
-          });
+          // getHabitFromStore(key).then((r) {
+          //   setState(() {
+          //     _habitMap[key] = true;
+          //   });
+          // });
+          _habitMap[key] = true;
         }
       });
     });
@@ -76,8 +77,14 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
-    if (userSnapshot.exists && userSnapshot['dailyHabits'] != null) {
-      var habitKeys = userSnapshot['dailyHabits'].keys.toList();
+    if (userSnapshot.exists && userSnapshot['userHabits'] != null) {
+      var habitKeys = userSnapshot['userHabits'].keys.toList();
+      var copyKeys = [...habitKeys];
+      for (var key in copyKeys) {
+        if (!userSnapshot['userHabits'][key]['isDailyHabit']) {
+          habitKeys.remove(key);
+        }
+      }
       return habitKeys;
     } else {
       return [];
@@ -95,13 +102,13 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
             .collection('users')
             .doc(FirebaseAuth.instance.currentUser!.uid)
             .update({
-          'dailyHabits.' + key: {'dailyComplete': false, 'user_completed': 0}
+          'userHabits.' + key + '.isDailyHabit': true
         }).then((value) => {});
       } else {
         await FirebaseFirestore.instance
             .collection('users')
             .doc(FirebaseAuth.instance.currentUser!.uid)
-            .update({'dailyHabits.' + key: FieldValue.delete()}).then(
+            .update({'userHabits.' + key + '.isDailyHabit': false}).then(
                 (value) => {});
       }
     }
@@ -112,7 +119,10 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
       _habitMap[habitID] = false;
     }
     return SwitchListTile(
-      title: Text(habitName),
+      title: Text(habitName,
+          style: TextStyle(
+            fontSize: 20,
+          )),
       activeColor: const Color.fromRGBO(0, 154, 6, 1),
       controlAffinity: ListTileControlAffinity.leading,
       value: _habitMap[habitID]!,
@@ -151,14 +161,14 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppBar(
-              title: const Text(
-                "",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              // title: const Text(
+              //   "",
+              //   style: TextStyle(
+              //     color: Colors.black,
+              //     fontSize: 20,
+              //     fontWeight: FontWeight.bold,
+              //   ),
+              // ),
               elevation: 0,
               toolbarHeight: 30,
               backgroundColor: _boxColor,
@@ -181,7 +191,7 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
                 "Which habits do you want to appear on your homescreen?",
                 textAlign: TextAlign.left,
                 style: TextStyle(
-                  fontSize: 28.0,
+                  fontSize: 25.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -198,7 +208,7 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
               ),
             ),
             SizedBox(
-              height: 300,
+              height: 285,
               child: Scrollbar(
                 controller: _controller,
                 child: SingleChildScrollView(
@@ -217,7 +227,10 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
               children: <Widget>[
                 const Spacer(),
                 TextButton(
-                  child: const Text('Save'),
+                  child: const Text('Save',
+                      style: TextStyle(
+                        fontSize: 20,
+                      )),
                   onPressed: () {
                     _habitMap.forEach(
                       (key, value) {
@@ -232,7 +245,7 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
                     primary: Colors.white,
                     backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
                     elevation: 5,
-                    fixedSize: const Size(61, 25),
+                    fixedSize: const Size(75, 50),
                   ),
                 ),
               ],
