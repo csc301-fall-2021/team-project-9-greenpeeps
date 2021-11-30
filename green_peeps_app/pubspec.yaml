@@ -72,6 +72,8 @@ flutter:
     - images/Profile.png
     - images/Ellipse1.png
     - images/Leaf.png
+    - images/GPSketch.png
+    - images/greenpeepswiz.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

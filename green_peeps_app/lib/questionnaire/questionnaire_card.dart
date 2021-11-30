@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 // rename to build question form
 
 class QuestionnaireCard extends StatefulWidget {
-  final Question question;
+  final Future<Question?> question;
 
   const QuestionnaireCard({Key? key, required this.question}) : super(key: key);
 
@@ -23,33 +23,59 @@ class _QuestionnaireCardState extends State<QuestionnaireCard> {
       child: Column(children: <Widget>[
         Container(
           width: double.infinity,
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-          child: Container(
-            padding: EdgeInsets.all(10),
-            child: Text(
-              widget.question.text,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
+          padding: EdgeInsets.all(10),
+          child: FutureBuilder<Question?>(
+              future: widget.question,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError || !snapshot.hasData) {
+                    return Text("Error loading data",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontFamily: "Nunito",
+                          fontWeight: FontWeight.w700,
+                        ));
+                  } else {
+                    return Text(snapshot.data.text,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontFamily: "Nunito",
+                          fontWeight: FontWeight.w700,
+                        ));
+                  }
+                } else {
+                  return Text("Loading...",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontFamily: "Nunito",
+                        fontWeight: FontWeight.w700,
+                      ));
+                }
+              }),
         ),
         Column(
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-              child: BuildQuestionForm(
-                question: widget.question,
-              ),
-            ),
-            // Row(
-            //   children: <Widget>[
-            //
-            //   ]
-            // ),
+            FutureBuilder<Question?>(
+                future: widget.question,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 15),
+                      child: BuildQuestionForm(
+                        question: snapshot.data!,
+                      ),
+                    );
+                  } else {
+                    return Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 15),
+                        child: CircularProgressIndicator());
+                  }
+                })
           ],
         ),
       ]),
