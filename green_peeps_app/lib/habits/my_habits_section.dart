@@ -33,7 +33,8 @@ class _MyHabitsSectionState extends State<MyHabitsSection> {
                 HabitTileInfo(
                     habitNum: index + 1,
                     habitName: habitList[index].title,
-                    habitDescription: habitList[index].info),
+                    habitDescription: habitList[index].info,
+                    habitID: habitList[index].id),
                 const Divider(
                   color: Colors.grey,
                 ),

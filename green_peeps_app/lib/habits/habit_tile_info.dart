@@ -5,12 +5,14 @@ class HabitTileInfo extends StatefulWidget {
   final int habitNum;
   final String habitName;
   final String habitDescription;
+  final String habitID;
 
   const HabitTileInfo(
       {Key? key,
       required this.habitNum,
       required this.habitName,
-      required this.habitDescription})
+      required this.habitDescription,
+      required this.habitID})
       : super(key: key);
 
   @override
@@ -39,7 +41,8 @@ class _HabitTileInfoState extends State<HabitTileInfo> {
           builder: (context) {
             return HabitTileDialogue(
                 habitName: widget.habitName,
-                habitDescription: widget.habitDescription);
+                habitDescription: widget.habitDescription,
+                habitID: widget.habitID);
           },
         );
       },

@@ -35,7 +35,8 @@ class _HabitsInProgressSectionState extends State<HabitsInProgressSection> {
                 HabitTileInfo(
                     habitNum: index + 1,
                     habitName: habitList[index].title,
-                    habitDescription: habitList[index].info),
+                    habitDescription: habitList[index].info,
+                    habitID: habitList[index].id),
                 HabitProgressBar(
                   userCompleted:
                       habitList[index].totalAmount - habitList[index].repsLeft,
