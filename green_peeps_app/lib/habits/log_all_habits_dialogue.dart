@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:green_peeps_app/habits/completed_log_habits_dialogue.dart';
 import 'package:green_peeps_app/services/habit_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -162,7 +163,7 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
                   ),
                 ),
                 SizedBox(
-                  height: 415,
+                  height: 315,
                   child: Scrollbar(
                     controller: _controller,
                     child: SingleChildScrollView(
@@ -182,6 +183,12 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
                     const Spacer(),
                     TextButton(
                       child: const Text('Save'),
+                      style: TextButton.styleFrom(
+                        primary: Colors.white,
+                        backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
+                        elevation: 5,
+                        fixedSize: const Size(61, 25),
+                      ),
                       onPressed: () async {
                         List completedHabitsAndCount =
                             await logHabitToDB(_habitMap);
@@ -189,13 +196,16 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
                         // Fetch completed list of habit and points gained from variable above
 
                         Navigator.of(context).pop();
+                        showDialog(
+                        context: context,
+                        builder: (context) {
+                          return CompletedLogHabits(
+                              completedHabits: completedHabitsAndCount[0],
+                              pointsGained: completedHabitsAndCount[1]);
+                        },
+                        );
                       },
-                      style: TextButton.styleFrom(
-                        primary: Colors.white,
-                        backgroundColor: const Color.fromRGBO(2, 152, 89, 1),
-                        elevation: 5,
-                        fixedSize: const Size(61, 25),
-                      ),
+
                     ),
                   ],
                 ),

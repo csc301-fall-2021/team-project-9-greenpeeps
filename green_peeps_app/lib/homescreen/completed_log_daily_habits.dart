@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CompletedLogHabits extends StatefulWidget {
+class CompletedLogDailyHabits extends StatefulWidget {
 
   final List completedHabits;
   final int pointsGained;
   final VoidCallback quit;
   final VoidCallback addNew;
-  const CompletedLogHabits(
+  const CompletedLogDailyHabits(
       {Key? key,
       required this.completedHabits,
       required this.pointsGained,
@@ -16,10 +16,10 @@ class CompletedLogHabits extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<CompletedLogHabits> createState() => _CompletedLogHabitsState();
+  State<CompletedLogDailyHabits> createState() => _CompletedLogDailyHabitsState();
 }
 
-class _CompletedLogHabitsState extends State<CompletedLogHabits> {
+class _CompletedLogDailyHabitsState extends State<CompletedLogDailyHabits> {
   final double _boxPadding = 10.0;
 
   final List<Widget> _buttonRow = [];

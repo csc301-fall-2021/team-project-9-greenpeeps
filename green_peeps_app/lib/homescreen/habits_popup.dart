@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:green_peeps_app/homescreen/log_habits.dart';
-import 'package:green_peeps_app/homescreen/completed_log_habits.dart';
+import 'package:green_peeps_app/homescreen/completed_log_daily_habits.dart';
 import 'package:green_peeps_app/homescreen/add_more_habits.dart';
 
 class LogHabitPopup extends StatefulWidget {
@@ -21,9 +21,7 @@ class _LogHabitPopup extends State<LogHabitPopup> {
   // Database Information
   bool addingNewHabit = true;
   void _addCompletedHabits(habitList, count) {
-    // todo compute the number of points the user gets
-    //  for completing these habits
-    _popupViews.add(CompletedLogHabits(
+    _popupViews.add(CompletedLogDailyHabits(
         completedHabits: habitList,
         pointsGained: count,
         quit: () {
