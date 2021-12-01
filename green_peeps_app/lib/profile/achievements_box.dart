@@ -169,8 +169,14 @@ class _AchievementsBoxState extends State<AchievementsBox> {
                         }
                       }
                     }
-                    return _buildThirdBox(context, _boxPadding, _boxElevation,
-                        _boxColor, _scrollController, [], []);
+                    return _buildThirdBox(
+                        context,
+                        _boxPadding,
+                        _boxElevation,
+                        _boxColor,
+                        _scrollController,
+                        achievementTitles,
+                        achievementIcons);
                   } else {
                     return _buildThirdBox(context, _boxPadding, _boxElevation,
                         _boxColor, _scrollController, [], []);

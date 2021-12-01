@@ -28,8 +28,17 @@ class _LoginState extends State<Login> {
         setState(() => error = 'Account not found.');
       } else if (e.code == 'wrong-password') {
         setState(() => error = 'Incorrect password.');
+      } else {
+        setState(() => error = e.code);
       }
     }
+  }
+
+  String checkFields(email, password) {
+    if (password.isEmpty || email.isEmpty) {
+      return 'All fields must be filled.';
+    }
+    return 'valid';
   }
 
   @override
@@ -124,7 +133,12 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     onPressed: () async {
-                      signInEmailPassword(email.trim(), password.trim());
+                      var checkStatus = checkFields(email, password);
+                      if (checkStatus == 'valid') {
+                        signInEmailPassword(email.trim(), password.trim());
+                      } else {
+                        setState(() => error = checkStatus);
+                      }
                     },
                   ),
                   const SizedBox(height: 20.0),

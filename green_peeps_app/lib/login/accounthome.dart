@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AccountHome extends StatefulWidget {
   const AccountHome({Key? key}) : super(key: key);
@@ -46,13 +47,14 @@ class _AccountHomeState extends State<AccountHome> {
                     ),
                   ),
                   const SizedBox(height: 20.0),
-                  ElevatedButton(
+                  ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                       elevation: 5,
                       minimumSize: const Size(double.infinity, 50),
                       primary: Colors.deepOrange[400],
                     ),
-                    child: const Text(
+                    icon: const FaIcon(FontAwesomeIcons.google),
+                    label: const Text(
                       'Continue with Google',
                       style: TextStyle(
                         color: Colors.white,
@@ -62,13 +64,14 @@ class _AccountHomeState extends State<AccountHome> {
                     onPressed: () async {},
                   ),
                   const SizedBox(height: 20.0),
-                  ElevatedButton(
+                  ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                       elevation: 5,
                       minimumSize: const Size(double.infinity, 50),
                       primary: Colors.blue[400],
                     ),
-                    child: const Text(
+                    icon: const FaIcon(FontAwesomeIcons.facebook),
+                    label: const Text(
                       'Continue with Facebook',
                       style: TextStyle(
                         color: Colors.white,
@@ -102,7 +105,7 @@ class _AccountHomeState extends State<AccountHome> {
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           elevation: 5,
-                          minimumSize: const Size(1, 25),
+                          minimumSize: const Size(1, 50),
                           primary: boxColour,
                         ),
                         child: const Text(
@@ -119,7 +122,7 @@ class _AccountHomeState extends State<AccountHome> {
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           elevation: 5,
-                          minimumSize: const Size(1, 25),
+                          minimumSize: const Size(1, 50),
                           primary: boxColour,
                         ),
                         child: const Text(
