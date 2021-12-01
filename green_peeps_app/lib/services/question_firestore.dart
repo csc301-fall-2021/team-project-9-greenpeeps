@@ -52,7 +52,8 @@ Future<QuestionMetadata?> _getMetadataFromStore() async {
             as Map<String, dynamic>)
         .map((key, value) => MapEntry(
             key, (value as List<dynamic>).map((e) => e.toString()).toList()));
-    return QuestionMetadata(categories: categories);
+    _cachedMetadata = QuestionMetadata(categories: categories);
+    return _cachedMetadata;
   } catch (exception) {
     return null;
   }

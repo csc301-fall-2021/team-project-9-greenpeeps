@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:green_peeps_app/questionnaire/build_question_form.dart';
+import 'package:green_peeps_app/services/string_extension.dart';
 
 typedef CategoryCallback = void Function(String category);
 
@@ -29,7 +29,7 @@ class _QuestionCategoryPopupState extends State<QuestionCategoryPopup> {
         widget.setCategory(categoryName);
       },
       child: Text(
-        categoryName,
+        categoryName.capitalize(),
         style: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.bold,

@@ -1,11 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:green_peeps_app/questionnaire/questionnaire_category.dart';
 import 'package:green_peeps_app/questionnaire/questionnaire_question.dart';
 import 'package:green_peeps_app/models/question.dart';
-import 'package:green_peeps_app/models/response.dart';
 import 'package:green_peeps_app/homescreen/completed_daily_questions.dart';
 import 'package:green_peeps_app/services/question_firestore.dart';
-import 'package:provider/provider.dart';
+import 'package:green_peeps_app/services/response_firestore.dart';
 
 // this manages the questionnaire category and questions popups.
 // after choosing a category, we will add questions to the list,
@@ -19,55 +20,71 @@ class DailyQuestionsPopup extends StatefulWidget {
 }
 
 class _DailyQuestionsPopupState extends State<DailyQuestionsPopup> {
-  // Current index of which popup view to look at
-  int _popupIndex = 0;
+  Future<String?>? _question;
   String _currCategoryName = "";
-  List<Question> questionList = [];
+  List<String> _questionList = [];
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
   bool _noMoreQuestions = false;
 
   int _questionsDone = 0;
   final int _questionsTodo = 2;
 
-// tODO would it actually make more sense for this to just go back to the
-  // category page rather than last question? or go back a page?
   void _goBack(setState) {
     setState(() {
-      _popupIndex = 0;
+      _question = null;
     });
   }
 
-  // Callback for skipping questions
-  void _nextQuestion(setState, String categoryName) {
-    setState(
-      () {
-        if (_popupIndex == 0) {
-          _popupIndex = 1;
-          _currCategoryName = categoryName;
-        } else if (_popupIndex < _popupViews.length - 1) {
-          _popupIndex += 1;
-          // get the next question in list
-        } else {
-          // no more questions! try another category
-          _popupIndex = 0;
-          _noMoreQuestions = true;
-        }
-      },
-    );
+  Widget getPopup() {
+    if (_questionsDone == _questionsTodo) {
+      return _getCompletionPage();
+    } else {
+      if (_question == null) {
+        return _getCategoryPage();
+      } else {
+        return _getQuestionPage();
+      }
+    }
   }
 
-  Future<List<String>?> getCategories() async {
+  Future<List<String>?> getCategoryNames() async {
     QuestionMetadata? metadata = await getMetadata();
     return metadata?.categories.keys.toList();
   }
 
+  Future<String?> _getQuestionId() async {
+    if (_questionList.isEmpty) {
+      QuestionMetadata? metadata = await getMetadata();
+      List<String>? categoryQuestions =
+          metadata?.categories[_currCategoryName.toLowerCase()];
+      if (categoryQuestions == null) {
+        return null;
+      }
+      List<String>? completedQuestions =
+          (await getResponses())?.map((response) => response.qID).toList();
+      completedQuestions ??= [];
+      _questionList = categoryQuestions
+          .toSet()
+          .difference(completedQuestions.toSet())
+          .toList();
+    }
+    if (_questionList.isEmpty) {
+      return null;
+    } else {
+      return _questionList.removeAt((Random().nextInt(_questionList.length)));
+    }
+  }
+
   Widget _getCategoryPage() {
     return QuestionCategoryPopup(
-        categories: getCategories(),
+        categories: getCategoryNames(),
         setCategory: (String category) {
-          _currCategoryName = category;
-          _noMoreQuestions = false;
-          _nextQuestion(setState, category);
+          setState(() {
+            _currCategoryName = category;
+            _questionList = [];
+            _noMoreQuestions = false;
+            _question = _getQuestionId();
+          });
         },
         noMoreQuestions: _noMoreQuestions);
   }
@@ -79,33 +96,35 @@ class _DailyQuestionsPopupState extends State<DailyQuestionsPopup> {
       _questionsDone += 1;
       setState(() {
         _popupViews.clear();
-        _popupIndex = 0;
       });
     });
   }
 
-  Widget _getQuestionWidgets(questionList) {
-    List<Widget> questionWidgets = [];
-    for (Future<Question?> question in questionList) {
-      questionWidgets.add(Consumer<ResponseListModel>(
-          builder: (context, responseListModel, child) {
-        return DailyQuestionQuestion(
-            question: question,
-            skipQuestion: () {
-              setState(() {
-                _nextQuestion(setState, _currCategoryName);
-              });
-            },
-            saveQuestion: () {
-              setState(() {
-                _questionsDone += 1;
-                responseListModel.saveResponsesToStore();
-                _nextQuestion(setState, _currCategoryName);
-              });
-            });
-      }));
-    }
-    return questionWidgets[0];
+  Widget _getQuestionPage() {
+    Future<String?> questionId = _getQuestionId();
+    return FutureBuilder<String?>(
+        future: questionId,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasData) {
+              return DailyQuestionQuestion(
+                  question: snapshot.data!,
+                  nextQuestion: (bool skip) {
+                    setState(() {
+                      _question = _getQuestionId();
+                      if (!skip) {
+                        _questionsDone += 1;
+                      }
+                    });
+                  });
+            } else {
+              _noMoreQuestions = true;
+              return _getCategoryPage();
+            }
+          } else {
+            return const CircularProgressIndicator();
+          }
+        });
   }
 
   final List<Widget> _popupViews = <Widget>[];
@@ -135,7 +154,7 @@ class _DailyQuestionsPopupState extends State<DailyQuestionsPopup> {
                   automaticallyImplyLeading: false,
                   actions: <Widget>[
                     Visibility(
-                      visible: _popupIndex > 0,
+                      visible: false,
                       child: IconButton(
                         padding: const EdgeInsets.all(0),
                         onPressed: () {
@@ -173,7 +192,7 @@ class _DailyQuestionsPopupState extends State<DailyQuestionsPopup> {
                     ),
                   ),
                 ),
-                // TODO: Insert view here
+                getPopup()
               ],
             ),
           ),

@@ -93,20 +93,21 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                       Spacer(),
                       FloatingActionButton.extended(
                         onPressed: () {
-                          responseListModel.saveResponsesToStore();
+                          responseListModel.saveCurrent();
                           if (widget.remainingQuestions!.isEmpty) {
-                            Navigator.popUntil(context, ModalRoute.withName('/init_questionnaire_intro'));
+                            Navigator.popUntil(
+                                context,
+                                ModalRoute.withName(
+                                    '/init_questionnaire_intro'));
                             Navigator.popAndPushNamed(context, '/nav');
                             showDialog(
                                 context: context,
                                 builder: (context) {
                                   return InfoDialog();
-                                }
-                            );
+                                });
                           } else {
                             // pushing instead of popping and pushing because the animation looks weird
-                            Navigator.pushNamed(
-                                context, '/init_questionnaire',
+                            Navigator.pushNamed(context, '/init_questionnaire',
                                 arguments: widget.remainingQuestions);
                           }
                         },
@@ -146,8 +147,10 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                       gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
-                          colors: [Color.fromRGBO(212, 240, 255, 1),
-                            Color.fromRGBO(177, 157, 255, 1)])),
+                          colors: [
+                        Color.fromRGBO(212, 240, 255, 1),
+                        Color.fromRGBO(177, 157, 255, 1)
+                      ])),
                   child: Consumer<QuestionListModel>(
                       builder: (context, questionListModel, child) {
                     return Column(children: [

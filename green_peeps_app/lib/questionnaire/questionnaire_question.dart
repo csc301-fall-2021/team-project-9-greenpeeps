@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 import 'package:green_peeps_app/models/question.dart';
 import 'package:green_peeps_app/models/response.dart';
 import 'package:provider/provider.dart';
 import 'package:green_peeps_app/questionnaire/questionnaire_card.dart';
 
 class DailyQuestionQuestion extends StatefulWidget {
-  final Future<Question?> question;
-  final VoidCallback skipQuestion;
-  final VoidCallback saveQuestion;
+  final String question;
+  final Function(bool) nextQuestion;
   const DailyQuestionQuestion(
-      {Key? key,
-      required this.question,
-      required this.skipQuestion,
-      required this.saveQuestion})
+      {Key? key, required this.question, required this.nextQuestion})
       : super(key: key);
 
   @override
@@ -27,7 +24,7 @@ class _DailyQuestionQuestionState extends State<DailyQuestionQuestion> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-            create: (context) => QuestionListModel('F3Ct0WCqgIaAlkdrqE7X')),
+            create: (context) => QuestionListModel(widget.question)),
         Provider(create: (context) => ResponseListModel())
       ],
       child: SafeArea(
@@ -36,28 +33,29 @@ class _DailyQuestionQuestionState extends State<DailyQuestionQuestion> {
               builder: (context, questionListModel, child) {
             return Container(
               height: 515,
-              child: Column(
-                children: [
-                  Container(
-                    // NOTE: questions are scollable but buttons are not!
-                    height: 455,
-                    child: SingleChildScrollView(
-                      child: Column(children: [
-                        for (Future<Question?> question
-                            in questionListModel.questionList)
-                          QuestionnaireCard(question: question)
-                      ]),
-                    ),
+              child: Column(children: [
+                Container(
+                  // NOTE: questions are scollable but buttons are not!
+                  height: 455,
+                  child: SingleChildScrollView(
+                    child: Column(children: [
+                      for (Future<Question?> question
+                          in questionListModel.questionList)
+                        QuestionnaireCard(question: question)
+                    ]),
                   ),
-                  Spacer(),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: Row(
-                      children: [
+                ),
+                Spacer(),
+                Consumer<ResponseListModel>(
+                    builder: (context, responses, child) {
+                  return Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Row(children: [
                         TextButton(
                             child: const Text('Skip Question'),
                             onPressed: () {
-                              widget.skipQuestion();
+                              responses.skipCurrent();
+                              widget.nextQuestion(true);
                             },
                             style: TextButton.styleFrom(
                               primary: Colors.white,
@@ -70,7 +68,8 @@ class _DailyQuestionQuestionState extends State<DailyQuestionQuestion> {
                         TextButton(
                           child: const Text('Save & Continue'),
                           onPressed: () {
-                            widget.saveQuestion();
+                            responses.saveCurrent();
+                            widget.nextQuestion(false);
                           },
                           style: TextButton.styleFrom(
                             primary: Colors.white,
@@ -80,11 +79,9 @@ class _DailyQuestionQuestionState extends State<DailyQuestionQuestion> {
                             fixedSize: const Size(145, 60),
                           ),
                         )
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                      ]));
+                })
+              ]),
             );
           }),
         ),
