@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:green_peeps_app/habits/habit_info_dialog.dart';
 
 class TitleBox extends StatefulWidget {
   const TitleBox({Key? key}) : super(key: key);
@@ -26,13 +27,32 @@ class _TitleBoxState extends State<TitleBox> {
             borderRadius: BorderRadius.circular(5.0),
             child: Container(
               padding: EdgeInsets.all(boxPadding),
-              child: const Text(
-                "Habits",
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 28.0,
-                  fontWeight: FontWeight.bold,
-                ),
+              child: Row(
+                children: [
+                  const Text(
+                    "Habits",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 28.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.help_outline_rounded,
+                      size: 30,
+                    ),
+                    tooltip: 'Help',
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return HabitInfoDialog();
+                          }
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
           );
