@@ -111,6 +111,7 @@ class _InfoDialogState extends State<InfoDialog> {
           padding: EdgeInsets.symmetric(horizontal: _boxPadding + 10,
               vertical: _boxPadding),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               AppBar(
                 elevation: 0,
