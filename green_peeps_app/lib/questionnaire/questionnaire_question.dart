@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 import 'package:green_peeps_app/models/question.dart';
 import 'package:green_peeps_app/models/response.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +24,7 @@ class _DailyQuestionQuestionState extends State<DailyQuestionQuestion> {
       providers: [
         ChangeNotifierProvider(
             create: (context) => QuestionListModel(widget.question)),
-        Provider(create: (context) => ResponseListModel())
+        Provider(create: (context) => ResponseListModel(widget.question))
       ],
       child: SafeArea(
         child: Container(

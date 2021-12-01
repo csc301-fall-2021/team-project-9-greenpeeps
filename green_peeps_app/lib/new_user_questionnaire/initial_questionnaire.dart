@@ -1,12 +1,9 @@
-import 'dart:isolate';
-
 import 'package:flutter/material.dart';
 import 'package:green_peeps_app/homescreen/info_dialog.dart';
 import 'package:green_peeps_app/models/question.dart';
 import 'package:green_peeps_app/models/response.dart';
 import 'package:provider/provider.dart';
 import 'package:green_peeps_app/questionnaire/questionnaire_card.dart';
-import 'package:green_peeps_app/new_user_questionnaire/initial_questionnaire_info_card.dart';
 
 class InitialQuestionnaire extends StatefulWidget {
   List<String>? remainingQuestions;
@@ -53,7 +50,7 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
       providers: [
         ChangeNotifierProvider(
             create: (context) => QuestionListModel(rootQuestion)),
-        Provider(create: (context) => ResponseListModel())
+        Provider(create: (context) => ResponseListModel(rootQuestion))
       ],
       child: SafeArea(
         child: Scaffold(

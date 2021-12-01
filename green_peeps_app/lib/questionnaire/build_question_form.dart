@@ -137,9 +137,9 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
                             // dropDownValue cannot be null because this is on changed
                             for (Answer answer in widget.question.answers) {
                               if (answer.text == dropDownValue) {
+                                responseListModel.currentQuestion =
+                                    answer.nextQuestion;
                                 if (answer.nextQuestion != null) {
-                                  responseListModel.currentQuestion =
-                                      answer.nextQuestion;
                                   questionListModel
                                       .addQuestion(answer.nextQuestion!);
                                 }

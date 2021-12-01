@@ -7,6 +7,10 @@ class ResponseListModel {
   final List<Response> _responses = [];
   String? currentQuestion;
 
+  ResponseListModel(String question) {
+    currentQuestion = question;
+  }
+
   UnmodifiableListView get questionList {
     return UnmodifiableListView(_responses);
   }

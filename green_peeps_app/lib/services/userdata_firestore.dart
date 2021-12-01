@@ -20,27 +20,44 @@ Future<List<String>?> getSkippedQuestions() async {
   return userData?.skipped;
 }
 
-Future<void> addIncompleteQuestion(String qID) async {}
+void clearCache() async {
+  userData = null;
+}
 
-Future<void> addSkippedQuestion(String qID) async {}
+Future<void> addIncompleteQuestion(String qID) async {
+  userData?.incomplete.add(qID);
+  await _userDataCollection.doc(FirebaseAuth.instance.currentUser!.uid).update({
+    'incompleteQuestions': FieldValue.arrayUnion([qID])
+  });
+}
+
+Future<void> addSkippedQuestion(String qID) async {
+  userData?.skipped.add(qID);
+  await _userDataCollection.doc(FirebaseAuth.instance.currentUser!.uid).update({
+    'skippedQuestions': FieldValue.arrayUnion([qID])
+  });
+}
 
 Future<void> _getUserData() async {
   DocumentSnapshot snapshot = await _userDataCollection
       .doc(FirebaseAuth.instance.currentUser!.uid)
       .get();
   Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
-  try {
-    userData = UserData(
-        incomplete: data!['incompleteQuestions'],
-        skipped: data['skippedQuestions']);
-  } catch (exception) {
-    return;
-  }
+  userData = UserData(
+      incomplete: (data?['incompleteQuestions'] as List<dynamic>?)
+              ?.map((data) => data.toString())
+              .toList() ??
+          [],
+      skipped: (data?['skippedQuestions'] as List<dynamic>?)
+              ?.map((data) => data.toString())
+              .toList() ??
+          []);
+  return;
 }
 
 class UserData {
-  List<String>? incomplete;
-  List<String>? skipped;
+  List<String> incomplete;
+  List<String> skipped;
 
   UserData({required this.incomplete, required this.skipped});
 }

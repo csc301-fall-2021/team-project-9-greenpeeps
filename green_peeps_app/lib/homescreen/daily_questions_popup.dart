@@ -7,6 +7,7 @@ import 'package:green_peeps_app/models/question.dart';
 import 'package:green_peeps_app/homescreen/completed_daily_questions.dart';
 import 'package:green_peeps_app/services/question_firestore.dart';
 import 'package:green_peeps_app/services/response_firestore.dart';
+import 'package:green_peeps_app/services/userdata_firestore.dart';
 
 // this manages the questionnaire category and questions popups.
 // after choosing a category, we will add questions to the list,
@@ -60,12 +61,15 @@ class _DailyQuestionsPopupState extends State<DailyQuestionsPopup> {
       if (categoryQuestions == null) {
         return null;
       }
-      List<String>? completedQuestions =
-          (await getResponses())?.map((response) => response.qID).toList();
-      completedQuestions ??= [];
+      List<String> completedQuestions =
+          (await getResponses())?.map((response) => response.qID).toList() ??
+              [];
+      List<String> skippedQuestions = await getSkippedQuestions() ?? [];
+
       _questionList = categoryQuestions
           .toSet()
           .difference(completedQuestions.toSet())
+          .difference(skippedQuestions.toSet())
           .toList();
     }
     if (_questionList.isEmpty) {
