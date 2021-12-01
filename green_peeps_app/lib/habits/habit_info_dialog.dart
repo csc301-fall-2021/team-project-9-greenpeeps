@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class InfoDialog extends StatefulWidget {
-  const InfoDialog({Key? key}) : super(key: key);
+class HabitInfoDialog extends StatefulWidget {
+  const HabitInfoDialog({Key? key}) : super(key: key);
 
   @override
-  _InfoDialogState createState() => _InfoDialogState();
+  _HabitInfoDialogState createState() => _HabitInfoDialogState();
 }
 
-class _InfoDialogState extends State<InfoDialog> {
+class _HabitInfoDialogState extends State<HabitInfoDialog> {
   final TextStyle style = TextStyle(
-      fontSize: 20,
+    fontSize: 20,
   );
   // Box Variables
   final double _boxPadding = 15.0;
@@ -20,56 +20,47 @@ class _InfoDialogState extends State<InfoDialog> {
   int _textIndex = 0;
 
   Widget Text1(){
-    return Text("This is your home screen - "
-        "the place where you can access all your GreenPeeps tools! "
-        "You can always return here by clicking the home icon on the bottom bar.",
+    return Text("In this section you'll see all of the habits recommended for you. "
+        "Some might be habits that you already have, and when that happens, "
+        "you can put those habits into your profile by clicking "
+        "\"This is an existing habit\"",
       style: style,
     );
   }
 
   Widget Text2(){
-    return Text("The bottom bar also contains three other icons that link to the other features of this app."
-    "\nIn the Habits section, you can get recommendations for small changes "
-        "you can make in your everyday life that can make small reductions in your carbon footprint.",
+    return Text("When you see a habit that you want to adopt in your life, "
+        "you can click the + button to add it to your Habits in Progress list. "
+        "We know it takes time to make new habits stick. ",
       style: style,
     );
   }
 
   Widget Text3(){
-    return Text("In the Learn section, we present you with easily digestible and "
-        "curated information about climate science, emissions, the science of habit change, "
-        "and other helpful knowledge to assist you on your way to becoming more carbon conscious.  ",
+    return Text("That's why we'll check in with you over the course of 14 days to see if you're having sucess with these habits. "
+        "Typically, doing something for 14 days is enough to entrench it into your routine, "
+        "but we also let you Complete the habit when you feel you're done. ",
       style: style,
     );
   }
 
   Widget Text4(){
-    return Text("In the Profile section, you will see your personal details and "
-        "information that we collect about your lifestyle as it pertains to emissions. "
-        "You'll also see your Leaf count. ",
+    return Text("To make sure that you don't get overloaded, "
+        "we have a maximum of three habits that you can work on at any given time. "
+        "Don't worry though, your recommendations will be waiting for you and "
+        "you can always add a new one once you complete a habit on your list.",
       style: style,
     );
   }
 
-  Widget Text5(){
-    return Text("Leaves are the basic unit of impact that we measure for you as you use our app. "
-        "The more climate friendly habits you adopt into your life, the more leaves you get. "
-        "We'll talk more about leaves later in your orientation to the app.",
-      style: style,
-    );
-  }
 
-  Widget Text6(){
-    return Text("Note: Soon you'll also be able to access your own personal carbon footprint estimate here - a feature that's coming in the next phase of our development.",
-      style: style,
-    );
-  }
+
 
   _nextText() {
     if(_textIndex < _textList.length - 1) {
-        setState((){
-          _textIndex += 1;
-        });
+      setState((){
+        _textIndex += 1;
+      });
 
     } else {
       Navigator.pop(context);
@@ -92,8 +83,7 @@ class _InfoDialogState extends State<InfoDialog> {
     _textList.add(Text2());
     _textList.add(Text3());
     _textList.add(Text4());
-    _textList.add(Text5());
-    _textList.add(Text6());
+
   }
 
   @override
@@ -166,8 +156,8 @@ class _InfoDialogState extends State<InfoDialog> {
           )
       ),
     );
-    }
   }
+}
 
 
 

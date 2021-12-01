@@ -47,7 +47,7 @@ class _NewAccountState extends State<NewAccount> {
                       'userHabits': {}
                     })
                     .then((value) => Navigator.popAndPushNamed(
-                        context, '/init_questionnaire_intro'))
+                        context, '/welcome_info'))
                     .catchError((error) => print("Failed to add user: $error"))
               });
     } on FirebaseAuthException catch (e) {
