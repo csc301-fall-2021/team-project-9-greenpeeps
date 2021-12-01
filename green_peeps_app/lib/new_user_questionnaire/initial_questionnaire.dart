@@ -1,6 +1,7 @@
 import 'dart:isolate';
 
 import 'package:flutter/material.dart';
+import 'package:green_peeps_app/homescreen/info_dialog.dart';
 import 'package:green_peeps_app/models/question.dart';
 import 'package:green_peeps_app/models/response.dart';
 import 'package:provider/provider.dart';
@@ -95,6 +96,12 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                           responseListModel.saveResponsesToStore();
                           if (widget.remainingQuestions!.isEmpty) {
                             Navigator.popAndPushNamed(context, '/nav');
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return InfoDialog();
+                                }
+                            );
                           } else {
                             Navigator.popAndPushNamed(
                                 context, '/init_questionnaire',
