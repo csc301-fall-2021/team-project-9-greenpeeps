@@ -17,6 +17,7 @@ class _LogAllHabitsState extends State<LogAllHabits> {
   // Map of which checkboxes are checked
   Map<String, bool> _habitMap = {};
   Map<String, String> keyToTitleHabit = {};
+  Map<String, int> keyToPointHabit = {};
   List allHabitKeys = [];
   List allHabitList = [];
   final ScrollController _controller = ScrollController();
@@ -31,6 +32,7 @@ class _LogAllHabitsState extends State<LogAllHabits> {
           getHabitFromStore(key).then((r) {
             setState(() {
               keyToTitleHabit[key] = r!.title;
+              keyToPointHabit[key] = r.points;
               allHabitList.add(r);
             });
           });
@@ -84,8 +86,14 @@ class _LogAllHabitsState extends State<LogAllHabits> {
                 .update({'userHabits.' + key + '.completed': true}).then(
                     (value) => {});
             completedHabits.add(keyToTitleHabit[key]);
+            count += keyToPointHabit[key] as int;
           }
           count++;
+          FirebaseFirestore.instance
+              .collection('users')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .update({'totalPoints': FieldValue.increment(count)}).then(
+                  (value) => {});
         }
       });
       return [completedHabits, count];
