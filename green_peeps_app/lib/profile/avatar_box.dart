@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:green_peeps_app/homescreen/info_dialog.dart';
 
-class WelcomeBox extends StatefulWidget {
-  const WelcomeBox({Key? key}) : super(key: key);
+class AvatarBox extends StatefulWidget {
+  const AvatarBox({Key? key}) : super(key: key);
 
   @override
-  _WelcomeBoxState createState() => _WelcomeBoxState();
+  _AvatarBoxState createState() => _AvatarBoxState();
 }
 
-class _WelcomeBoxState extends State<WelcomeBox> {
+class _AvatarBoxState extends State<AvatarBox> {
   // Box Variables
   final double _boxPadding = 10.0;
   final double _boxElevation = 5.0; // The height of shadow beneath box
@@ -23,40 +22,32 @@ class _WelcomeBoxState extends State<WelcomeBox> {
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
           return Material(
-            color: boxColor,
-            elevation: boxElevation,
-            borderRadius: BorderRadius.circular(5.0),
-            child: Container(
-              padding: EdgeInsets.all(boxPadding),
-              child: Row(
-                children: [
-                  Text(
-                    "Welcome " + userFirstName + "!",
+              color: boxColor,
+              elevation: boxElevation,
+              borderRadius: BorderRadius.circular(5.0),
+              child: Column(children: [
+                Container(
+                  padding: EdgeInsets.all(boxPadding),
+                  child: Text(
+                    userFirstName,
                     textAlign: TextAlign.left,
                     style: const TextStyle(
                       fontSize: 28.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Spacer(),
-                  IconButton(
-                    icon: const Icon(Icons.help_outline_rounded,
-                      size: 30,
-                    ),
-                    tooltip: 'Help',
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return InfoDialog();
-                          }
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
+                ),
+                Container(
+                    padding: EdgeInsets.all(boxPadding),
+                    child: Container(
+                      padding: EdgeInsets.all(150.0),
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('images/Ellipse1.png')),
+                          color: Colors.orange,
+                          shape: BoxShape.circle),
+                    )),
+              ]));
         },
         childCount: 1,
       ),
@@ -77,7 +68,7 @@ class _WelcomeBoxState extends State<WelcomeBox> {
             var userData = snapshot.data;
             var userFirstName = userData!['firstName'];
 
-          return _buildFirstBox(
+            return _buildFirstBox(
                 context, _boxPadding, _boxElevation, _boxColor, userFirstName);
           } else {
             return _buildFirstBox(

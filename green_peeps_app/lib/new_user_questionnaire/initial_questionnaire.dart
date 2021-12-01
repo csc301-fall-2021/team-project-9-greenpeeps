@@ -1,6 +1,7 @@
 import 'dart:isolate';
 
 import 'package:flutter/material.dart';
+import 'package:green_peeps_app/homescreen/info_dialog.dart';
 import 'package:green_peeps_app/models/question.dart';
 import 'package:green_peeps_app/models/response.dart';
 import 'package:provider/provider.dart';
@@ -56,7 +57,7 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
       ],
       child: SafeArea(
         child: Scaffold(
-          backgroundColor: Colors.transparent,
+          backgroundColor: Color.fromRGBO(212, 240, 255, 1),
           floatingActionButton: Consumer<ResponseListModel>(
               builder: (context, responseListModel, child) {
             return Consumer<ResponseListModel>(
@@ -66,6 +67,7 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                   child: Row(
                     // fit: StackFit.expand,
                     children: [
+                      Spacer(),
                       FloatingActionButton.extended(
                         heroTag: null,
                         onPressed: () {
@@ -82,8 +84,7 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                           "Skip Question",
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 20,
-                            fontFamily: "Nunito",
+                            fontSize: 15,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -94,9 +95,17 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                         onPressed: () {
                           responseListModel.saveResponsesToStore();
                           if (widget.remainingQuestions!.isEmpty) {
+                            Navigator.popUntil(context, ModalRoute.withName('/init_questionnaire_intro'));
                             Navigator.popAndPushNamed(context, '/nav');
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return InfoDialog();
+                                }
+                            );
                           } else {
-                            Navigator.popAndPushNamed(
+                            // pushing instead of popping and pushing because the animation looks weird
+                            Navigator.pushNamed(
                                 context, '/init_questionnaire',
                                 arguments: widget.remainingQuestions);
                           }
@@ -107,18 +116,20 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                                 "Save & Quit",
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 20,
-                                  fontFamily: "Nunito",
+                                  fontSize: 15,
                                   fontWeight: FontWeight.w700,
                                 ),
                               )
-                            : const Text("Save & Continue",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                  fontFamily: "Nunito",
-                                  fontWeight: FontWeight.w700,
-                                )),
+                            : Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 100),
+                                child: const Text("Save & Continue",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w700,
+                                    )),
+                              ),
                         backgroundColor: Colors.green,
                       )
                     ],
@@ -135,7 +146,8 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                       gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
-                          colors: [Colors.black, Colors.purple])),
+                          colors: [Color.fromRGBO(212, 240, 255, 1),
+                            Color.fromRGBO(177, 157, 255, 1)])),
                   child: Consumer<QuestionListModel>(
                       builder: (context, questionListModel, child) {
                     return Column(children: [

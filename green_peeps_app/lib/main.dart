@@ -8,9 +8,13 @@ import 'package:green_peeps_app/login/login.dart';
 import 'package:green_peeps_app/new_user_questionnaire/initial_questionnaire.dart';
 import 'package:green_peeps_app/login/new_account.dart';
 import 'package:green_peeps_app/homescreen/learn_more.dart';
-
+import 'package:green_peeps_app/login/accounthome.dart';
+import 'package:green_peeps_app/new_user_questionnaire/initial_questionnaire_intro.dart';
 // Import the firebase_core plugin
 import 'package:firebase_core/firebase_core.dart';
+import 'package:green_peeps_app/welcome_info.dart';
+
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -66,7 +70,7 @@ class _AppState extends State<MyApp> {
           radius: const Radius.circular(10),
         ),
       ),
-      initialRoute: '/welcome',
+      initialRoute: '/accounthome',
       onGenerateRoute: (settings) {
         if (settings.name == '/init_questionnaire') {
           final value = settings.arguments as List<String>?;
@@ -78,9 +82,12 @@ class _AppState extends State<MyApp> {
         // '/': (context) => Loading(),
         '/welcome': (context) => Welcome(),
         '/nav': (context) => Navigation(),
+        '/accounthome': (context) => AccountHome(),
         '/login': (context) => Login(),
         '/new': (context) => NewAccount(),
         '/learn_more': (context) => LearnMore(),
+        '/init_questionnaire_intro': (context) => InitialQuestionnaireIntro(),
+        '/welcome_info': (context) => WelcomeInfo(),
       },
     );
   }
