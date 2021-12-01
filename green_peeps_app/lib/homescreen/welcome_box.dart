@@ -40,7 +40,7 @@ class _WelcomeBoxState extends State<WelcomeBox> {
                   ),
                   Spacer(),
                   IconButton(
-                    icon: const Icon(Icons.help,
+                    icon: const Icon(Icons.help_outline_rounded,
                       size: 30,
                     ),
                     tooltip: 'Help',

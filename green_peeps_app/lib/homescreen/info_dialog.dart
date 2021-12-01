@@ -64,15 +64,16 @@ class _InfoDialogState extends State<InfoDialog> {
     }
   }
 
-
   @override
-  Widget build(BuildContext context) {
-    // use init fn
+  void initState() {
     _textList.clear();
     _textList.add(Text1());
     _textList.add(Text2());
     _textList.add(Text3());
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Dialog(
       insetPadding: const EdgeInsets.all(15),
       backgroundColor: _boxColor,
