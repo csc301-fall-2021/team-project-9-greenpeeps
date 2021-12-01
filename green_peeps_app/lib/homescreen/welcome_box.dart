@@ -40,8 +40,10 @@ class _WelcomeBoxState extends State<WelcomeBox> {
                   ),
                   Spacer(),
                   IconButton(
-                    icon: const Icon(Icons.help),
-                    tooltip: 'Increase volume by 10',
+                    icon: const Icon(Icons.help,
+                      size: 30,
+                    ),
+                    tooltip: 'Help',
                     onPressed: () {
                       showDialog(
                           context: context,
