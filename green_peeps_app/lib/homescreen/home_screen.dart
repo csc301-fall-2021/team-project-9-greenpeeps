@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:green_peeps_app/homescreen/info_box.dart';
+import 'package:green_peeps_app/homescreen/info_dialog.dart';
 import 'package:green_peeps_app/homescreen/pie_diagram.dart';
 
 import 'package:green_peeps_app/homescreen/welcome_box.dart';

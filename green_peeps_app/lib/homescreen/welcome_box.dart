@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:green_peeps_app/homescreen/info_dialog.dart';
 
 class WelcomeBox extends StatefulWidget {
   const WelcomeBox({Key? key}) : super(key: key);
@@ -27,13 +28,32 @@ class _WelcomeBoxState extends State<WelcomeBox> {
             borderRadius: BorderRadius.circular(5.0),
             child: Container(
               padding: EdgeInsets.all(boxPadding),
-              child: Text(
-                "Welcome " + userFirstName + "!",
-                textAlign: TextAlign.left,
-                style: const TextStyle(
-                  fontSize: 28.0,
-                  fontWeight: FontWeight.bold,
-                ),
+              child: Row(
+                children: [
+                  Text(
+                    "Welcome " + userFirstName + "!",
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(
+                      fontSize: 28.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.help_outline_rounded,
+                      size: 30,
+                    ),
+                    tooltip: 'Help',
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return InfoDialog();
+                          }
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
           );

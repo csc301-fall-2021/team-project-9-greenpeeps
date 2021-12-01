@@ -31,30 +31,21 @@ class _PieDiagramBoxState extends State<PieDiagramBox> {
                     .min, // Use the minimum space necessary to fit all widgets
                 children: <Widget>[
                   Row(
-                    children: [
-                      Spacer(),
-                      Icon(
-                        Icons.info_outline_rounded,
-                        color: Colors.black,
-                        size: 30,
-                      ),
-                    ],
-                  ),
-                  Row(
                   children: const <Widget>[
                     Text(
                       "My Carbon Emissions",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          fontSize: 30,
+                          fontSize: 28,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
-                    // Icon(
-                    //   Icons.info_outline_rounded,
-                    //   color: Colors.black,
-                    //   size: 30,
-                    // ),
+                    Spacer(),
+                    Icon(
+                      Icons.info_outline_rounded,
+                      color: Colors.black,
+                      size: 30,
+                    ),
                   ],
                     ),
                   PieDiagram(),

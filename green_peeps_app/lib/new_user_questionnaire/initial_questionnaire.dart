@@ -1,6 +1,7 @@
 import 'dart:isolate';
 
 import 'package:flutter/material.dart';
+import 'package:green_peeps_app/homescreen/info_dialog.dart';
 import 'package:green_peeps_app/models/question.dart';
 import 'package:green_peeps_app/models/response.dart';
 import 'package:provider/provider.dart';
@@ -56,7 +57,7 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
       ],
       child: SafeArea(
         child: Scaffold(
-          backgroundColor: Colors.transparent,
+          backgroundColor: Color.fromRGBO(212, 240, 255, 1),
           floatingActionButton: Consumer<ResponseListModel>(
               builder: (context, responseListModel, child) {
             return Consumer<ResponseListModel>(
@@ -94,9 +95,17 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                         onPressed: () {
                           responseListModel.saveResponsesToStore();
                           if (widget.remainingQuestions!.isEmpty) {
+                            Navigator.popUntil(context, ModalRoute.withName('/init_questionnaire_intro'));
                             Navigator.popAndPushNamed(context, '/nav');
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return InfoDialog();
+                                }
+                            );
                           } else {
-                            Navigator.popAndPushNamed(
+                            // pushing instead of popping and pushing because the animation looks weird
+                            Navigator.pushNamed(
                                 context, '/init_questionnaire',
                                 arguments: widget.remainingQuestions);
                           }
@@ -137,7 +146,8 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                       gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
-                          colors: [Colors.black, Colors.purple])),
+                          colors: [Color.fromRGBO(212, 240, 255, 1),
+                            Color.fromRGBO(177, 157, 255, 1)])),
                   child: Consumer<QuestionListModel>(
                       builder: (context, questionListModel, child) {
                     return Column(children: [
