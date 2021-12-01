@@ -22,10 +22,6 @@ class DailyQuestionQuestion extends StatefulWidget {
 class _DailyQuestionQuestionState extends State<DailyQuestionQuestion> {
   _setProgress(setState) {}
 
-  // TODO: based on the question, we will have a questionList that will update.
-  // This is like initial questionnaire
-  // Backend.. do your thinG!
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(

@@ -5,12 +5,14 @@ typedef CategoryCallback = void Function(String category);
 
 class QuestionCategoryPopup extends StatefulWidget {
   final CategoryCallback setCategory;
-  final List<String> categories;
+  final Future<List<String>?> categories;
   final bool noMoreQuestions;
-  const QuestionCategoryPopup({Key? key,
-    required this.categories,
-    required this.noMoreQuestions,
-    required this.setCategory}) : super(key: key);
+  const QuestionCategoryPopup(
+      {Key? key,
+      required this.categories,
+      required this.noMoreQuestions,
+      required this.setCategory})
+      : super(key: key);
 
   @override
   _QuestionCategoryPopupState createState() => _QuestionCategoryPopupState();
@@ -26,7 +28,8 @@ class _QuestionCategoryPopupState extends State<QuestionCategoryPopup> {
       onPressed: () {
         widget.setCategory(categoryName);
       },
-      child: Text(categoryName,
+      child: Text(
+        categoryName,
         style: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.bold,
@@ -43,34 +46,32 @@ class _QuestionCategoryPopupState extends State<QuestionCategoryPopup> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: _boxPadding + 5, vertical: _boxPadding),
+      padding: EdgeInsets.symmetric(
+          horizontal: _boxPadding + 5, vertical: _boxPadding),
       width: double.infinity,
-
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Visibility(
             visible: widget.noMoreQuestions,
-            child: const Text("There are no more questions available for this category, "
-                "Please choose a new one",
+            child: const Text(
+              "There are no more questions available for this category, "
+              "Please choose a new one",
               style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black54),
-                ),
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black54),
             ),
+          ),
           Divider(color: _boxColor),
           const Text(
             "Receive 1 point per Question!",
             style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black),
+                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
           ),
           Divider(color: _boxColor),
           const Text(
@@ -82,21 +83,32 @@ class _QuestionCategoryPopupState extends State<QuestionCategoryPopup> {
           ),
           Divider(color: _boxColor),
           // If the number of categories exceed the box, it becomes scrollable
-          SingleChildScrollView(
-            // If the number of categories per row overflow, it will start at a new row
-            child: Wrap(
-              spacing: 10,
-              runSpacing: 10,
-              children: <Widget>[
-                for (var category in widget.categories)
-                  _makeCategoryButton(context, category)
-              ],
-            ),
-          ),
+          FutureBuilder<List<String>?>(
+              future: widget.categories,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasData) {
+                    return SingleChildScrollView(
+                      // If the number of categories per row overflow, it will start at a new row
+                      child: Wrap(
+                        spacing: 10,
+                        runSpacing: 10,
+                        children: <Widget>[
+                          for (var category in snapshot.data!)
+                            _makeCategoryButton(context, category)
+                        ],
+                      ),
+                    );
+                  } else {
+                    // TODO: Add less scuffed error state behaviour
+                    return const Text("Error loading data");
+                  }
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              }),
         ],
       ),
     );
   }
 }
-
-
