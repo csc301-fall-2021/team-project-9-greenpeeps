@@ -15,12 +15,8 @@ class _ProgressBoxState extends State<ProgressBox> {
   final double _boxElevation = 5.0; // The height of shadow beneath box
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
 
-  Widget _buildSecondBox(
-      BuildContext context,
-      double boxPadding,
-      double boxElevation,
-      Color boxColor,
-      int totalPoints) {
+  Widget _buildSecondBox(BuildContext context, double boxPadding,
+      double boxElevation, Color boxColor, int totalPoints) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
@@ -50,7 +46,7 @@ class _ProgressBoxState extends State<ProgressBox> {
                     child: LinearProgressIndicator(
                       backgroundColor: const Color.fromRGBO(180, 180, 180, 1),
                       valueColor:
-                          const AlwaysStoppedAnimation<Color>(Colors.green),
+                          const AlwaysStoppedAnimation<Color>(Colors.purple),
                       value: (totalPoints % 50) / 50,
                       minHeight: 10,
                     ),
@@ -85,8 +81,8 @@ class _ProgressBoxState extends State<ProgressBox> {
               totalPoints = userData["totalPoints"];
             }
 
-            return _buildSecondBox(context, _boxPadding, _boxElevation,
-                _boxColor, totalPoints);
+            return _buildSecondBox(
+                context, _boxPadding, _boxElevation, _boxColor, totalPoints);
           } else {
             return _buildSecondBox(
                 context, _boxPadding, _boxElevation, _boxColor, 0);
