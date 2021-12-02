@@ -41,12 +41,6 @@ class Question {
   // 1: Multiple choice
   // 2: Dropdown
   final int fieldType;
-  // The type of question.
-  //
-  // 0: Branching
-  // 1: BaseValue
-  // 2: Modifier
-  final int type;
   final List<String> tags;
   final List<Answer> answers;
 
@@ -54,7 +48,6 @@ class Question {
       {required this.id,
       required this.text,
       required this.fieldType,
-      required this.type,
       required this.tags,
       required this.answers});
 
@@ -63,8 +56,6 @@ class Question {
   String getText() => text;
 
   int getFieldType() => fieldType;
-
-  int getType() => type;
 
   List<String> getAnswerText() {
     var answersList = <String>[];
