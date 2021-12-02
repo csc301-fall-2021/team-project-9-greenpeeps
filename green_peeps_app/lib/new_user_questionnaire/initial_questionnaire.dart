@@ -68,14 +68,23 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                       FloatingActionButton.extended(
                         heroTag: null,
                         onPressed: () {
-                          // TODO skip question / add new question to list
-                          // note that this would have to somehow tell build_question_card
-                          // to no longer accept questions
-                          // or you need to insert the follow up questions from the skipped question
-                          // above new questions if the user decides to answer the skipped question
-                          // after they said they want to skip it
-                          // please ask eryka for clarification
-                          _ScrollDown();
+                          responseListModel.skipCurrent();
+                          if (widget.remainingQuestions!.isEmpty) {
+                            Navigator.popUntil(
+                                context,
+                                ModalRoute.withName(
+                                    '/init_questionnaire_intro'));
+                            Navigator.popAndPushNamed(context, '/nav');
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return InfoDialog();
+                                });
+                          } else {
+                            // pushing instead of popping and pushing because the animation looks weird
+                            Navigator.pushNamed(context, '/init_questionnaire',
+                                arguments: widget.remainingQuestions);
+                          }
                         },
                         label: const Text(
                           "Skip Question",
