@@ -116,7 +116,7 @@ class _RecommendedHabitDialogueState extends State<RecommendedHabitDialogue> {
             Container(
               padding: const EdgeInsets.all(10),
               child: Text(
-                "Leaves: ${widget.points}",
+                "Points: ${widget.points}",
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
