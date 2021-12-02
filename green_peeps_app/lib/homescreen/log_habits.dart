@@ -108,10 +108,9 @@ class _LogHabitsState extends State<LogHabits> {
     }
     return CheckboxListTile(
       title: Text(habitName,
-        style: TextStyle(
-        fontSize: 20,
-        )
-      ),
+          style: TextStyle(
+            fontSize: 20,
+          )),
       activeColor: const Color.fromRGBO(0, 154, 6, 1),
       controlAffinity: ListTileControlAffinity.leading,
       value: _habitMap[habitID],
@@ -146,9 +145,17 @@ class _LogHabitsState extends State<LogHabits> {
               controller: _controller,
               child: Column(
                 children: [
-                  for (var i = 0; i < dailyHabitList.length; i++)
-                    _makeHabitCheckbox(setState, dailyHabitList[i].title,
-                        dailyHabitList[i].id),
+                  if (dailyHabitList.isNotEmpty)
+                    for (var i = 0; i < dailyHabitList.length; i++)
+                      _makeHabitCheckbox(setState, dailyHabitList[i].title,
+                          dailyHabitList[i].id)
+                  else
+                    const Text(
+                      "No Habits to Log",
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
                 ],
               ),
             ),
