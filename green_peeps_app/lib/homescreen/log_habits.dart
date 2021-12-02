@@ -93,7 +93,7 @@ class _LogHabitsState extends State<LogHabits> {
             FirebaseFirestore.instance
                 .collection('users')
                 .doc(FirebaseAuth.instance.currentUser!.uid)
-                .update({'userHabits.' + key + '.completed': true}).then(
+                .update({'userHabits.' + key + '.completed': true, 'userHabits.' + key + '.isDailyHabit': false}).then(
                     (value) => {});
             completedHabits.add(keyToTitleHabit[key]);
             count += keyToPointHabit[key] as int;
