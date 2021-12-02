@@ -153,9 +153,17 @@ class _LogHabitsState extends State<LogHabits> {
               controller: _controller,
               child: Column(
                 children: [
-                  for (var i = 0; i < dailyHabitList.length; i++)
-                    _makeHabitCheckbox(setState, dailyHabitList[i].title,
-                        dailyHabitList[i].id),
+                  if (dailyHabitList.isNotEmpty)
+                    for (var i = 0; i < dailyHabitList.length; i++)
+                      _makeHabitCheckbox(setState, dailyHabitList[i].title,
+                          dailyHabitList[i].id)
+                  else
+                    const Text(
+                      "No Habits to Log",
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
                 ],
               ),
             ),

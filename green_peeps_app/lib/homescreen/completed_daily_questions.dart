@@ -28,7 +28,7 @@ class _CompletedDailyQuestionsState extends State<CompletedDailyQuestions> {
                 fontWeight: FontWeight.bold,
                 color: Colors.black),
           ),
-          Text("You have recieved XX seeds!",
+          Text("You have recieved XX points!",
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 20,
