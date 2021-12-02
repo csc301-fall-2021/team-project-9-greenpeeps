@@ -52,100 +52,100 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
             create: (context) => QuestionListModel(rootQuestion)),
         Provider(create: (context) => ResponseListModel(rootQuestion))
       ],
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: Color.fromRGBO(212, 240, 255, 1),
-          floatingActionButton: Consumer<ResponseListModel>(
-              builder: (context, responseListModel, child) {
-            return Consumer<ResponseListModel>(
-              builder: (context, responseListModel, child) {
-                return Container(
-                  padding: EdgeInsets.all(10),
-                  child: Row(
-                    // fit: StackFit.expand,
-                    children: [
-                      Spacer(),
-                      FloatingActionButton.extended(
-                        heroTag: null,
-                        onPressed: () {
-                          responseListModel.skipCurrent();
-                          if (widget.remainingQuestions!.isEmpty) {
-                            Navigator.popUntil(
-                                context,
-                                ModalRoute.withName(
-                                    '/init_questionnaire_intro'));
-                            Navigator.popAndPushNamed(context, '/nav');
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return InfoDialog();
-                                });
-                          } else {
-                            // pushing instead of popping and pushing because the animation looks weird
-                            Navigator.pushNamed(context, '/init_questionnaire',
-                                arguments: widget.remainingQuestions);
-                          }
-                        },
-                        label: const Text(
-                          "Skip Question",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700,
-                          ),
+      child: Scaffold(
+        backgroundColor: Color.fromRGBO(212, 240, 255, 1),
+        floatingActionButton: Consumer<ResponseListModel>(
+            builder: (context, responseListModel, child) {
+          return Consumer<ResponseListModel>(
+            builder: (context, responseListModel, child) {
+              return Container(
+                padding: EdgeInsets.all(10),
+                child: Row(
+                  // fit: StackFit.expand,
+                  children: [
+                    Spacer(),
+                    FloatingActionButton.extended(
+                      heroTag: null,
+                      onPressed: () {
+                        responseListModel.skipCurrent();
+                        if (widget.remainingQuestions!.isEmpty) {
+                          Navigator.popUntil(
+                              context,
+                              ModalRoute.withName(
+                                  '/init_questionnaire_intro'));
+                          Navigator.popAndPushNamed(context, '/nav');
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return InfoDialog();
+                              });
+                        } else {
+                          // pushing instead of popping and pushing because the animation looks weird
+                          Navigator.pushNamed(context, '/init_questionnaire',
+                              arguments: widget.remainingQuestions);
+                        }
+                      },
+                      label: const Text(
+                        "Skip Question",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
                         ),
-                        backgroundColor: Colors.green,
                       ),
-                      Spacer(),
-                      FloatingActionButton.extended(
-                        onPressed: () {
-                          responseListModel.saveCurrent();
-                          if (widget.remainingQuestions!.isEmpty) {
-                            Navigator.popUntil(
-                                context,
-                                ModalRoute.withName(
-                                    '/init_questionnaire_intro'));
-                            Navigator.popAndPushNamed(context, '/nav');
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return InfoDialog();
-                                });
-                          } else {
-                            // pushing instead of popping and pushing because the animation looks weird
-                            Navigator.pushNamed(context, '/init_questionnaire',
-                                arguments: widget.remainingQuestions);
-                          }
-                        },
-                        heroTag: null,
-                        label: widget.remainingQuestions!.isEmpty
-                            ? const Text(
-                                "Save & Quit",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              )
-                            : Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 100),
-                                child: const Text("Save & Continue",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w700,
-                                    )),
+                      backgroundColor: Colors.green,
+                    ),
+                    Spacer(),
+                    FloatingActionButton.extended(
+                      onPressed: () {
+                        responseListModel.saveCurrent();
+                        if (widget.remainingQuestions!.isEmpty) {
+                          Navigator.popUntil(
+                              context,
+                              ModalRoute.withName(
+                                  '/init_questionnaire_intro'));
+                          Navigator.popAndPushNamed(context, '/nav');
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return InfoDialog();
+                              });
+                        } else {
+                          // pushing instead of popping and pushing because the animation looks weird
+                          Navigator.pushNamed(context, '/init_questionnaire',
+                              arguments: widget.remainingQuestions);
+                        }
+                      },
+                      heroTag: null,
+                      label: widget.remainingQuestions!.isEmpty
+                          ? const Text(
+                              "Save & Quit",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w700,
                               ),
-                        backgroundColor: Colors.green,
-                      )
-                    ],
-                  ),
-                );
-              },
-            );
-          }),
-          body: CustomScrollView(slivers: [
+                            )
+                          : Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 100),
+                              child: const Text("Save & Continue",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w700,
+                                  )),
+                            ),
+                      backgroundColor: Colors.green,
+                    )
+                  ],
+                ),
+              );
+            },
+          );
+        }),
+        body: SafeArea(
+          child: CustomScrollView(slivers: [
             SliverFillRemaining(
               hasScrollBody: false,
               child: Container(
