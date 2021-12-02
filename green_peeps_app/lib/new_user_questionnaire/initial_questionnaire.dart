@@ -1,12 +1,9 @@
-import 'dart:isolate';
-
 import 'package:flutter/material.dart';
 import 'package:green_peeps_app/homescreen/info_dialog.dart';
 import 'package:green_peeps_app/models/question.dart';
 import 'package:green_peeps_app/models/response.dart';
 import 'package:provider/provider.dart';
 import 'package:green_peeps_app/questionnaire/questionnaire_card.dart';
-import 'package:green_peeps_app/new_user_questionnaire/initial_questionnaire_info_card.dart';
 
 class InitialQuestionnaire extends StatefulWidget {
   List<String>? remainingQuestions;
@@ -53,7 +50,7 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
       providers: [
         ChangeNotifierProvider(
             create: (context) => QuestionListModel(rootQuestion)),
-        Provider(create: (context) => ResponseListModel())
+        Provider(create: (context) => ResponseListModel(rootQuestion))
       ],
       child: SafeArea(
         child: Scaffold(
@@ -71,14 +68,23 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                       FloatingActionButton.extended(
                         heroTag: null,
                         onPressed: () {
-                          // TODO skip question / add new question to list
-                          // note that this would have to somehow tell build_question_card
-                          // to no longer accept questions
-                          // or you need to insert the follow up questions from the skipped question
-                          // above new questions if the user decides to answer the skipped question
-                          // after they said they want to skip it
-                          // please ask eryka for clarification
-                          _ScrollDown();
+                          responseListModel.skipCurrent();
+                          if (widget.remainingQuestions!.isEmpty) {
+                            Navigator.popUntil(
+                                context,
+                                ModalRoute.withName(
+                                    '/init_questionnaire_intro'));
+                            Navigator.popAndPushNamed(context, '/nav');
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return InfoDialog();
+                                });
+                          } else {
+                            // pushing instead of popping and pushing because the animation looks weird
+                            Navigator.pushNamed(context, '/init_questionnaire',
+                                arguments: widget.remainingQuestions);
+                          }
                         },
                         label: const Text(
                           "Skip Question",
@@ -93,20 +99,21 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                       Spacer(),
                       FloatingActionButton.extended(
                         onPressed: () {
-                          responseListModel.saveResponsesToStore();
+                          responseListModel.saveCurrent();
                           if (widget.remainingQuestions!.isEmpty) {
-                            Navigator.popUntil(context, ModalRoute.withName('/init_questionnaire_intro'));
+                            Navigator.popUntil(
+                                context,
+                                ModalRoute.withName(
+                                    '/init_questionnaire_intro'));
                             Navigator.popAndPushNamed(context, '/nav');
                             showDialog(
                                 context: context,
                                 builder: (context) {
                                   return InfoDialog();
-                                }
-                            );
+                                });
                           } else {
                             // pushing instead of popping and pushing because the animation looks weird
-                            Navigator.pushNamed(
-                                context, '/init_questionnaire',
+                            Navigator.pushNamed(context, '/init_questionnaire',
                                 arguments: widget.remainingQuestions);
                           }
                         },
@@ -146,8 +153,10 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                       gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
-                          colors: [Color.fromRGBO(212, 240, 255, 1),
-                            Color.fromRGBO(177, 157, 255, 1)])),
+                          colors: [
+                        Color.fromRGBO(212, 240, 255, 1),
+                        Color.fromRGBO(177, 157, 255, 1)
+                      ])),
                   child: Consumer<QuestionListModel>(
                       builder: (context, questionListModel, child) {
                     return Column(children: [

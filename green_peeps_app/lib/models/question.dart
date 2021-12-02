@@ -22,6 +22,16 @@ class QuestionListModel extends ChangeNotifier {
   }
 }
 
+class QuestionMetadata {
+  final Map<String, List<String>> categories;
+
+  QuestionMetadata({required this.categories});
+
+  List<String> getQuestionsFromCategory(String category) {
+    return categories[category.toLowerCase()] ?? [];
+  }
+}
+
 class Question {
   final String id;
   final String text;

@@ -1,11 +1,15 @@
 import 'dart:collection';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 
 import '../services/response_firestore.dart';
+import '../services/userdata_firestore.dart';
 
 class ResponseListModel {
   final List<Response> _responses = [];
+  String? currentQuestion;
+
+  ResponseListModel(String question) {
+    currentQuestion = question;
+  }
 
   UnmodifiableListView get questionList {
     return UnmodifiableListView(_responses);
@@ -20,14 +24,17 @@ class ResponseListModel {
     }
   }
 
-  Future<void> saveResponsesToStore() async {
-    String uID =
-        FirebaseAuth.instance.currentUser!.uid; // TODO: Handle null case
-    var futures = <Future>[];
-    for (Response response in _responses) {
-      futures.add(sendResponseToStore(uID, response));
+  Future<void> saveCurrent() async {
+    if (currentQuestion != null) {
+      addIncompleteQuestion(currentQuestion!);
     }
-    Future.wait(futures);
+    saveResponses(_responses);
+  }
+
+  Future<void> skipCurrent() async {
+    if (currentQuestion != null) {
+      addSkippedQuestion(currentQuestion!);
+    }
   }
 }
 
