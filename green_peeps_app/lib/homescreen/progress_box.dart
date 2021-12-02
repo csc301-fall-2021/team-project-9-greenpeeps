@@ -35,7 +35,7 @@ class _ProgressBoxState extends State<ProgressBox> {
                   Text(
                     "You are " +
                         (50 - totalPoints % 50).toString() +
-                        " seeds away from your next leaf!",
+                        " points away from your next leaf!",
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                   Divider(
