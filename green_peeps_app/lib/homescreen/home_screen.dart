@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:green_peeps_app/homescreen/info_dialog.dart';
 import 'package:green_peeps_app/homescreen/pie_diagram.dart';
 
 import 'package:green_peeps_app/homescreen/welcome_box.dart';
@@ -128,12 +129,20 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  void _reverseSeeInfo(){
+    setState((){
+      _seeInfo = !_seeInfo;
+    });
+  }
+
+  bool _seeInfo = false;
   final ScrollController _controller = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Center(
       // List of scrollable widgets
       // You can customize to space between each widget/ box
+
       child: Scrollbar(
         controller: _controller,
         child: CustomScrollView(

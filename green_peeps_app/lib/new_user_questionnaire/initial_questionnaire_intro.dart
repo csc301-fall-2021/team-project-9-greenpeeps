@@ -20,7 +20,7 @@ class InitialQuestionnaireIntro extends StatelessWidget {
                     onPressed:() async {
                       Navigator.pushNamed(context, '/init_questionnaire');
                       },
-                    child: Text("Let's Go!",
+                    child: Text("Continue",
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,

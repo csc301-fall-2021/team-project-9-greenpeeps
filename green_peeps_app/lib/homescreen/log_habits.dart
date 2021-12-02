@@ -19,6 +19,7 @@ class _LogHabitsState extends State<LogHabits> {
   // Map of which checkboxes are checked
   Map<String, bool> _habitMap = {};
   Map<String, String> keyToTitleHabit = {};
+  Map<String, int> keyToPointHabit = {};
   List dailyHabitKeys = [];
   List dailyHabitList = [];
 
@@ -36,6 +37,7 @@ class _LogHabitsState extends State<LogHabits> {
                   setState(
                     () {
                       keyToTitleHabit[key] = r!.title;
+                      keyToPointHabit[key] = r.points;
                       dailyHabitList.add(r);
                     },
                   );
@@ -94,8 +96,14 @@ class _LogHabitsState extends State<LogHabits> {
                 .update({'userHabits.' + key + '.completed': true}).then(
                     (value) => {});
             completedHabits.add(keyToTitleHabit[key]);
+            count += keyToPointHabit[key] as int;
           }
           count++;
+          FirebaseFirestore.instance
+              .collection('users')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .update({'totalPoints': FieldValue.increment(count)}).then(
+                  (value) => {});
         }
       });
       return [completedHabits, count]; // returns list<string>, list<int>
@@ -176,7 +184,6 @@ class _LogHabitsState extends State<LogHabits> {
                   Navigator.of(context).pop(); // Closes popup
                 } else {
                   List completedHabitsAndCount = await logHabitToDB(_habitMap);
-                  print(completedHabitsAndCount);
                   widget.saveHabits(
                       completedHabitsAndCount[0], completedHabitsAndCount[1]);
                 }

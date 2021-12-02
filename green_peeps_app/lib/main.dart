@@ -12,6 +12,7 @@ import 'package:green_peeps_app/login/accounthome.dart';
 import 'package:green_peeps_app/new_user_questionnaire/initial_questionnaire_intro.dart';
 // Import the firebase_core plugin
 import 'package:firebase_core/firebase_core.dart';
+import 'package:green_peeps_app/welcome_info.dart';
 
 
 
@@ -86,6 +87,7 @@ class _AppState extends State<MyApp> {
         '/new': (context) => NewAccount(),
         '/learn_more': (context) => LearnMore(),
         '/init_questionnaire_intro': (context) => InitialQuestionnaireIntro(),
+        '/welcome_info': (context) => WelcomeInfo(),
       },
     );
   }

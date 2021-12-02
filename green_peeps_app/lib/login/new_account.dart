@@ -13,6 +13,7 @@ class _NewAccountState extends State<NewAccount> {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+  final emailRE = RegExp(r'[^@\s]+@[^@\s]+\.[^@\s]+$');
   String email = '';
   String password = '';
   String firstName = '';
@@ -38,15 +39,15 @@ class _NewAccountState extends State<NewAccount> {
                       'lastName': lastName,
                       'achievements': [],
                       'carbonEmissions': {
-                        'electricity': 1,
-                        'food': 1,
-                        'transportation': 1
+                        'electricity': 0,
+                        'food': 0,
+                        'transportation': 0
                       },
                       'totalPoints': 0,
                       'userHabits': {}
                     })
                     .then((value) => Navigator.popAndPushNamed(
-                        context, '/init_questionnaire_intro'))
+                        context, '/welcome_info'))
                     .catchError((error) => print("Failed to add user: $error"))
               });
     } on FirebaseAuthException catch (e) {
@@ -56,8 +57,21 @@ class _NewAccountState extends State<NewAccount> {
         setState(() => error = 'The password provided is too weak.');
       }
     } catch (e) {
-      print(e);
+      setState(() => error = "Account creation failed.");
     }
+  }
+
+  String checkFields(email, password, firstName, lastName) {
+    if (password.isEmpty ||
+        email.isEmpty ||
+        firstName.isEmpty ||
+        lastName.isEmpty) {
+      return 'All fields must be filled.';
+    }
+    if (!emailRE.hasMatch(email)) {
+      return 'The email is not valid';
+    }
+    return 'valid';
   }
 
   @override
@@ -206,8 +220,14 @@ class _NewAccountState extends State<NewAccount> {
                       ),
                     ),
                     onPressed: () async {
-                      createUserEmailPassword(email.trim(), password.trim(),
-                          firstName.trim(), lastName.trim());
+                      var checkStatus =
+                          checkFields(email, password, firstName, lastName);
+                      if (checkStatus == 'valid') {
+                        createUserEmailPassword(email.trim(), password.trim(),
+                            firstName.trim(), lastName.trim());
+                      } else {
+                        setState(() => error = checkStatus);
+                      }
                     },
                   ),
                   const SizedBox(height: 20.0),
