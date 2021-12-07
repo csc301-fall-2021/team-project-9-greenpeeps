@@ -8,18 +8,17 @@ class InfoDialog extends StatefulWidget {
 }
 
 class _InfoDialogState extends State<InfoDialog> {
-  final TextStyle style = TextStyle(
-      fontSize: 20,
-  );
+  final TextStyle style = const TextStyle(
+        fontSize: 20,
+    );
   // Box Variables
   final double _boxPadding = 15.0;
-  final double _boxElevation = 5.0; // The height of shadow beneath box
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
 
   List<Widget> _textList = [];
   int _textIndex = 0;
 
-  Widget Text1(){
+  Widget text1(){
     return Text("This is your home screen - "
         "the place where you can access all your GreenPeeps tools! "
         "You can always return here by clicking the home icon on the bottom bar.",
@@ -27,7 +26,7 @@ class _InfoDialogState extends State<InfoDialog> {
     );
   }
 
-  Widget Text2(){
+  Widget text2(){
     return Text("The bottom bar also contains three other icons that link to the other features of this app."
     "\nIn the Habits section, you can get recommendations for small changes "
         "you can make in your everyday life that can make small reductions in your carbon footprint.",
@@ -35,7 +34,7 @@ class _InfoDialogState extends State<InfoDialog> {
     );
   }
 
-  Widget Text3(){
+  Widget text3(){
     return Text("In the Learn section, we present you with easily digestible and "
         "curated information about climate science, emissions, the science of habit change, "
         "and other helpful knowledge to assist you on your way to becoming more carbon conscious.  ",
@@ -43,7 +42,7 @@ class _InfoDialogState extends State<InfoDialog> {
     );
   }
 
-  Widget Text4(){
+  Widget text4(){
     return Text("In the Profile section, you will see your personal details and "
         "information that we collect about your lifestyle as it pertains to emissions. "
         "You'll also see your Leaf count. ",
@@ -51,7 +50,7 @@ class _InfoDialogState extends State<InfoDialog> {
     );
   }
 
-  Widget Text5(){
+  Widget text5(){
     return Text("Leaves are the basic unit of impact that we measure for you as you use our app. "
         "The more climate friendly habits you adopt into your life, the more leaves you get. "
         "We'll talk more about leaves later in your orientation to the app.",
@@ -59,7 +58,7 @@ class _InfoDialogState extends State<InfoDialog> {
     );
   }
 
-  Widget Text6(){
+  Widget text6(){
     return Text("Note: Soon you'll also be able to access your own personal carbon footprint estimate here - a feature that's coming in the next phase of our development.",
       style: style,
     );
@@ -88,12 +87,12 @@ class _InfoDialogState extends State<InfoDialog> {
   @override
   void initState() {
     _textList.clear();
-    _textList.add(Text1());
-    _textList.add(Text2());
-    _textList.add(Text3());
-    _textList.add(Text4());
-    _textList.add(Text5());
-    _textList.add(Text6());
+    _textList.add(text1());
+    _textList.add(text2());
+    _textList.add(text3());
+    _textList.add(text4());
+    _textList.add(text5());
+    _textList.add(text6());
   }
 
   @override
@@ -130,9 +129,9 @@ class _InfoDialogState extends State<InfoDialog> {
                   )
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               _textList[_textIndex],
-              Spacer(),
+              const Spacer(),
               Row(
                 children: [
                   Visibility(
@@ -147,8 +146,7 @@ class _InfoDialogState extends State<InfoDialog> {
                       ),
                     ),
                   ),
-
-                  Spacer(),
+                  const Spacer(),
                   ElevatedButton(
                     onPressed: () {
                       _nextText();

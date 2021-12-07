@@ -141,14 +141,14 @@ class _DailyQuestionsPopupState extends State<DailyQuestionsPopup> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-        insetPadding: EdgeInsets.all(15),
+        insetPadding: const EdgeInsets.all(15),
         backgroundColor: _boxColor,
         child: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             height: 600,
             child: Column(
               children: [
-                Container(
+                const SizedBox(
                   height: 10,
                 ),
                 AppBar(

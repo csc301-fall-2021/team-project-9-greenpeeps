@@ -13,14 +13,14 @@ class InitialQuestionnaireIntro extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              InitialQuestionnaireInfoCard(),
+              const InitialQuestionnaireInfoCard(),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                 child: ElevatedButton(
                     onPressed:() async {
                       Navigator.pushNamed(context, '/init_questionnaire');
                       },
-                    child: Text("Continue",
+                    child: const Text("Continue",
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,

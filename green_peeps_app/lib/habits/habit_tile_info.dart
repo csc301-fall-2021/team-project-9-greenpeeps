@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:green_peeps_app/habits/habit_tile_info_dialogue.dart';
 
+// habit tile on the habits page
+
 class HabitTileInfo extends StatefulWidget {
   final int habitNum;
   final String habitName;

@@ -45,20 +45,20 @@ class _DailyLogsBoxState extends State<DailyLogsBox> {
                     ),
                   ),
                   ElevatedButton(
+                    child: const Text("GO >"),
+                    style: ElevatedButton.styleFrom(
+                      primary: const Color.fromRGBO(0, 154, 6, 1),
+                    ),
                     onPressed: () {
                       showDialog(
                         barrierDismissible:
-                            false, // Users cannot click off the screen to close popup
+                        false, // Users cannot click off the screen to close popup
                         context: context,
                         builder: (BuildContext context) {
                           return const LogHabitPopup();
                         },
                       );
                     },
-                    child: const Text("GO >"),
-                    style: ElevatedButton.styleFrom(
-                      primary: const Color.fromRGBO(0, 154, 6, 1),
-                    ),
                   )
                 ],
               ),

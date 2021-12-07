@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:green_peeps_app/homescreen/question_popup.dart'; TODO remove
 import 'package:green_peeps_app/homescreen/daily_questions_popup.dart';
 
 class DailyQuestionsBox extends StatefulWidget {
@@ -30,7 +29,7 @@ class _DailyQuestionsBoxState extends State<DailyQuestionsBox> {
                 mainAxisSize: MainAxisSize
                     .min, // Use the minimum space necessary to fit all widgets
                 crossAxisAlignment:
-                    CrossAxisAlignment.start, // Everything starts fartest left
+                    CrossAxisAlignment.start, // Everything starts farthest left
                 children: <Widget>[
                   const Text(
                     "Daily Questions",
