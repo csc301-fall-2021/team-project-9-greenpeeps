@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:green_peeps_app/questionnaire/questionnaire_category.dart';
 import 'package:green_peeps_app/services/habit_firestore.dart';
 
 class LogHabits extends StatefulWidget {
@@ -116,7 +115,7 @@ class _LogHabitsState extends State<LogHabits> {
     }
     return CheckboxListTile(
       title: Text(habitName,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 20,
           )),
       activeColor: const Color.fromRGBO(0, 154, 6, 1),

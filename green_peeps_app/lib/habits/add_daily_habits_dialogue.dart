@@ -161,14 +161,6 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppBar(
-              // title: const Text(
-              //   "",
-              //   style: TextStyle(
-              //     color: Colors.black,
-              //     fontSize: 20,
-              //     fontWeight: FontWeight.bold,
-              //   ),
-              // ),
               elevation: 0,
               toolbarHeight: 30,
               backgroundColor: _boxColor,

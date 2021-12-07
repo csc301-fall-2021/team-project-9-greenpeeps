@@ -17,12 +17,10 @@ class InitialQuestionnaire extends StatefulWidget {
 
 class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
   String rootQuestion = "";
-  ScrollController _controller = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    _controller = ScrollController();
     widget.remainingQuestions ??= [
       'F3Ct0WCqgIaAlkdrqE7X',
       'rxxqFtUd9314aRYB8UiG'
@@ -30,19 +28,6 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
     rootQuestion = widget.remainingQuestions!.removeLast();
   }
 
-  void _ScrollDown() {
-    if (_controller.hasClients) {
-      setState(
-        () {
-          _controller.animateTo(
-            _controller.position.maxScrollExtent,
-            duration: Duration(seconds: 1),
-            curve: Curves.ease,
-          );
-        },
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,17 +38,17 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
         Provider(create: (context) => ResponseListModel(rootQuestion))
       ],
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(212, 240, 255, 1),
+        backgroundColor: const Color.fromRGBO(212, 240, 255, 1),
         floatingActionButton: Consumer<ResponseListModel>(
             builder: (context, responseListModel, child) {
           return Consumer<ResponseListModel>(
             builder: (context, responseListModel, child) {
               return Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: Row(
                   // fit: StackFit.expand,
                   children: [
-                    Spacer(),
+                    const Spacer(),
                     FloatingActionButton.extended(
                       heroTag: null,
                       onPressed: () {
@@ -77,7 +62,7 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                           showDialog(
                               context: context,
                               builder: (context) {
-                                return InfoDialog();
+                                return const InfoDialog();
                               });
                         } else {
                           // pushing instead of popping and pushing because the animation looks weird
@@ -95,7 +80,7 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                       ),
                       backgroundColor: Colors.green,
                     ),
-                    Spacer(),
+                    const Spacer(),
                     FloatingActionButton.extended(
                       onPressed: () {
                         responseListModel.saveCurrent();
@@ -108,7 +93,7 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                           showDialog(
                               context: context,
                               builder: (context) {
-                                return InfoDialog();
+                                return const InfoDialog();
                               });
                         } else {
                           // pushing instead of popping and pushing because the animation looks weird
@@ -127,7 +112,7 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                               ),
                             )
                           : Container(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 100),
                               child: const Text("Save & Continue",
                                   style: TextStyle(
@@ -149,7 +134,7 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
             SliverFillRemaining(
               hasScrollBody: false,
               child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,

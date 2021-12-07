@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:green_peeps_app/habits/completed_log_habits_dialogue.dart';
 import 'package:green_peeps_app/services/habit_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -106,7 +105,7 @@ class _LogAllHabitsState extends State<LogAllHabits> {
     }
     return CheckboxListTile(
       title: Text(habitName,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 20,
         ),
       ),

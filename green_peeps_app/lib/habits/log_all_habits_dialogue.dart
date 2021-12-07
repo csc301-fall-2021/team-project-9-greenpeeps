@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:green_peeps_app/habits/completed_log_habits_dialogue.dart';
 import 'package:green_peeps_app/habits/log_all_habits.dart';
-import 'package:green_peeps_app/services/habit_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LogAllHabitsDialogue extends StatefulWidget {
   const LogAllHabitsDialogue({Key? key}) : super(key: key);
@@ -15,7 +12,6 @@ class LogAllHabitsDialogue extends StatefulWidget {
 class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
   final double _boxPadding = 10.0;
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
-  final ScrollController _controller = ScrollController();
   int _popupIndex = 0;
   List<Widget> _popupViews = [];
 

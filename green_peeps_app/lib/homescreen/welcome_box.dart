@@ -38,7 +38,7 @@ class _WelcomeBoxState extends State<WelcomeBox> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   IconButton(
                     icon: const Icon(Icons.help_outline_rounded,
                       size: 30,
@@ -48,7 +48,7 @@ class _WelcomeBoxState extends State<WelcomeBox> {
                       showDialog(
                           context: context,
                           builder: (context) {
-                            return InfoDialog();
+                            return const InfoDialog();
                           }
                       );
                     },
