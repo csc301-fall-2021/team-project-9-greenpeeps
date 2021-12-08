@@ -14,14 +14,14 @@ class PieDiagram extends StatelessWidget {
   PieDiagram({Key? key}) : super(key: key);
 
   final List<Color> _pieChartColors = <Color>[
-    Colors.teal.shade200,
-    Colors.teal.shade300,
-    Colors.teal.shade400,
+    Colors.red,
+    Colors.yellow.shade700,
     Colors.teal,
-    Colors.teal.shade600,
-    Colors.teal.shade700,
-    Colors.teal.shade800,
-    Colors.teal.shade900
+    Colors.purple,
+    Colors.pink.shade200,
+    Colors.green,
+    Colors.brown,
+    Colors.grey,
   ];
 
   Map<String, double> carbonEmissions = {
