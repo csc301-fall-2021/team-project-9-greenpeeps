@@ -4,7 +4,8 @@ class RecommendedComeBackLater extends StatefulWidget {
   const RecommendedComeBackLater({Key? key}) : super(key: key);
 
   @override
-  _RecommendedComeBackLaterState createState() => _RecommendedComeBackLaterState();
+  _RecommendedComeBackLaterState createState() =>
+      _RecommendedComeBackLaterState();
 }
 
 class _RecommendedComeBackLaterState extends State<RecommendedComeBackLater> {
@@ -12,7 +13,7 @@ class _RecommendedComeBackLaterState extends State<RecommendedComeBackLater> {
   final double _habitItemElevation = 5.0; // The height of shadow beneath box
   final Color _habitItemColor = const Color.fromRGBO(248, 244, 219, 1);
 
-  @override 
+  @override
   Widget build(BuildContext context) {
     return Material(
       color: _habitItemColor,
@@ -23,13 +24,15 @@ class _RecommendedComeBackLaterState extends State<RecommendedComeBackLater> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: const <Widget>[
-            Text("Come back later for more :)",
-            style: TextStyle(
+            Text(
+              "Come back later for more :)",
+              style: TextStyle(
                 fontSize: 20,
-            )),
-          ]
-        )
-      )
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

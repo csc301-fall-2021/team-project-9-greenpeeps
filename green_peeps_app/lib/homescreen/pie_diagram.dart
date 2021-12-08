@@ -27,7 +27,6 @@ class PieDiagram extends StatelessWidget {
   Map<String, double> carbonEmissions = {
     "Food": 0,
     "Electricity": 0,
-    "Water": 0,
     "Transportation": 0,
   };
 
@@ -44,6 +43,7 @@ class PieDiagram extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.active) {
           var userData = snapshot.data;
 
+          // Load user data into pie chart
           if (userData!.data().toString().contains('carbonEmissions') ==
               false) {
             carbonEmissions = {

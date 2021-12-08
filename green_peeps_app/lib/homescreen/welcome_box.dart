@@ -15,9 +15,8 @@ class _WelcomeBoxState extends State<WelcomeBox> {
   final double _boxPadding = 10.0;
   final double _boxElevation = 5.0; // The height of shadow beneath box
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
-  // First box when looking at boxes from top to bottom
-  // (consider making each box its own dart file)
-  Widget _buildFirstBox(BuildContext context, double boxPadding,
+
+  Widget _buildWelcomeBox(BuildContext context, double boxPadding,
       double boxElevation, Color boxColor, String userFirstName) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
@@ -40,16 +39,17 @@ class _WelcomeBoxState extends State<WelcomeBox> {
                   ),
                   const Spacer(),
                   IconButton(
-                    icon: const Icon(Icons.help_outline_rounded,
+                    icon: const Icon(
+                      Icons.help_outline_rounded,
                       size: 30,
                     ),
                     tooltip: 'Help',
                     onPressed: () {
                       showDialog(
-                          context: context,
-                          builder: (context) {
-                            return const InfoDialog();
-                          }
+                        context: context,
+                        builder: (context) {
+                          return const InfoDialog();
+                        },
                       );
                     },
                   ),
@@ -71,18 +71,19 @@ class _WelcomeBoxState extends State<WelcomeBox> {
         .snapshots();
 
     return StreamBuilder<DocumentSnapshot>(
-        stream: users,
-        builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (snapshot.connectionState == ConnectionState.active) {
-            var userData = snapshot.data;
-            var userFirstName = userData!['firstName'];
+      stream: users,
+      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          var userData = snapshot.data;
+          var userFirstName = userData!['firstName'];
 
-          return _buildFirstBox(
-                context, _boxPadding, _boxElevation, _boxColor, userFirstName);
-          } else {
-            return _buildFirstBox(
-                context, _boxPadding, _boxElevation, _boxColor, "");
-          }
-        });
+          return _buildWelcomeBox(
+              context, _boxPadding, _boxElevation, _boxColor, userFirstName);
+        } else {
+          return _buildWelcomeBox(
+              context, _boxPadding, _boxElevation, _boxColor, "");
+        }
+      },
+    );
   }
 }

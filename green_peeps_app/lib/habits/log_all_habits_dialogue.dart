@@ -16,20 +16,21 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
   List<Widget> _popupViews = [];
 
   void _addCompletedHabits(habitList, count) {
-    _popupViews.add(CompletedLogHabits(
+    _popupViews.add(
+      CompletedLogHabits(
         completedHabits: habitList,
         pointsGained: count,
         quit: () {
           Navigator.of(context).pop(); // Closes popup
-        }
-      )
+        },
+      ),
     );
   }
 
   // Changes popup view being viewed
   void _nextPage(setState) {
     setState(
-          () {
+      () {
         if (_popupIndex < _popupViews.length - 1) {
           _popupIndex += 1;
         }
@@ -39,15 +40,17 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
 
   @override
   Widget build(BuildContext context) {
-    _popupViews.add(LogAllHabits(
-      saveHabits: (habitList, count) {
-        _addCompletedHabits(habitList, count);
-        _nextPage(setState);
-      },
-    ));
+    _popupViews.add(
+      LogAllHabits(
+        saveHabits: (habitList, count) {
+          _addCompletedHabits(habitList, count);
+          _nextPage(setState);
+        },
+      ),
+    );
 
     return Dialog(
-      insetPadding: EdgeInsets.all(15),
+      insetPadding: const EdgeInsets.all(15),
       backgroundColor: _boxColor,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -77,11 +80,9 @@ class _LogAllHabitsDialogueState extends State<LogAllHabitsDialogue> {
                 )
               ],
             ),
-
             SingleChildScrollView(
               child: _popupViews.elementAt(_popupIndex),
             )
-            // const Expanded(child: Divider()),
           ],
         ),
       ),
