@@ -6,14 +6,6 @@ import 'package:green_peeps_app/homescreen/daily_questions_box.dart';
 import 'package:green_peeps_app/homescreen/daily_habits_box.dart';
 import 'package:green_peeps_app/homescreen/pie_diagram_box.dart';
 
-// Database Information (variables)
-String userFirstName = "";
-Map<String, double> carbonEmissions = {
-  'electricity': 0.0,
-  'food': 0.0,
-  'transportation': 0.0
-};
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -22,7 +14,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   final ScrollController _controller = ScrollController();
   @override
   Widget build(BuildContext context) {

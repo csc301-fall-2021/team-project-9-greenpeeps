@@ -14,8 +14,6 @@ import 'package:green_peeps_app/new_user_questionnaire/initial_questionnaire_int
 import 'package:firebase_core/firebase_core.dart';
 import 'package:green_peeps_app/welcome_info.dart';
 
-
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
@@ -35,14 +33,18 @@ class _AppState extends State<MyApp> {
     try {
       // Wait for Firebase to initialize and set `_initialized` state to true
       await Firebase.initializeApp();
-      setState(() {
-        _initialized = true;
-      });
+      setState(
+        () {
+          _initialized = true;
+        },
+      );
     } catch (e) {
       // Set `_error` state to true if Firebase initialization fails
-      setState(() {
-        _error = true;
-      });
+      setState(
+        () {
+          _error = true;
+        },
+      );
     }
   }
 

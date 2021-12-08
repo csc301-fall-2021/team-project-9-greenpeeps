@@ -29,7 +29,7 @@ class _DailyLogsBoxState extends State<DailyLogsBox> {
                 mainAxisSize: MainAxisSize
                     .min, // Use the minimum space necessary to fit all widgets
                 crossAxisAlignment:
-                    CrossAxisAlignment.start, // Everything starts fartest left
+                    CrossAxisAlignment.start, // Everything starts farthest left
                 children: <Widget>[
                   const Text(
                     "Log Daily Habits",
@@ -52,7 +52,7 @@ class _DailyLogsBoxState extends State<DailyLogsBox> {
                     onPressed: () {
                       showDialog(
                         barrierDismissible:
-                        false, // Users cannot click off the screen to close popup
+                            false, // Users cannot click off the screen to close popup
                         context: context,
                         builder: (BuildContext context) {
                           return const LogHabitPopup();

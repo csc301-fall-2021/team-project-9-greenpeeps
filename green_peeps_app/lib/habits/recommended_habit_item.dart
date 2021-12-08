@@ -11,14 +11,20 @@ class RecommendedHabitItem extends StatefulWidget {
   final int amount;
   final int points;
 
-  const RecommendedHabitItem({Key? key, required this.hid, required this.title, required this.info, required this.amount, required this.points}) : super(key: key);
+  const RecommendedHabitItem(
+      {Key? key,
+      required this.hid,
+      required this.title,
+      required this.info,
+      required this.amount,
+      required this.points})
+      : super(key: key);
 
   @override
   _RecommendedHabitItemState createState() => _RecommendedHabitItemState();
 }
 
 class _RecommendedHabitItemState extends State<RecommendedHabitItem> {
-
   // Item Variables
   final double _habitItemPadding = 15.0;
   final double _habitItemElevation = 5.0; // The height of shadow beneath box
@@ -30,37 +36,38 @@ class _RecommendedHabitItemState extends State<RecommendedHabitItem> {
   // display info
   // proceed as according to UI
 
-
-  @override 
+  @override
   Widget build(BuildContext context) {
-
-
     return InkWell(
-      onTap: (){
+      onTap: () {
         showDialog(
             context: context,
             builder: (context) {
-              return RecommendedHabitDialogue(hid: widget.hid, title: widget.title, info: widget.info, amount: widget.amount, points: widget.points);
-            }
-        );
+              return RecommendedHabitDialogue(
+                  hid: widget.hid,
+                  title: widget.title,
+                  info: widget.info,
+                  amount: widget.amount,
+                  points: widget.points);
+            });
       },
       child: Card(
         color: _habitItemColor,
         elevation: _habitItemElevation,
-        // borderRadius: BorderRadius.circular(5.0),
         child: Container(
           padding: EdgeInsets.all(_habitItemPadding),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Flexible(
-                child: Text(widget.title,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                child: Text(
+                  widget.title,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               const Icon(
@@ -68,9 +75,9 @@ class _RecommendedHabitItemState extends State<RecommendedHabitItem> {
                 size: 28,
               ),
               // ExpandHabitDialogueButton(hid: widget.hid, title: widget.title, info: widget.info, amount: widget.amount, points: widget.points),
-            ]
-          )
-        )
+            ],
+          ),
+        ),
       ),
     );
   }

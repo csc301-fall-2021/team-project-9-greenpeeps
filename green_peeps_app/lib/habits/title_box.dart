@@ -35,9 +35,10 @@ class _TitleBoxState extends State<TitleBox> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   IconButton(
-                    icon: const Icon(Icons.help_outline_rounded,
+                    icon: const Icon(
+                      Icons.help_outline_rounded,
                       size: 30,
                     ),
                     tooltip: 'Help',
@@ -46,8 +47,7 @@ class _TitleBoxState extends State<TitleBox> {
                           context: context,
                           builder: (context) {
                             return const HabitInfoDialog();
-                          }
-                      );
+                          });
                     },
                   ),
                 ],
