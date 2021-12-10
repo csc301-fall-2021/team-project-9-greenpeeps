@@ -11,11 +11,19 @@ void updateCarbonCalculations() async {
   if (formulas == null || responses == null) {
     return;
   } else {
+    var combinedValues = {};
     for (Formula formula in formulas) {
       if (checkPrereqs(formula, responses)) {
         double carbonValue = parseFormula(formula, responses);
-        setCarbonValue(formula.category, carbonValue);
+        if (combinedValues.containsKey(formula.category)) {
+          combinedValues[formula.category] += carbonValue;
+        } else {
+          combinedValues[formula.category] = carbonValue;
+        }
       }
+    }
+    for (MapEntry entry in combinedValues.entries) {
+      setCarbonValue(entry.key, entry.value);
     }
   }
 }
