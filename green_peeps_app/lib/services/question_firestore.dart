@@ -67,18 +67,20 @@ Future<Question?> _getQuestionFromStore(String documentId) async {
     return null;
   }
   try {
-    return Question(
+    var answerList = await _getAnswersFromStore(documentId, data['next']);
+    var question = Question(
         id: snapshot.id,
         text: data['text'],
         fieldType: data['field_type'],
         tags: List.castFrom(data['tags'] ?? []),
-        answers: await _getAnswersFromStore(documentId));
+        answers: answerList);
   } catch (exception) {
     return null;
   }
 }
 
-Future<List<Answer>> _getAnswersFromStore(String documentId) async {
+Future<List<Answer>> _getAnswersFromStore(
+    String documentId, String? defaultNext) async {
   var answers = await _questions.doc(documentId).collection("answers").get();
   List<Answer> answerList = [];
   for (var snapshot in answers.docs) {
@@ -86,7 +88,7 @@ Future<List<Answer>> _getAnswersFromStore(String documentId) async {
     Answer answer = Answer(
         text: data['text'],
         value: data['value'],
-        nextQuestion: data['next']?.toString());
+        nextQuestion: data['next'] ?? defaultNext);
     answerList.add(answer);
   }
 
