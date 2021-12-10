@@ -21,13 +21,9 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
   @override
   void initState() {
     super.initState();
-    widget.remainingQuestions ??= [
-      'F3Ct0WCqgIaAlkdrqE7X',
-      'rxxqFtUd9314aRYB8UiG'
-    ];
+    widget.remainingQuestions ??= ['has_car', 'eats_meat'];
     rootQuestion = widget.remainingQuestions!.removeLast();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -54,10 +50,8 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                       onPressed: () {
                         responseListModel.skipCurrent();
                         if (widget.remainingQuestions!.isEmpty) {
-                          Navigator.popUntil(
-                              context,
-                              ModalRoute.withName(
-                                  '/init_questionnaire_intro'));
+                          Navigator.popUntil(context,
+                              ModalRoute.withName('/init_questionnaire_intro'));
                           Navigator.popAndPushNamed(context, '/nav');
                           showDialog(
                               context: context,
@@ -85,10 +79,8 @@ class _InitialQuestionnaireState extends State<InitialQuestionnaire> {
                       onPressed: () {
                         responseListModel.saveCurrent();
                         if (widget.remainingQuestions!.isEmpty) {
-                          Navigator.popUntil(
-                              context,
-                              ModalRoute.withName(
-                                  '/init_questionnaire_intro'));
+                          Navigator.popUntil(context,
+                              ModalRoute.withName('/init_questionnaire_intro'));
                           Navigator.popAndPushNamed(context, '/nav');
                           showDialog(
                               context: context,

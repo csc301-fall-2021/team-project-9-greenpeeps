@@ -21,7 +21,6 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
 
   // Build a form widget for questions with answers selected from dropdown box
   Widget _buildDropDown(BuildContext context) {
-
     return SizedBox(
       width: double.infinity,
       child: Consumer2<QuestionListModel, ResponseListModel>(
@@ -86,7 +85,12 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
                           setState(() {
                             responseListModel.addResponse(Response(
                                 qID: widget.question.id,
-                                answer: dropDownValue!));
+                                answer: dropDownValue!,
+                                value: widget.question.answers
+                                    .firstWhere((answer) =>
+                                        answer.text == dropDownValue!)
+                                    .value
+                                    ?.toDouble()));
                             // dropDownValue cannot be null because this is on changed
                             for (Answer answer in widget.question.answers) {
                               if (answer.text == dropDownValue) {
@@ -197,7 +201,9 @@ class _BuildQuestionFormState extends State<BuildQuestionForm> {
                         if (input.isNotEmpty) {
                           setState(() {
                             responseListModel.addResponse(Response(
-                                qID: widget.question.id, answer: input));
+                                qID: widget.question.id,
+                                answer: input,
+                                value: double.tryParse(input)));
                             // dropDownValue cannot be null because this is on changed
                             for (Answer answer in widget.question.answers) {
                               if (answer.text == dropDownValue) {
