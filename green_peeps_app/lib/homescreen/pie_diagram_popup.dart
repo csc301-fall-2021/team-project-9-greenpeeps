@@ -24,11 +24,30 @@ class _PieDiagramPopupState extends State<PieDiagramPopup> {
       ),
       child: SizedBox(
         width: double.infinity,
-        height: 535,
+        height: 450,
         child: Column(
           children: <Widget>[
-            const Padding(padding: EdgeInsets.all(8)),
-            PieDiagram(),
+            AppBar(
+              elevation: 0,
+              toolbarHeight: 40,
+              backgroundColor: _boxColor,
+              automaticallyImplyLeading: false, // No back arrow
+              actions: <Widget>[
+                IconButton(
+                  padding: const EdgeInsets.all(15),
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Closes popup
+                  },
+                  icon: const Icon(Icons.close),
+                  color: Colors.black,
+                  splashRadius: 15,
+                )
+              ],
+            ),
+            Padding(
+                padding: EdgeInsets.all(8),
+                child: PieDiagram(),
+            ),
             const Padding(padding: EdgeInsets.all(8)),
             const Text(
                 "The category where most of your consumptions come from is: ",
@@ -40,14 +59,14 @@ class _PieDiagramPopupState extends State<PieDiagramPopup> {
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
             const Padding(padding: EdgeInsets.all(8)),
-            const Text(
-              "Some ways to reduce carbon emissions: ",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 13,
-              ),
-            ),
+            // const Text(
+            //   "Some ways to reduce carbon emissions: ",
+            //   textAlign: TextAlign.center,
+            //   style: TextStyle(
+            //     fontWeight: FontWeight.bold,
+            //     fontSize: 13,
+            //   ),
+            // ),
           ],
         ),
       ),
