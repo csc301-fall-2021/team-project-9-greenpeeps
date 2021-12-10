@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:green_peeps_app/login/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Welcome extends StatefulWidget {
@@ -20,9 +19,6 @@ class _WelcomeState extends State<Welcome> {
       primary: Colors.white70,
     );
 
-// ButtonStyle(
-//     backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-//   )
     const double horPaddingVal = 50;
 
     return Scaffold(
@@ -37,14 +33,15 @@ class _WelcomeState extends State<Welcome> {
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 80.0),
                 child: Center(
-                    child: Text(
-                  'Welcome Traveller',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 32,
-                    fontFamily: 'Nunito',
+                  child: Text(
+                    'Welcome Traveller',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                      fontFamily: 'Nunito',
+                    ),
                   ),
-                )),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(

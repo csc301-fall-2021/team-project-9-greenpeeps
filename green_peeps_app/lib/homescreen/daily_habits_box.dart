@@ -29,7 +29,7 @@ class _DailyLogsBoxState extends State<DailyLogsBox> {
                 mainAxisSize: MainAxisSize
                     .min, // Use the minimum space necessary to fit all widgets
                 crossAxisAlignment:
-                    CrossAxisAlignment.start, // Everything starts fartest left
+                    CrossAxisAlignment.start, // Everything starts farthest left
                 children: <Widget>[
                   const Text(
                     "Log Daily Habits",
@@ -45,6 +45,10 @@ class _DailyLogsBoxState extends State<DailyLogsBox> {
                     ),
                   ),
                   ElevatedButton(
+                    child: const Text("GO >"),
+                    style: ElevatedButton.styleFrom(
+                      primary: const Color.fromRGBO(0, 154, 6, 1),
+                    ),
                     onPressed: () {
                       showDialog(
                         barrierDismissible:
@@ -55,10 +59,6 @@ class _DailyLogsBoxState extends State<DailyLogsBox> {
                         },
                       );
                     },
-                    child: const Text("GO >"),
-                    style: ElevatedButton.styleFrom(
-                      primary: const Color.fromRGBO(0, 154, 6, 1),
-                    ),
                   )
                 ],
               ),

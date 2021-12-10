@@ -30,7 +30,6 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
     return StreamBuilder<QuerySnapshot>(
       stream: articles,
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        // ignore: todo
         // TODO: style come back later text
         if (!snapshot.hasData)
           return const Text("Come back later for more articles!");

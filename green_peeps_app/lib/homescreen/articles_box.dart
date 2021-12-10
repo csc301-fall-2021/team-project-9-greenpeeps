@@ -30,11 +30,13 @@ class _ArticlesBoxState extends State<ArticlesBox> {
     final _rand = Random();
 
     List<ArticleItem> allArticles = snapshot.data!.docs
-        .map((doc) => ArticleItem(
-              title: doc["title"],
-              link: doc["link"],
-              randImg: images[_rand.nextInt(images.length)],
-            ))
+        .map(
+          (doc) => ArticleItem(
+            title: doc["title"],
+            link: doc["link"],
+            randImg: images[_rand.nextInt(images.length)],
+          ),
+        )
         .toList();
 
     return allArticles[Random().nextInt(allArticles.length)];
@@ -42,12 +44,13 @@ class _ArticlesBoxState extends State<ArticlesBox> {
 
   Widget _randomArticle(Stream<QuerySnapshot> articles) {
     return StreamBuilder<QuerySnapshot>(
-        stream: articles,
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (!snapshot.hasData)
-            return const Text("Come back later for more articles!");
-          return Container(child: _getRandomArticle(snapshot));
-        });
+      stream: articles,
+      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (!snapshot.hasData)
+          return const Text("Come back later for more articles!");
+        return Container(child: _getRandomArticle(snapshot));
+      },
+    );
   }
 
   Widget _buildArticlesBox(BuildContext context, double boxPadding,
@@ -60,8 +63,9 @@ class _ArticlesBoxState extends State<ArticlesBox> {
             elevation: boxElevation,
             borderRadius: BorderRadius.circular(5.0),
             child: Container(
-                padding: EdgeInsets.all(boxPadding),
-                child: Column(children: <Widget>[
+              padding: EdgeInsets.all(boxPadding),
+              child: Column(
+                children: <Widget>[
                   const Text(
                     "Today's Article (Learn About Climate Change):",
                     textAlign: TextAlign.left,
@@ -75,7 +79,9 @@ class _ArticlesBoxState extends State<ArticlesBox> {
                     borderRadius: BorderRadius.circular(10),
                     child: _randomArticle(articles),
                   ),
-                ])),
+                ],
+              ),
+            ),
           );
         },
         childCount: 1,

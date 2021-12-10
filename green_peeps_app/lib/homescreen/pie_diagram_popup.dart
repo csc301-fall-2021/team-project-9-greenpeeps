@@ -13,8 +13,8 @@ class PieDiagramPopup extends StatefulWidget {
 class _PieDiagramPopupState extends State<PieDiagramPopup> {
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
   // This popup includes a more detailed breakdown of carbon emissions
-// (you could use tabs or use a scrollable, etc. to fit more visuals)
-  Widget _buildEmissionsPopup(BuildContext context, Color boxColor, String maxEmission) {
+  Widget _buildEmissionsPopup(
+      BuildContext context, Color boxColor, String maxEmission) {
     return Dialog(
       backgroundColor: boxColor,
       shape: const RoundedRectangleBorder(
@@ -39,7 +39,6 @@ class _PieDiagramPopupState extends State<PieDiagramPopup> {
                 textAlign: TextAlign.center,
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
-
           ],
         ),
       ),
@@ -54,23 +53,27 @@ class _PieDiagramPopupState extends State<PieDiagramPopup> {
         .snapshots();
 
     return StreamBuilder<DocumentSnapshot>(
-        stream: users,
-        builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (snapshot.connectionState == ConnectionState.active) {
-            var userData = snapshot.data;
-            var carbonEmissions = userData!['carbonEmissions'];
-            double thevalue = 0.0;
-            var thekey = 'None';
-            carbonEmissions.forEach((k, v) {
+      stream: users,
+      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          var userData = snapshot.data;
+          var carbonEmissions = userData!['carbonEmissions'];
+          double thevalue = 0.0;
+          var thekey = 'None';
+          carbonEmissions.forEach(
+            (k, v) {
               if (v > thevalue) {
                 thevalue = v;
                 thekey = k;
               }
-            });
-            return _buildEmissionsPopup(context, _boxColor, thekey.replaceFirst(thekey[0], thekey[0].toUpperCase()));
-          } else {
-            return _buildEmissionsPopup(context, _boxColor, 'None');
-          }
-        });
+            },
+          );
+          return _buildEmissionsPopup(context, _boxColor,
+              thekey.replaceFirst(thekey[0], thekey[0].toUpperCase()));
+        } else {
+          return _buildEmissionsPopup(context, _boxColor, 'None');
+        }
+      },
+    );
   }
 }

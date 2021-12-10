@@ -8,7 +8,10 @@ class HabitTileDialogue extends StatefulWidget {
   final String habitID;
 
   const HabitTileDialogue(
-      {Key? key, required this.habitName, required this.habitDescription, required this.habitID})
+      {Key? key,
+      required this.habitName,
+      required this.habitDescription,
+      required this.habitID})
       : super(key: key);
 
   @override
@@ -107,23 +110,6 @@ class _HabitTileDialogueState extends State<HabitTileDialogue> {
 
   @override
   Widget build(BuildContext context) {
-    // Stream<DocumentSnapshot> users = FirebaseFirestore.instance
-    //     .collection('users')
-    //     .doc(FirebaseAuth.instance.currentUser!.uid)
-    //     .snapshots();
-
-    // return StreamBuilder<DocumentSnapshot>(
-    //     stream: users,
-    //     builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-    //       if (snapshot.connectionState == ConnectionState.active) {
-    //         List allHabitKeys = [];
-    //         var userData = snapshot.data;
-    //         allHabitKeys = userData!['userHabits'].keys.toList();
-    //         return _buildHabitTile(context, allHabitKeys);
-    //       } else {
-    //         return _buildHabitTile(context, []);
-    //       }
-    //     });
     return _buildHabitTile(context, widget.habitID);
   }
 }

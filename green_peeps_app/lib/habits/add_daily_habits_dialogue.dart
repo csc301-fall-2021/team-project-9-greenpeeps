@@ -101,9 +101,8 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
         await FirebaseFirestore.instance
             .collection('users')
             .doc(FirebaseAuth.instance.currentUser!.uid)
-            .update({
-          'userHabits.' + key + '.isDailyHabit': true
-        }).then((value) => {});
+            .update({'userHabits.' + key + '.isDailyHabit': true}).then(
+                (value) => {});
       } else {
         await FirebaseFirestore.instance
             .collection('users')
@@ -120,7 +119,7 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
     }
     return SwitchListTile(
       title: Text(habitName,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 20,
           )),
       activeColor: const Color.fromRGBO(0, 154, 6, 1),
@@ -161,14 +160,6 @@ class _AddDailyHabitsDialogueState extends State<AddDailyHabitsDialogue> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppBar(
-              // title: const Text(
-              //   "",
-              //   style: TextStyle(
-              //     color: Colors.black,
-              //     fontSize: 20,
-              //     fontWeight: FontWeight.bold,
-              //   ),
-              // ),
               elevation: 0,
               toolbarHeight: 30,
               backgroundColor: _boxColor,

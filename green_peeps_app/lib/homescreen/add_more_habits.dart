@@ -56,14 +56,116 @@ class _AddHabitState extends State<AddHabit> {
     return habitMap;
   }
 
-  @override
-  Widget build(BuildContext context) {
+  _addCompletedHabit(){
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then(
+          (DocumentSnapshot snapshot) {
+        // if allHabits doesn't exist yet
+        if (!(snapshot
+            .data()
+            .toString()
+            .contains("userHabits"))) {
+          FirebaseFirestore.instance
+              .collection('users')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .set({'userHabits': '{}'},
+              SetOptions(merge: true)).then(
+                (onValue) {
+              FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                  .update(
+                {
+                  'userHabits.' + widget.hid:
+                  _generateCompletedHabitDict()
+                },
+              );
+            },
+          );
+
+          // if user already has allHabits
+        } else {
+          // update the appropriate habit inside allHabits
+          FirebaseFirestore.instance
+              .collection('users')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .update(
+            {
+              'userHabits.' + widget.hid:
+              _generateCompletedHabitDict()
+            },
+          );
+        }
+      },
+    );
+  }
+
+  _addInProgressHabit(){
     SnackBar addedHabitInProgressSnackBar = SnackBar(
-      content: Text('Added \"${widget.title}\" to your Habits In Progress'),
+      content: Text('Added "${widget.title}" to your Habits In Progress'),
     );
 
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then(
+          (DocumentSnapshot snapshot) {
+        // if user doesn't have allHabits
+        if (!(snapshot
+            .data()
+            .toString()
+            .contains("userHabits"))) {
+          FirebaseFirestore.instance
+              .collection('users')
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .set({'userHabits': '{}'},
+              SetOptions(merge: true)).then(
+                (onValue) {
+              FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                  .update(
+                {
+                  'userHabits.' + widget.hid:
+                  _generateHabitDict(widget.amount)
+                },
+              );
+            },
+          );
+
+          // if user already has allHabits
+        } else {
+          // firebase structure automatically prevents repeats additions with the same key
+          // if doesn't already exist
+          if (!(snapshot
+              .get(FieldPath(const ["userHabits"]))
+              .toString()
+              .contains(widget.hid))) {
+            FirebaseFirestore.instance
+                .collection('users')
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .update(
+              {
+                'userHabits.' + widget.hid:
+                _generateHabitDict(widget.amount)
+              },
+            );
+            ScaffoldMessenger.of(context)
+                .showSnackBar(addedHabitInProgressSnackBar);
+          }
+        }
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     SnackBar addedCompletedHabitSnackBar = SnackBar(
-      content: Text('Added \"${widget.title}\" to your Completed Habits '),
+      content: Text('Added "${widget.title}" to your Completed Habits '),
     );
 
     return SizedBox(
@@ -90,123 +192,25 @@ class _AddHabitState extends State<AddHabit> {
             children: <Widget>[
               ElevatedButton(
                 style: style,
-                onPressed: () {
-                  FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(FirebaseAuth.instance.currentUser!.uid)
-                      .get()
-                      .then(
-                    (DocumentSnapshot snapshot) {
-                      // if allHabits doesn't exist yet
-                      if (!(snapshot
-                          .data()
-                          .toString()
-                          .contains("userHabits"))) {
-                        FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(FirebaseAuth.instance.currentUser!.uid)
-                            .set({'userHabits': '{}'},
-                                SetOptions(merge: true)).then(
-                          (onValue) {
-                            FirebaseFirestore.instance
-                                .collection('users')
-                                .doc(FirebaseAuth.instance.currentUser!.uid)
-                                .update(
-                              {
-                                'userHabits.' + widget.hid:
-                                    _generateCompletedHabitDict()
-                              },
-                            );
-                          },
-                        );
-
-                        // if user already has allHabits
-                      } else {
-                        // update the appropriate habit inside allHabits
-                        FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(FirebaseAuth.instance.currentUser!.uid)
-                            .update(
-                          {
-                            'userHabits.' + widget.hid:
-                                _generateCompletedHabitDict()
-                          },
-                        );
-                      }
-                    },
-                  );
-                  Navigator.of(context).pop();
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(addedCompletedHabitSnackBar);
-                },
                 child: const Text(
                   'I already have this Habit',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 15,
-                    fontFamily: "Nunito",
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                onPressed: () {
+                  _addCompletedHabit();
+                  Navigator.of(context).pop();
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(addedCompletedHabitSnackBar);
+                },
+
               ),
               const Spacer(),
               ElevatedButton(
                 style: style,
-                onPressed: () => {
-                  FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(FirebaseAuth.instance.currentUser!.uid)
-                      .get()
-                      .then(
-                    (DocumentSnapshot snapshot) {
-                      // if user doesn't have allHabits
-                      if (!(snapshot
-                          .data()
-                          .toString()
-                          .contains("userHabits"))) {
-                        FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(FirebaseAuth.instance.currentUser!.uid)
-                            .set({'userHabits': '{}'},
-                                SetOptions(merge: true)).then(
-                          (onValue) {
-                            FirebaseFirestore.instance
-                                .collection('users')
-                                .doc(FirebaseAuth.instance.currentUser!.uid)
-                                .update(
-                              {
-                                'userHabits.' + widget.hid:
-                                    _generateHabitDict(widget.amount)
-                              },
-                            );
-                          },
-                        );
-
-                        // if user already has allHabits
-                      } else {
-                        // firebase structure automatically prevents repeats additions with the same key
-                        // if doesn't already exist
-                        if (!(snapshot
-                            .get(FieldPath(const ["userHabits"]))
-                            .toString()
-                            .contains(widget.hid))) {
-                          FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(FirebaseAuth.instance.currentUser!.uid)
-                              .update(
-                            {
-                              'userHabits.' + widget.hid:
-                                  _generateHabitDict(widget.amount)
-                            },
-                          );
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(addedHabitInProgressSnackBar);
-                        }
-                      }
-                    },
-                  ),
-                  Navigator.of(context).pop(),
-                },
                 child: const Text(
                   'Add this to Habits In Progress',
                   textAlign: TextAlign.center,
@@ -215,6 +219,10 @@ class _AddHabitState extends State<AddHabit> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                onPressed: () => {
+                  _addInProgressHabit(),
+                  Navigator.of(context).pop(),
+                },
               ),
             ],
           ),

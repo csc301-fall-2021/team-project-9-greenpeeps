@@ -15,7 +15,7 @@ class _ProgressBoxState extends State<ProgressBox> {
   final double _boxElevation = 5.0; // The height of shadow beneath box
   final Color _boxColor = const Color.fromRGBO(248, 244, 219, 1);
 
-  Widget _buildSecondBox(BuildContext context, double boxPadding,
+  Widget _buildProgressBox(BuildContext context, double boxPadding,
       double boxElevation, Color boxColor, int totalPoints) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
@@ -30,7 +30,7 @@ class _ProgressBoxState extends State<ProgressBox> {
                 mainAxisSize: MainAxisSize
                     .min, // Use the minimum space necessary to fit all widgets
                 crossAxisAlignment:
-                    CrossAxisAlignment.start, // Everything starts fartest left
+                    CrossAxisAlignment.start, // Everything starts farthest left
                 children: <Widget>[
                   Text(
                     "You are " +
@@ -38,8 +38,9 @@ class _ProgressBoxState extends State<ProgressBox> {
                         " points away from your next leaf!",
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
-                  Divider(
-                      color: boxColor), // Adds some room between these widgets
+                  const Divider(
+                      color: Colors
+                          .transparent), // Adds some room between these widgets
                   ClipRRect(
                     // Used to make the bar round
                     borderRadius: BorderRadius.circular(10),
@@ -70,23 +71,24 @@ class _ProgressBoxState extends State<ProgressBox> {
 
     int totalPoints;
     return StreamBuilder<DocumentSnapshot>(
-        stream: users,
-        builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (snapshot.connectionState == ConnectionState.active) {
-            var userData = snapshot.data;
+      stream: users,
+      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          var userData = snapshot.data;
 
-            if (userData!.data().toString().contains('totalPoints') == false) {
-              totalPoints = 0;
-            } else {
-              totalPoints = userData["totalPoints"];
-            }
-
-            return _buildSecondBox(
-                context, _boxPadding, _boxElevation, _boxColor, totalPoints);
+          if (userData!.data().toString().contains('totalPoints') == false) {
+            totalPoints = 0;
           } else {
-            return _buildSecondBox(
-                context, _boxPadding, _boxElevation, _boxColor, 0);
+            totalPoints = userData["totalPoints"];
           }
-        });
+
+          return _buildProgressBox(
+              context, _boxPadding, _boxElevation, _boxColor, totalPoints);
+        } else {
+          return _buildProgressBox(
+              context, _boxPadding, _boxElevation, _boxColor, 0);
+        }
+      },
+    );
   }
 }

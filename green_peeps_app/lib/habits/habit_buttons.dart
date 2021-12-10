@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:green_peeps_app/habits/add_daily_habits_dialogue.dart';
 import 'package:green_peeps_app/habits/log_all_habits_dialogue.dart';
 
@@ -45,7 +43,7 @@ class _HabitButtonsState extends State<HabitButtons> {
                 showDialog(
                   context: context,
                   builder: (context) {
-                    return AddDailyHabitsDialogue();
+                    return const AddDailyHabitsDialogue();
                   },
                 );
               },

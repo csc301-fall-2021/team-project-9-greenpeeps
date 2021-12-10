@@ -27,9 +27,11 @@ class _NavigationState extends State<Navigation> {
 
   // Updates which screen option is currently in the center of the scaffold
   void _onButtonTap(int index) {
-    setState(() {
-      _currIndex = index;
-    });
+    setState(
+      () {
+        _currIndex = index;
+      },
+    );
   }
 
   // Customizes the appearance of bottom navigation bar buttons
@@ -38,7 +40,7 @@ class _NavigationState extends State<Navigation> {
       label: buttonText,
       icon: ImageIcon(
         AssetImage('images/' + buttonText + '.png'),
-        size: 40.0,
+        size: 50.0,
       ),
     );
   }
@@ -52,9 +54,9 @@ class _NavigationState extends State<Navigation> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: const Color.fromRGBO(201, 221, 148, 1),
-        selectedItemColor: Colors.teal.shade900,
-        unselectedItemColor: Colors.green.shade700,
+        backgroundColor: const Color.fromRGBO(20, 131, 1, 1),
+        selectedItemColor: Colors.white,
+        unselectedItemColor: const Color.fromRGBO(157, 207, 148, 1),
         selectedLabelStyle: const TextStyle(
           fontSize: 10.0,
           fontWeight: FontWeight.bold,

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:green_peeps_app/habits/habit_info_dialog.dart';
 
 class TitleBox extends StatefulWidget {
@@ -37,9 +35,10 @@ class _TitleBoxState extends State<TitleBox> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   IconButton(
-                    icon: const Icon(Icons.help_outline_rounded,
+                    icon: const Icon(
+                      Icons.help_outline_rounded,
                       size: 30,
                     ),
                     tooltip: 'Help',
@@ -47,9 +46,8 @@ class _TitleBoxState extends State<TitleBox> {
                       showDialog(
                           context: context,
                           builder: (context) {
-                            return HabitInfoDialog();
-                          }
-                      );
+                            return const HabitInfoDialog();
+                          });
                     },
                   ),
                 ],

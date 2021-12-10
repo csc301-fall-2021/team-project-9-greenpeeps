@@ -71,7 +71,6 @@ Future<Question?> _getQuestionFromStore(String documentId) async {
         id: snapshot.id,
         text: data['text'],
         fieldType: data['field_type'],
-        type: data['type'],
         tags: List.castFrom(data['tags'] ?? []),
         answers: await _getAnswersFromStore(documentId));
   } catch (exception) {
