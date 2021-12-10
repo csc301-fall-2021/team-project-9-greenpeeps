@@ -59,6 +59,8 @@ class _PieDiagramPopupState extends State<PieDiagramPopup> {
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
             const Padding(padding: EdgeInsets.all(8)),
+            // this is currently not implemented so we are commenting it out
+            // future developers can consider adding this feature, or delete if it is not needed
             // const Text(
             //   "Some ways to reduce carbon emissions: ",
             //   textAlign: TextAlign.center,
@@ -67,6 +69,7 @@ class _PieDiagramPopupState extends State<PieDiagramPopup> {
             //     fontSize: 13,
             //   ),
             // ),
+
           ],
         ),
       ),
