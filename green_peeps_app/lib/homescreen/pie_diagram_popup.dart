@@ -24,7 +24,7 @@ class _PieDiagramPopupState extends State<PieDiagramPopup> {
       ),
       child: SizedBox(
         width: double.infinity,
-        height: 535,
+        height: 435,
         child: Column(
           children: <Widget>[
             const Padding(padding: EdgeInsets.all(8)),
@@ -39,13 +39,7 @@ class _PieDiagramPopupState extends State<PieDiagramPopup> {
                 textAlign: TextAlign.center,
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
-            const Padding(padding: EdgeInsets.all(8)),
-            const Text("Some ways to reduce carbon emissions: ",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13,
-                )),
+
           ],
         ),
       ),
