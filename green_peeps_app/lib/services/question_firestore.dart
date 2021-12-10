@@ -68,7 +68,7 @@ Future<Question?> _getQuestionFromStore(String documentId) async {
   }
   try {
     var answerList = await _getAnswersFromStore(documentId, data['next']);
-    var question = Question(
+    return Question(
         id: snapshot.id,
         text: data['text'],
         fieldType: data['field_type'],
