@@ -38,6 +38,12 @@ Future<void> addSkippedQuestion(String qID) async {
   });
 }
 
+Future<void> setCarbonValue(String category, double value) async {
+  await _userDataCollection
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .update({'carbonEmissions.$category': value});
+}
+
 Future<void> _getUserData() async {
   DocumentSnapshot snapshot = await _userDataCollection
       .doc(FirebaseAuth.instance.currentUser!.uid)
